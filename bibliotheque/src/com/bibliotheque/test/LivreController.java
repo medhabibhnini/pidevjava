@@ -469,7 +469,9 @@ private void afficherLivraison(){
                 userlivraison_colum.setCellValueFactory(new PropertyValueFactory <>("idc"));
              
     }
-
+/**
+ * azertyuiop
+ */
 private void loadDataLivraison() {
    dataL.clear();
          try {
