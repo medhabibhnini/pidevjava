@@ -121,7 +121,8 @@ private ObservableList<Livraison> dataL;
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)
+    {
        con = DataBase.getInstance().getConnection();
          data= FXCollections.observableArrayList();
         datac= FXCollections.observableArrayList();
@@ -371,7 +372,8 @@ System.out.println(formatter.format(date));
         
         
     }
-                  @FXML
+                  
+     @FXML
 public void deleteprod(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
         
         
