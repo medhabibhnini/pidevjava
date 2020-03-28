@@ -5,6 +5,8 @@
  */
 package com.user.Entite;
 
+import java.util.Objects;
+
 
 /**
  *
@@ -15,28 +17,28 @@ public class Blog
     private int idb ;
     private String sujet ;
     private String description ;
-    private String type ;
-    private User U ;
+    
+    
 
-    public Blog(int idb, String sujet, String description, String type, User U) {
+    public Blog(int idb, String sujet, String description) {
         this.idb = idb;
         this.sujet = sujet;
         this.description = description;
-        this.type = type;
-        this.U = U;
+       
+       
     }
 
-    public Blog(String sujet, String description, String type, User U) {
+    public Blog(String sujet, String description) {
         this.sujet = sujet;
         this.description = description;
-        this.type = type;
-        this.U = U;
+        
+        
     }
     
 
     @Override
     public String toString() {
-        return "Blog{" + "idb=" + idb + ", sujet=" + sujet + ", description=" + description + ", type=" + type + ", U=" + U + '}';
+        return "Blog{" + "idb=" + idb + ", sujet=" + sujet + ", description=" + description + '}';
     }
     
 
@@ -64,21 +66,42 @@ public class Blog
         this.description = description;
     }
 
-    public String getType() {
-        return type;
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public Blog() {
     }
 
-    public User getU() {
-        return U;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Blog other = (Blog) obj;
+        if (this.idb != other.idb) {
+            return false;
+        }
+        if (!Objects.equals(this.sujet, other.sujet)) {
+            return false;
+        }
+        if (!Objects.equals(this.description, other.description)) {
+            return false;
+        }
+        return true;
     }
 
-    public void setU(User U) {
-        this.U = U;
-    }
+   
+
+    
     
     
     

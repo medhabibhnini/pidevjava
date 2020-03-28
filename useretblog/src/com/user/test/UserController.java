@@ -9,6 +9,10 @@ import com.user.Entite.User;
 import com.user.Service.ServiceUser;
 import com.user.Utils.DataBase;
 import java.awt.AWTException;
+import com.user.Entite.Blog;
+import com.user.Service.ServiceBlog;
+
+
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -21,17 +25,22 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
+import javax.imageio.ImageIO;
 
 /**
  * FXML Controller class
@@ -60,6 +69,20 @@ public class UserController implements Initializable {
     private TableColumn<User, ?> role_colum;
     @FXML
     private TableView<User> tab_view;
+    @FXML
+    private TextField tf_sujet;
+    @FXML
+    private TextField tf_description;
+    @FXML
+    private Button btn_import;
+    @FXML
+    private TableView<?> t_view;
+    @FXML
+    private ImageView imgview;
+    @FXML
+    private TableColumn<?, ?> sujet_colum;
+    @FXML
+    private TableColumn<?, ?> description_colum;
 
     /**
      * Initializes the controller class.
@@ -71,10 +94,11 @@ public class UserController implements Initializable {
         data= FXCollections.observableArrayList();
         setCellValueFromTableToTextFieldprod();
         afficheruser();
-       loadDataUser();
+        loadDataUser();
         
     } 
-  @FXML
+    
+    @FXML
     private void Adduser(ActionEvent event) throws SQLException {
             
         int i=0;
@@ -121,7 +145,8 @@ private void loadDataUser() {
            Logger.getLogger(ServiceUser.class.getName()).log(Level.SEVERE, null, ex);
        }
         tab_view.setItems(data);
-    }  
+    } 
+
   @FXML
      public void updateprod(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
         //boolean isIdEmpty=validation.TextFieldvalidation.istextFieldTypeNumber(tf_idcat, error_idcat, "id must be number");
@@ -169,7 +194,8 @@ private void loadDataUser() {
         
         
     }
-                  @FXML
+     
+@FXML
 public void deleteUser(ActionEvent event) throws SQLException, AWTException, MalformedURLException 
 {
         
@@ -201,15 +227,17 @@ public void deleteUser(ActionEvent event) throws SQLException, AWTException, Mal
         
     }
 
-@FXML
-      public User gettemp(TableColumn.CellEditEvent edittedCell) {
+      public User gettemp(TableColumn.CellEditEvent edittedCell) 
+      {
         User test = tab_view.getSelectionModel().getSelectedItem();
         
         return test;
     }
       
-        private void setCellValueFromTableToTextFieldprod(){
-       tab_view.setOnMouseClicked(new EventHandler<MouseEvent>(){
+        private void setCellValueFromTableToTextFieldprod()
+        {
+       tab_view.setOnMouseClicked(new EventHandler<MouseEvent>()
+       {
         @Override
         public void handle(MouseEvent event) {
 User us=tab_view.getItems().get(tab_view.getSelectionModel().getSelectedIndex());
@@ -224,4 +252,69 @@ tf_name.setText(us.getUsername());
 });
     
 }
+       /* -------------------*/
+         @FXML
+    private void AddBlog(ActionEvent event) throws SQLException {
+            
+        int i=0;
+        String sujet =tf_sujet.getText();    
+        String description =tf_description.getText();
+        ServiceBlog Bl = new ServiceBlog();
+        Blog B = new Blog(sujet, description);
+         System.out.println(B);
+         i=Bl.ajouterBlog(B);
+if (i == 1)
+    {
+        
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("Blog added");
+                alert.showAndWait();
+                 afficherblog();
+                
+
+    }
+ 
+ }
+     @FXML
+  public void afficherblog(){
+
+             sujet_colum.setCellValueFactory(new PropertyValueFactory <>("sujet"));
+             description_colum.setCellValueFactory(new PropertyValueFactory <>("description"));
+             
+            
+    }
+
+  public void deleteBlog(ActionEvent event) throws SQLException, AWTException, MalformedURLException 
+{
+        
+        
+ TableColumn.CellEditEvent edittedcell = null;
+            User x=gettemp(edittedcell);  
+            System.out.println(x);
+            int i=x.getId();
+             System.out.println(i);
+            ServiceBlog liv=new ServiceBlog();
+           
+           
+            
+            int s=liv.deleteBlog(i);
+                     
+              if(s==1)
+        {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("Blog deleted");
+                alert.showAndWait();
+           afficherblog();
+           loadDataUser();
+            System.out.println(s);
+        }
+                
+           
+        
+    }
+
 }

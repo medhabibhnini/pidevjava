@@ -15,7 +15,7 @@ import com.user.Utils.DataBase;
 
 /**
  *
- * @author ghassen
+ * @author daly
  */
 public class DataAccessObject {
    private DataBase database=new DataBase();

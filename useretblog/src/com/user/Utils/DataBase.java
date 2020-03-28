@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 /**
  *
- * @author Mohamedhabib - pc
+ * @author daly
  */
 public class DataBase {
     private static DataBase db;

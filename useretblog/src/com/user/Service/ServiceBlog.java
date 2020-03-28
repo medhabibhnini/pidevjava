@@ -5,10 +5,67 @@
  */
 package com.user.Service;
 
+import com.user.Utils.DataBase;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import com.user.Entite.Blog;
+
 /**
  *
  * @author Daly
  */
-public class ServiceBlog {
+public class ServiceBlog 
+{
+    private Connection con;
+    private Statement ste;
+    private PreparedStatement pst;
+
+    public ServiceBlog()
+    {
+        con = DataBase.getInstance().getConnection();
+    }
+    
+    public int ajouterBlog(Blog B) throws SQLException 
+    {
+
+        String requeteInsert = "INSERT INTO blog (sujet,description) VALUES ( '" +B.getSujet()+ "','" +B.getDescription()+ "');";
+        int i = 0;   
+       try 
+       {
+           ste = con.createStatement();
+           i = ste.executeUpdate(requeteInsert);
+           System.out.println(requeteInsert);
+           
+       } 
+       catch (SQLException ex) 
+       {
+           Logger.getLogger(ServiceBlog.class.getName()).log(Level.SEVERE, null, ex);
+       }
+       finally{ste.close();} 
+       return i;
+             
+    }
+    
+    public int deleteBlog(int idb) throws SQLException  
+    {
+        int i = 0;
+       try 
+       {
+           ste=con.createStatement();
+           String sql="DELETE FROM blog WHERE id="+idb;   
+            i=ste.executeUpdate(sql);
+       } 
+       catch (SQLException ex) 
+       {
+           Logger.getLogger(ServiceBlog.class.getName()).log(Level.SEVERE, null, ex);
+       }
+     finally{ste.close();}
+      return i;  
+    }
+    
     
 }
