@@ -406,6 +406,7 @@ public void deleteprod(ActionEvent event) throws SQLException, AWTException, Mal
            
         
     }
+@FXML
 public void deletcommande(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
         
         
@@ -492,6 +493,7 @@ private void loadDataLivraison() {
        }
         livraison_view.setItems(dataL);
     }    
+@FXML
  public void Livrer(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
         //boolean isIdEmpty=validation.TextFieldvalidation.istextFieldTypeNumber(tf_idcat, error_idcat, "id must be number");
         //boolean isNameEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_nomcat, error_namecat, "Name is require");
@@ -541,6 +543,7 @@ private void loadDataLivraison() {
         
         
     }
+@FXML
  public void deletlivraison(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
         
         
@@ -587,7 +590,7 @@ RequestOptions options = RequestOptions
   .build();
 
 Charge.create(chargeParams, options);
- }
-*/
+ }*/
+
  
 }
