@@ -25,6 +25,10 @@ import javafx.collections.FXCollections;
 import javafx.embed.swing.SwingFXUtils;
 import java.sql.Connection;
 import com.bibliotheque.Utils.DataBase;
+import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
+import com.stripe.model.Charge;
+import com.stripe.net.RequestOptions;
 import java.awt.AWTException;
 import java.net.MalformedURLException;
 import javafx.scene.input.MouseEvent;
@@ -34,6 +38,8 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 import javafx.collections.ObservableList;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -535,6 +541,53 @@ private void loadDataLivraison() {
         
         
     }
+ public void deletlivraison(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
+        
+        
+ TableColumn.CellEditEvent edittedcell = null;
+            Livraison x=gettempt(edittedcell);         
+            int i=x.getIdlivraison();
+            ServiceLivraison cmd=new ServiceLivraison();
+           
+           
+            
+            int s=cmd.deleteLivraison(i);
+              if(s==1)
+        {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("order deleted");
+                alert.showAndWait();
+         loadDataLivraison();
+        afficherLivraison();
+        }
+              
+          
+             
+          
+           
+        
+    }
+ /*
+ public void charge() throws StripeException
+ {
+     Stripe.apiKey = "pk_test_u9EXruHrMT2njpoJCfZrNib500V6stJCjf";
 
+Map<String, Object> chargeParams = new HashMap<>();
+chargeParams.put("amount",500 );
+chargeParams.put("currency", "usd");
+chargeParams.put("description", "My First Test Charge (created for API docs)");
+chargeParams.put("source", "tok_mastercard");
+// ^ obtained with Stripe.js
+
+RequestOptions options = RequestOptions
+  .builder()
+  .setIdempotencyKey("3XmtVJIIGuqVXrog")
+  .build();
+
+Charge.create(chargeParams, options);
+ }
+*/
  
 }

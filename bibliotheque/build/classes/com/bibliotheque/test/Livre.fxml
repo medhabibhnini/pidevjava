@@ -67,8 +67,9 @@
                               <TableColumn fx:id="datecom_view" prefWidth="266.0" text="date commande" />
                           </columns>
                         </TableView>
-                        <Button layoutX="154.0" layoutY="510.0" mnemonicParsing="false" onAction="#deletcommande" prefHeight="61.0" prefWidth="278.0" text="annuler la commande" />
-                        <Button layoutX="610.0" layoutY="510.0" mnemonicParsing="false" onAction="#Livrer" prefHeight="61.0" prefWidth="278.0" text="Livrer la commande" />
+                        <Button layoutX="94.0" layoutY="510.0" mnemonicParsing="false" onAction="#deletcommande" prefHeight="61.0" prefWidth="278.0" text="annuler la commande" />
+                        <Button layoutX="721.0" layoutY="510.0" mnemonicParsing="false" onAction="#Livrer" prefHeight="61.0" prefWidth="278.0" text="Livrer la commande" />
+                        <Button layoutX="412.0" layoutY="510.0" mnemonicParsing="false" onAction="#charge" prefHeight="61.0" prefWidth="278.0" text="payer la commande" />
                      </children>
                   </AnchorPane>
             </content>
@@ -77,7 +78,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button layoutX="400.0" layoutY="513.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="278.0" text="annuler la livraison" />
+                        <Button layoutX="400.0" layoutY="513.0" mnemonicParsing="false" onAction="#deletlivraison" prefHeight="61.0" prefWidth="278.0" text="annuler la livraison" />
                         <TableView fx:id="livraison_view" layoutX="199.0" layoutY="88.0" prefHeight="399.0" prefWidth="555.0">
                           <columns>
                             <TableColumn fx:id="idlivraison_colum" prefWidth="181.0" text="id livraison" />
