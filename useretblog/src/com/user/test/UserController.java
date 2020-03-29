@@ -49,10 +49,11 @@ import javax.imageio.ImageIO;
  */
 public class UserController implements Initializable {
     private ObservableList<User> data;
-      private ResultSet rs=null;
+    private ObservableList<Blog> datab;
+    private ResultSet rs=null;
     private PreparedStatement pst;
-
     private Connection con;
+    
     @FXML
     private TextField tf_name;
     @FXML
@@ -76,13 +77,13 @@ public class UserController implements Initializable {
     @FXML
     private Button btn_import;
     @FXML
-    private TableView<?> t_view;
+    private TableView<Blog> t_view;
     @FXML
     private ImageView imgview;
     @FXML
-    private TableColumn<?, ?> sujet_colum;
+    private TableColumn<Blog, ?> sujet_colum;
     @FXML
-    private TableColumn<?, ?> description_colum;
+    private TableColumn<Blog, ?> description_colum;
 
     /**
      * Initializes the controller class.
@@ -92,9 +93,11 @@ public class UserController implements Initializable {
         // TODO
         con = DataBase.getInstance().getConnection();
         data= FXCollections.observableArrayList();
-        setCellValueFromTableToTextFieldprod();
+        datab= FXCollections.observableArrayList();
         afficheruser();
         loadDataUser();
+        afficherblog();
+        loadDataBlog();
         
     } 
     
@@ -116,7 +119,7 @@ if (i == 1)
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information");
                 alert.setHeaderText(null);
-                alert.setContentText("User added");
+                alert.setContentText("User ajouter");
                 alert.showAndWait();
                  afficheruser();
                 loadDataUser();
@@ -184,7 +187,7 @@ private void loadDataUser() {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information");
                 alert.setHeaderText(null);
-                alert.setContentText("User updated");
+                alert.setContentText("User modifier");
                 alert.showAndWait();
            afficheruser();
            loadDataUser();
@@ -216,7 +219,7 @@ public void deleteUser(ActionEvent event) throws SQLException, AWTException, Mal
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information");
                 alert.setHeaderText(null);
-                alert.setContentText("User deleted");
+                alert.setContentText("User supprimer");
                 alert.showAndWait();
            afficheruser();
            loadDataUser();
@@ -269,9 +272,11 @@ if (i == 1)
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information");
                 alert.setHeaderText(null);
-                alert.setContentText("Blog added");
+                alert.setContentText("Blog ajouter");
                 alert.showAndWait();
                  afficherblog();
+                 loadDataBlog();
+                 
                 
 
     }
@@ -286,35 +291,60 @@ if (i == 1)
             
     }
 
-  public void deleteBlog(ActionEvent event) throws SQLException, AWTException, MalformedURLException 
-{
+  
+ private void loadDataBlog() {
+   datab.clear();
+         try {
+           pst =con.prepareStatement("Select * from blog");
+
+    rs=pst.executeQuery();
+     while (rs.next()) {                
+             datab.add(new  Blog(rs.getInt("idb"), rs.getString("sujet"), rs.getString("description")));
+     }       }
+       catch (SQLException ex) {
+           Logger.getLogger(ServiceBlog.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        t_view.setItems(datab);
+    } 
+  
+  
+  
+  
+                   @FXML
+public void deleteBlog(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
         
         
  TableColumn.CellEditEvent edittedcell = null;
-            User x=gettemp(edittedcell);  
-            System.out.println(x);
-            int i=x.getId();
-             System.out.println(i);
+            Blog x=getttemp(edittedcell);
+            int i=x.getIdb();
             ServiceBlog liv=new ServiceBlog();
            
            
             
             int s=liv.deleteBlog(i);
-                     
               if(s==1)
         {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information");
                 alert.setHeaderText(null);
-                alert.setContentText("Blog deleted");
+                alert.setContentText("Blog supprimer");
                 alert.showAndWait();
            afficherblog();
-           loadDataUser();
-            System.out.println(s);
+           loadDataBlog();
         }
-                
+              
+          
+             
+          
            
         
     }
+        
+        public Blog getttemp(TableColumn.CellEditEvent edittedCell) {
+        Blog test = t_view.getSelectionModel().getSelectedItem();
+        
+        return test;
+    }
+
 
 }

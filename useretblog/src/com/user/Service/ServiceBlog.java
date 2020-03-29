@@ -13,6 +13,9 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.user.Entite.Blog;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -56,7 +59,7 @@ public class ServiceBlog
        try 
        {
            ste=con.createStatement();
-           String sql="DELETE FROM blog WHERE id="+idb;   
+           String sql="DELETE FROM blog WHERE idb="+idb;   
             i=ste.executeUpdate(sql);
        } 
        catch (SQLException ex) 
@@ -66,6 +69,25 @@ public class ServiceBlog
      finally{ste.close();}
       return i;  
     }
+    
+     public List<Blog> afficherblog() {
+        List<Blog> list = new ArrayList<>();
+
+        try {
+            String requete = "SELECT * FROM blog";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                list.add(new Blog(rs.getInt(1), rs.getString(2), rs.getString(5)));
+            }
+
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+
+        return list;
+    }
+    
     
     
 }
