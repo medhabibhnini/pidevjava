@@ -25,22 +25,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.FileChooser;
-import javax.imageio.ImageIO;
+
 
 /**
  * FXML Controller class
@@ -75,15 +70,13 @@ public class UserController implements Initializable {
     @FXML
     private TextField tf_description;
     @FXML
-    private Button btn_import;
-    @FXML
     private TableView<Blog> t_view;
-    @FXML
-    private ImageView imgview;
     @FXML
     private TableColumn<Blog, ?> sujet_colum;
     @FXML
     private TableColumn<Blog, ?> description_colum;
+    @FXML
+    private TextField search;
 
     /**
      * Initializes the controller class.
@@ -96,10 +89,18 @@ public class UserController implements Initializable {
         datab= FXCollections.observableArrayList();
         afficheruser();
         loadDataUser();
+        setCellValueFromTableToTextFieldprod();
         afficherblog();
         loadDataBlog();
+        searchProduct();
+        
         
     } 
+    
+    
+    
+    
+    /* -----------------------------User------------------------------------------*/
     
     @FXML
     private void Adduser(ActionEvent event) throws SQLException {
@@ -152,14 +153,7 @@ private void loadDataUser() {
 
   @FXML
      public void updateprod(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
-        //boolean isIdEmpty=validation.TextFieldvalidation.istextFieldTypeNumber(tf_idcat, error_idcat, "id must be number");
-        //boolean isNameEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_nomcat, error_namecat, "Name is require");
-    // boolean isIdEmpty=validation.TextFieldvalidation.istextFieldTypeNumber(tf_idprod, error_idprod, "id must be number");
-        //boolean isNameEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_nameprod, error_nameprod, "Name is require");
-         //boolean isPriceEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_prodprice, error_priceprod, "price is require");
-       /**
-        * tl
-        */ 
+     
        
         int i;
            
@@ -167,14 +161,14 @@ private void loadDataUser() {
     TableColumn.CellEditEvent edittedcell = null;
            User x=gettemp(edittedcell);
            int c=x.getId();
-            //String idp = tf_idprod.getText();
+          
             String Nomp = tf_name.getText();
            String mail=tf_email.getText();
            String pswd = tf_password.getText();
            String role=tf_role.getText();            
             
    
-              //Category c = new Category(0,Namecat);
+            
             ServiceUser prod=new ServiceUser();
             User u=new User(c, Nomp, mail, pswd, role);
          
@@ -245,7 +239,7 @@ public void deleteUser(ActionEvent event) throws SQLException, AWTException, Mal
         public void handle(MouseEvent event) {
 User us=tab_view.getItems().get(tab_view.getSelectionModel().getSelectedIndex());
 
-//tf_rate.setText(idprod);
+
 
 tf_name.setText(us.getUsername());
  tf_email.setText(us.getEmail());
@@ -255,7 +249,7 @@ tf_name.setText(us.getUsername());
 });
     
 }
-       /* -------------------*/
+       /* -----------------------------Blog------------------------------------------*/
          @FXML
     private void AddBlog(ActionEvent event) throws SQLException {
             
@@ -282,7 +276,6 @@ if (i == 1)
     }
  
  }
-     @FXML
   public void afficherblog(){
 
              sujet_colum.setCellValueFactory(new PropertyValueFactory <>("sujet"));
@@ -345,6 +338,44 @@ public void deleteBlog(ActionEvent event) throws SQLException, AWTException, Mal
         
         return test;
     }
+        
+          
+        public void searchProduct(){
+search.setOnKeyReleased(e->{
+    if(search.getText().equals("")){
+        loadDataBlog();
+    }
+    else{
+        datab.clear();
+          String sql = "Select * from blog where sujet LIKE '%"+search.getText()+"%'"
+                + "UNION Select * from blog where description LIKE '%"+search.getText()+"%'" ;
+    try {
+      
+        pst=con.prepareStatement(sql);
+        rs=pst.executeQuery();
+        while(rs.next())
+        {
+          String sujet =rs.getString("sujet");  
+         String description=rs.getString("description");
+         
+     
+                        //datap.add(new Produits(idProduct,productName,productPrice,idcat));
+    
+             datab.add(new Blog(sujet, description));
+ 
+        }
+        t_view.setItems(datab);
+    } catch (SQLException ex) {
+        Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
+    }
+});
 
 
+        
+        
+        
+        }   
+        
 }

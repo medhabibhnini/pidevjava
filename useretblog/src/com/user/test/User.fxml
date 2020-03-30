@@ -65,7 +65,9 @@
                           </columns>
                         </TableView>
                         <Button layoutX="149.0" layoutY="252.0" mnemonicParsing="false" onAction="#AddBlog" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: black;" text="ajouter" textFill="WHITE" />
-                        <Button layoutX="438.0" layoutY="310.0" mnemonicParsing="false" onAction="#deleteBlog" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: black;" text="supprimer" textFill="WHITE" />
+                        <Button layoutX="438.0" layoutY="349.0" mnemonicParsing="false" onAction="#deleteBlog" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: black;" text="supprimer" textFill="WHITE" />
+                        <TextField fx:id="search" layoutX="411.0" layoutY="289.0" />
+                        <Label layoutX="346.0" layoutY="293.0" text="Recherche :" />
                      </children></AnchorPane>
             </content>
           </Tab>
