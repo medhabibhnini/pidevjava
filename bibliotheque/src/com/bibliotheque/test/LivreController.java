@@ -46,7 +46,9 @@ import org.apache.commons.lang3.RandomStringUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -57,6 +59,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import static org.apache.commons.lang3.time.FastDateParserSDFTest.data;
 import static org.apache.commons.lang3.time.FastDatePrinterTimeZonesTest.data;
@@ -71,6 +75,7 @@ public class LivreController implements Initializable {
 private ObservableList<Livre> data;
 private ObservableList<Commande> datac;
 private ObservableList<Livraison> dataL;
+    private FXMLLoader loader;
    private Connection con;
     private ResultSet rs=null;
     private PreparedStatement pst;
@@ -101,8 +106,6 @@ private ObservableList<Livraison> dataL;
     @FXML
     private TableColumn<Livre,?> quantite;
     @FXML
-    private Button commender;
-    @FXML
     private TableView<Commande> com_view;
     @FXML
     private TableColumn<Commande, ?> idcom_view;
@@ -120,6 +123,8 @@ private ObservableList<Livraison> dataL;
     private TableColumn<Livraison, ?> userlivraison_colum;
     @FXML
     private TableColumn<Commande, ?> comlivraison_colum;
+    @FXML
+    private Button payer;
   
  
 
@@ -139,6 +144,13 @@ private ObservableList<Livraison> dataL;
        loadDataLivre();
        loadDataLivraison();
         afficherLivraison();
+            payer.setOnAction(new EventHandler<ActionEvent>() {
+           @Override
+           public void handle(ActionEvent e) {
+               showMycommande();
+           }
+       });
+            
     }  
      @FXML
     private void addImage(ActionEvent event) throws IOException{
@@ -586,5 +598,19 @@ RequestOptions options = RequestOptions
 Charge.create(chargeParams, options);
  }
 */
- 
+ private void showMycommande(){
+                        try {
+       loader = new FXMLLoader();
+    loader.setLocation(getClass().getResource("Payment.fxml"));
+                            Object load = loader.load();
+    Scene scene= new Scene(loader.getRoot());
+    Stage stage = new Stage();
+    stage.setScene(scene);
+    stage.initModality(Modality.APPLICATION_MODAL);
+    stage.show();            
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+		} 
 }
+

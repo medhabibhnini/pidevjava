@@ -10,7 +10,9 @@ import com.bibliotheque.Entite.Livre;
 import com.bibliotheque.Service.ServiceCommande;
 import com.bibliotheque.Service.ServiceLivre;
 import com.bibliotheque.Utils.DataBase;
+import doryan.windowsnotificationapi.fr.Notification;
 import java.awt.AWTException;
+import java.awt.TrayIcon;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -203,15 +205,11 @@ System.out.println(formatter.format(date));
               if(i==1)
         {
            
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Information");
-                alert.setHeaderText(null);
-                alert.setContentText("book order now");
-                alert.showAndWait();
+              
            afficherLivre();
            loadDataLivre();
       
-           
+            Notification.sendNotification("Ingenschool"," \n your book has been ordered ." ,TrayIcon.MessageType.INFO);
         }
           
         
@@ -259,9 +257,9 @@ Livre liv=tab_livre.getItems().get(tab_livre.getSelectionModel().getSelectedInde
 private void showMycommande(){
                         try {
        loader = new FXMLLoader();
-    loader.setLocation(getClass().getResource("commande.fxml"));
-    CommandeController controller= new CommandeController();
-    loader.setController(controller);
+    loader.setLocation(getClass().getResource("mycommande.fxml"));
+    
+
     loader.load();
     Scene scene= new Scene(loader.getRoot());
     Stage stage = new Stage();

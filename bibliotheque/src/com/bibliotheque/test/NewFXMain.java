@@ -26,7 +26,7 @@ public class NewFXMain extends Application {
     @Override
     public void start(Stage primaryStage) {
    try {
-   Parent root = FXMLLoader.load(getClass().getResource("commande.fxml"));
+   Parent root = FXMLLoader.load(getClass().getResource("mycommande.fxml"));
             
             Scene scene = new Scene(root);
             
