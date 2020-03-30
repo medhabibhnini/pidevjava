@@ -17,29 +17,35 @@ public class Blog
     private int idb ;
     private String sujet ;
     private String description ;
+    private String type ;
+    
     
     
 
-    public Blog(int idb, String sujet, String description) {
+    public Blog(int idb, String sujet, String description, String type) {
         this.idb = idb;
         this.sujet = sujet;
         this.description = description;
+        this.type = type;
        
        
     }
 
-    public Blog(String sujet, String description) {
+    public Blog(String sujet, String description, String type) {
         this.sujet = sujet;
         this.description = description;
+        this.type = type;
         
         
     }
-    
 
     @Override
     public String toString() {
-        return "Blog{" + "idb=" + idb + ", sujet=" + sujet + ", description=" + description + '}';
+        return "Blog{" + "idb=" + idb + ", sujet=" + sujet + ", description=" + description + ", type=" + type + '}';
     }
+    
+
+    
     
 
     public int getIdb() {
@@ -66,6 +72,16 @@ public class Blog
         this.description = description;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 3;
@@ -96,8 +112,13 @@ public class Blog
         if (!Objects.equals(this.description, other.description)) {
             return false;
         }
+        if (!Objects.equals(this.type, other.type)) {
+            return false;
+        }
         return true;
     }
+
+    
 
    
 

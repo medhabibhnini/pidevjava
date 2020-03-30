@@ -35,7 +35,7 @@ public class ServiceBlog
     public int ajouterBlog(Blog B) throws SQLException 
     {
 
-        String requeteInsert = "INSERT INTO blog (sujet,description) VALUES ( '" +B.getSujet()+ "','" +B.getDescription()+ "');";
+        String requeteInsert = "INSERT INTO blog (sujet,description,type) VALUES ( '" +B.getSujet()+ "','" +B.getDescription()+ "','" +B.getType()+ "');";
         int i = 0;   
        try 
        {
@@ -78,7 +78,7 @@ public class ServiceBlog
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(requete);
             while (rs.next()) {
-                list.add(new Blog(rs.getInt(1), rs.getString(2), rs.getString(5)));
+                list.add(new Blog(rs.getInt(1), rs.getString(2), rs.getString(5), rs.getString(7)));
             }
 
         } catch (SQLException ex) {

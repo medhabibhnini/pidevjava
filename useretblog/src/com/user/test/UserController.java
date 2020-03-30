@@ -11,6 +11,7 @@ import com.user.Utils.DataBase;
 import java.awt.AWTException;
 import com.user.Entite.Blog;
 import com.user.Service.ServiceBlog;
+import java.io.File;
 
 
 
@@ -30,11 +31,14 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -43,11 +47,13 @@ import javafx.scene.input.MouseEvent;
  * @author Daly
  */
 public class UserController implements Initializable {
+    
     private ObservableList<User> data;
     private ObservableList<Blog> datab;
     private ResultSet rs=null;
     private PreparedStatement pst;
     private Connection con;
+    private String path ;
     
     @FXML
     private TextField tf_name;
@@ -77,6 +83,10 @@ public class UserController implements Initializable {
     private TableColumn<Blog, ?> description_colum;
     @FXML
     private TextField search;
+    @FXML
+    private Button browse;
+    @FXML
+    private TextField timage;
 
     /**
      * Initializes the controller class.
@@ -89,10 +99,10 @@ public class UserController implements Initializable {
         datab= FXCollections.observableArrayList();
         afficheruser();
         loadDataUser();
-        setCellValueFromTableToTextFieldprod();
+        setCellValueFromTableToTextFieldUser();
         afficherblog();
         loadDataBlog();
-        searchProduct();
+        searchBlog();
         
         
     } 
@@ -231,7 +241,7 @@ public void deleteUser(ActionEvent event) throws SQLException, AWTException, Mal
         return test;
     }
       
-        private void setCellValueFromTableToTextFieldprod()
+        private void setCellValueFromTableToTextFieldUser()
         {
        tab_view.setOnMouseClicked(new EventHandler<MouseEvent>()
        {
@@ -256,10 +266,12 @@ tf_name.setText(us.getUsername());
         int i=0;
         String sujet =tf_sujet.getText();    
         String description =tf_description.getText();
+        String type =timage.getText();
         ServiceBlog Bl = new ServiceBlog();
-        Blog B = new Blog(sujet, description);
+        Blog B = new Blog(sujet, description, type);
          System.out.println(B);
          i=Bl.ajouterBlog(B);
+         B.setType(timage.getText());
 if (i == 1)
     {
         
@@ -292,7 +304,7 @@ if (i == 1)
 
     rs=pst.executeQuery();
      while (rs.next()) {                
-             datab.add(new  Blog(rs.getInt("idb"), rs.getString("sujet"), rs.getString("description")));
+             datab.add(new  Blog(rs.getInt("idb"), rs.getString("sujet"), rs.getString("description"), rs.getString("type")));
      }       }
        catch (SQLException ex) {
            Logger.getLogger(ServiceBlog.class.getName()).log(Level.SEVERE, null, ex);
@@ -340,7 +352,7 @@ public void deleteBlog(ActionEvent event) throws SQLException, AWTException, Mal
     }
         
           
-        public void searchProduct(){
+        public void searchBlog(){
 search.setOnKeyReleased(e->{
     if(search.getText().equals("")){
         loadDataBlog();
@@ -357,11 +369,12 @@ search.setOnKeyReleased(e->{
         {
           String sujet =rs.getString("sujet");  
          String description=rs.getString("description");
+         String type=rs.getString("type");
          
      
-                        //datap.add(new Produits(idProduct,productName,productPrice,idcat));
+                      
     
-             datab.add(new Blog(sujet, description));
+             datab.add(new Blog(sujet, description, type));
  
         }
         t_view.setItems(datab);
@@ -371,11 +384,41 @@ search.setOnKeyReleased(e->{
     
     }
 });
-
-
-        
-        
+   
+      
         
         }   
+        
+private String filen() 
+      {
+        try 
+	{
+            JFileChooser chooser = new JFileChooser();
+            chooser.showOpenDialog(null);
+            File f = chooser.getSelectedFile();
+            String filename = null;
+            filename = f.getAbsolutePath();
+            path = filename;
+        } 
+	catch (Exception e) 
+	{
+            JOptionPane.showMessageDialog(null, "Veuillez mettre une image");
+        }
+        return path;
+    }
+
+    @FXML
+    private void browse(ActionEvent event) {
+        
+        
+            String path1 = filen();
+        if (path1 == null) {
+
+        } else {
+            timage.setText(path1);
+        }
+
+        
+    }
         
 }
