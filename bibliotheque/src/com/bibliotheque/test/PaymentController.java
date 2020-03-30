@@ -38,7 +38,7 @@ import javafx.scene.control.TextField;
  * @author Mohamedhabib - pc
  */
 public class PaymentController implements Initializable {
-
+    float x;
     @FXML
     private TextField carte;
     @FXML
@@ -53,7 +53,7 @@ public class PaymentController implements Initializable {
     private Button valider;
     @FXML
     private Button annuler;
-
+    
     /**
      * Initializes the controller class.
      * @param url
@@ -61,8 +61,8 @@ public class PaymentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       // Commande aa=gettempc(edittedcell);  
-     //   prix.setText(String.valueOf(aa));
+      
+  
         
         valider.setOnAction((ActionEvent event) -> {
            
@@ -107,17 +107,17 @@ public class PaymentController implements Initializable {
         a.getSources().create(source);
 
         Map<String, Object> chargeParams = new HashMap<String, Object>();
+        //chargeParams.put("amount", l.getL().getPrixlivre());
         chargeParams.put("amount", Integer.parseInt(prix.getText()));
+       // chargeParams.put("amount", Float.(l.getL().getPrixlivre()));
         chargeParams.put("currency", "usd");
         chargeParams.put("customer", a.getId());
        
-        
         Charge.create(chargeParams);
         
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         System.out.println(gson.toJson(a));
-       
-              
+        
             } catch (StripeException ex) {
                 Logger.getLogger(PaymentController.class.getName()).log(Level.SEVERE, null, ex);
             }

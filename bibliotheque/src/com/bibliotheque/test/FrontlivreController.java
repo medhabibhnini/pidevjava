@@ -88,13 +88,13 @@ public class FrontlivreController implements Initializable {
               setCellValueFromTableToTextFieldprod();
               afficherLivre();
        loadDataLivre();
-       searchProduct();
+       searchLivre();
        
         btnnn.setOnAction(e->{
                 showMycommande();
             });
     }  
-    public void searchProduct(){
+    public void searchLivre(){
 search.setOnKeyReleased(e->{
     if(search.getText().equals("")){
         loadDataLivre();
@@ -113,7 +113,7 @@ search.setOnKeyReleased(e->{
          String titre=rs.getString("nomlivre");
          Float prix=rs.getFloat("prixlivre");
          int quantite=rs.getInt("quantitelivre");
-                        //datap.add(new Produits(idProduct,productName,productPrice,idcat));
+                 ;
     
              data.add(new Livre(idlivre, titre, prix, quantite));
  
@@ -128,7 +128,7 @@ search.setOnKeyReleased(e->{
 }
     private void afficherLivre(){
 
-             //idlivre.setCellValueFactory(new PropertyValueFactory <>("idlivre"));
+          
              titre.setCellValueFactory(new PropertyValueFactory <>("nomlivre"));
              prix.setCellValueFactory(new PropertyValueFactory <>("prixlivre"));
              quantite.setCellValueFactory(new PropertyValueFactory <>("quantitelivre"));
@@ -173,14 +173,7 @@ search.setOnKeyReleased(e->{
     }
                @FXML
      public void commander(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
-        //boolean isIdEmpty=validation.TextFieldvalidation.istextFieldTypeNumber(tf_idcat, error_idcat, "id must be number");
-        //boolean isNameEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_nomcat, error_namecat, "Name is require");
-    // boolean isIdEmpty=validation.TextFieldvalidation.istextFieldTypeNumber(tf_idprod, error_idprod, "id must be number");
-        //boolean isNameEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_nameprod, error_nameprod, "Name is require");
-         //boolean isPriceEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_prodprice, error_priceprod, "price is require");
-       /**
-        * tl
-        */ 
+  
        
         int i;
            
@@ -190,12 +183,10 @@ search.setOnKeyReleased(e->{
            SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
 Date date = new Date(System.currentTimeMillis());
 System.out.println(formatter.format(date));
-            //String idp = tf_idprod.getText();
+        
           
            
-             
-   
-              //Category c = new Category(0,Namecat);
+           
             ServiceCommande cmd=new ServiceCommande();
             
          
@@ -221,13 +212,7 @@ System.out.println(formatter.format(date));
         public void handle(MouseEvent event) {
 Livre liv=tab_livre.getItems().get(tab_livre.getSelectionModel().getSelectedIndex());
 
-//tf_rate.setText(idprod);
-
-
-
-//tf_titre.setText(liv.getNomlivre());
-//tf_prix.setText(Float.toString(liv.getPrixlivre()));
- //tf_quantite.setText(Integer.toString(liv.getQuantitelivre()));      
+   
          TableColumn.CellEditEvent edittedcell = null;
             Livre l=gettemp(edittedcell);  
             

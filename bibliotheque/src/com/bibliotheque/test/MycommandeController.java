@@ -244,7 +244,8 @@ SmsSubmissionResponse response = client.getSmsClient().submitMessage(message);
                         try {
        loader = new FXMLLoader();
     loader.setLocation(getClass().getResource("Payment.fxml"));
-    
+
+        
 
     loader.load();
     Scene scene= new Scene(loader.getRoot());

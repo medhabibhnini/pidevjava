@@ -186,7 +186,7 @@ private ObservableList<Livraison> dataL;
         @FXML
     private void AddLivre(ActionEvent event) throws SQLException {
 
-        // int id = Integer.valueOf(Ab_IdAb.getText());
+ 
         Date date = Date.valueOf(datepicker.getValue());
          String titre = tf_titre.getText();
           String auteur = tf_auteur.getText();
@@ -260,7 +260,7 @@ private void loadDatacommande() {
         public void handle(MouseEvent event) {
 Livre liv=tab_livre.getItems().get(tab_livre.getSelectionModel().getSelectedIndex());
 
-//tf_rate.setText(idprod);
+
 
 
 

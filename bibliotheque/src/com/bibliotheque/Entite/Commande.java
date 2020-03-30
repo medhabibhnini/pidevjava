@@ -26,6 +26,10 @@ public class Commande {
         this.user = user;
     }
 
+    public Commande(Livre l) {
+     this.l = l;
+    }
+
   
 
     public int getIdl() {
