@@ -204,7 +204,7 @@ Commande liv=com_view.getItems().get(com_view.getSelectionModel().getSelectedInd
                 alert.setHeaderText(null);
                 alert.setContentText("book order now");
                 alert.showAndWait();
-      Notification.sendNotification("Deboo Team"," \n Category Has been updated ." ,MessageType.WARNING);
+      Notification.sendNotification("Ingenschool"," \n your product is going to get livred ." ,MessageType.INFO);
             affichercomd();
         loadDatacommande();
    

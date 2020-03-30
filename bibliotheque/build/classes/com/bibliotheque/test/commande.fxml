@@ -1,72 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="763.0" prefWidth="1149.0" style="-fx-background-color: orange;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="553.0" prefWidth="561.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox layoutY="90.0" prefHeight="478.0" prefWidth="209.0" style="-fx-background-color: orange;">
-         <children>
-            <Button mnemonicParsing="false" prefHeight="74.0" prefWidth="231.0" style="-fx-background-color: white;" text="Bibliotheque">
-               <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </VBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="74.0" prefWidth="231.0" style="-fx-background-color: grey;" text="Divers">
-               <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </VBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="74.0" prefWidth="231.0" style="-fx-background-color: grey;" text="daly">
-               <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </VBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="74.0" prefWidth="231.0" style="-fx-background-color: grey;" text="larrouse">
-               <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </VBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="74.0" prefWidth="231.0" style="-fx-background-color: grey;" text="Button">
-               <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </VBox.margin>
-            </Button>
-         </children>
-      </VBox>
-      <AnchorPane layoutX="236.0" layoutY="40.0" prefHeight="724.0" prefWidth="877.0">
-         <children>
-            <Pane layoutY="-1.0" prefHeight="724.0" prefWidth="912.0" style="-fx-background-color: white;" />
-            <Pane prefHeight="724.0" prefWidth="912.0" style="-fx-background-color: black;" />
-            <Pane fx:id="biblio_pane" prefHeight="724.0" prefWidth="912.0" style="-fx-background-color: white;">
-               <children>
-                  <ImageView fitHeight="616.0" fitWidth="912.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/unsplash.jpg" />
-                     </image>
-                  </ImageView>
-                  <TableView fx:id="com_view" layoutX="148.0" layoutY="62.0" prefHeight="435.0" prefWidth="585.0" style="-fx-background-color: white; -fx-border-color: black;">
-                    <columns>
-                      <TableColumn fx:id="idliv_view" prefWidth="203.0" text="livre" />
-                      <TableColumn fx:id="iduser_view" prefWidth="184.0" text="id_user" />
-                        <TableColumn fx:id="datecom_view" minWidth="0.0" prefWidth="174.0" text="date commande" />
-                    </columns>
-                  </TableView>
-                  <Button fx:id="brn_livrer" layoutX="142.0" layoutY="634.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="200.0" style="-fx-background-color: orange;" text="Livrer ma commande" />
-                  <ImageView fx:id="imgview" fitHeight="257.0" fitWidth="209.0" layoutX="659.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button fx:id="btn_delete" layoutX="533.0" layoutY="634.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="200.0" style="-fx-background-color: orange;" text="annuler la livraison" />
-               </children>
-            </Pane>
-         </children>
-      </AnchorPane>
-      <ButtonBar layoutX="236.0" layoutY="-6.0" prefHeight="40.0" prefWidth="200.0" />
+      <ImageView fitHeight="536.0" fitWidth="766.0" layoutX="15.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/panier.png" />
+         </image>
+      </ImageView>
+      <TableView fx:id="com_view" layoutX="80.0" layoutY="31.0" prefHeight="299.0" prefWidth="401.0" style="-fx-background-color: white; -fx-border-color: black;">
+        <columns>
+          <TableColumn fx:id="idliv_view" prefWidth="124.0" text="livre" />
+          <TableColumn fx:id="iduser_view" prefWidth="135.0" text="id_user" />
+            <TableColumn fx:id="datecom_view" minWidth="0.0" prefWidth="143.0" text="date commande" />
+        </columns>
+      </TableView>
+      <Button fx:id="brn_livrer" layoutX="32.0" layoutY="437.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="200.0" style="-fx-background-color: orange;" text="Livrer ma commande" />
+      <Button fx:id="btn_delete" layoutX="324.0" layoutY="437.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="200.0" style="-fx-background-color: orange;" text="annuler la livraison" />
    </children>
 </AnchorPane>

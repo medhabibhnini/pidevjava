@@ -328,16 +328,14 @@ tf_prix.setText(Float.toString(liv.getPrixlivre()));
         
         
     }
-      @FXML
+    /*  @FXML
      public void commander(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
         //boolean isIdEmpty=validation.TextFieldvalidation.istextFieldTypeNumber(tf_idcat, error_idcat, "id must be number");
         //boolean isNameEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_nomcat, error_namecat, "Name is require");
     // boolean isIdEmpty=validation.TextFieldvalidation.istextFieldTypeNumber(tf_idprod, error_idprod, "id must be number");
         //boolean isNameEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_nameprod, error_nameprod, "Name is require");
          //boolean isPriceEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_prodprice, error_priceprod, "price is require");
-       /**
-        * tl
-        */ 
+     
        
         int i;
            
@@ -376,9 +374,9 @@ System.out.println(formatter.format(date));
           
         
         
-    }
+    }*/
                   @FXML
-public void deleteprod(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
+public void deletelivre(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
         
         
  TableColumn.CellEditEvent edittedcell = null;
@@ -476,9 +474,7 @@ private void afficherLivraison(){
                 userlivraison_colum.setCellValueFactory(new PropertyValueFactory <>("idc"));
              
     }
-/**
- * azertyuiop
- */
+
 private void loadDataLivraison() {
    dataL.clear();
          try {
@@ -493,16 +489,14 @@ private void loadDataLivraison() {
        }
         livraison_view.setItems(dataL);
     }    
-@FXML
+/*@FXML
  public void Livrer(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
         //boolean isIdEmpty=validation.TextFieldvalidation.istextFieldTypeNumber(tf_idcat, error_idcat, "id must be number");
         //boolean isNameEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_nomcat, error_namecat, "Name is require");
     // boolean isIdEmpty=validation.TextFieldvalidation.istextFieldTypeNumber(tf_idprod, error_idprod, "id must be number");
         //boolean isNameEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_nameprod, error_nameprod, "Name is require");
          //boolean isPriceEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_prodprice, error_priceprod, "price is require");
-       /**
-        * tl
-        */ 
+     
        
         int i;
            
@@ -542,7 +536,7 @@ private void loadDataLivraison() {
           
         
         
-    }
+    }*/
 @FXML
  public void deletlivraison(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
         
@@ -590,7 +584,7 @@ RequestOptions options = RequestOptions
   .build();
 
 Charge.create(chargeParams, options);
- }*/
-
+ }
+*/
  
 }
