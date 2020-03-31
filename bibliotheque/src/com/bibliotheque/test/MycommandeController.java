@@ -11,10 +11,17 @@ import com.bibliotheque.Service.ServiceCommande;
 import com.bibliotheque.Service.ServiceLivraison;
 import com.bibliotheque.Service.ServiceLivre;
 import com.bibliotheque.Utils.DataBase;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.nexmo.client.NexmoClient;
 import com.nexmo.client.sms.MessageStatus;
 import com.nexmo.client.sms.SmsSubmissionResponse;
 import com.nexmo.client.sms.messages.TextMessage;
+import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
+import com.stripe.model.Charge;
+import com.stripe.model.Customer;
+import com.stripe.model.Token;
 import com.teknikindustries.bulksms.SMS;
 import doryan.windowsnotificationapi.fr.Notification;
 import java.awt.AWTException;
@@ -26,9 +33,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -41,8 +51,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import static jdk.nashorn.internal.runtime.JSType.TO_NUMBER;
@@ -72,6 +84,24 @@ public class MycommandeController implements Initializable {
     @FXML
     private Button payer;
     private FXMLLoader loader;
+    @FXML
+    private TextField carte;
+    @FXML
+    private TextField cvc;
+    @FXML
+    private TextField month;
+    @FXML
+    private TextField year;
+    @FXML
+    private Button valider;
+    @FXML
+    private Button annuler;
+    @FXML
+    private TextField prix;
+    @FXML
+    private Pane payment;
+    @FXML
+    private Pane commande;
   
 
 
@@ -81,6 +111,70 @@ public class MycommandeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
  con=DataBase.getInstance().getConnection();
+    valider.setOnAction((ActionEvent event) -> {
+           
+            
+            try {
+               
+             if (controleDeSaisi()) {
+              
+            if (carte.getText().isEmpty()) {
+                carte.setText("");
+            }
+            if (month.getText().isEmpty()) {
+                month.setText("");
+            }
+            if (year.getText().isEmpty()) {
+                year.setText("");
+            }
+            if (cvc.getText().isEmpty()) {
+                cvc.setText("");
+            }   
+            
+               }
+                
+                 Stripe.apiKey="sk_test_gpKkx2i75i9ZEgbDtmczQo3600enJvzSfr";
+        
+        
+        Customer a =Customer.retrieve("cus_H0RyFibMrama3r");
+       Map<String, Object> cardParams = new HashMap<String, Object>();
+        cardParams.put("number", Long.parseLong(carte.getText()));
+        cardParams.put("exp_month", Integer.parseInt(month.getText()));
+        cardParams.put("exp_year", Integer.parseInt(year.getText()));
+        cardParams.put("cvc",  Integer.parseInt(cvc.getText()));
+        
+        Map<String, Object> tokenParams = new HashMap<String, Object>();
+        tokenParams.put("card", cardParams);
+        
+        Token token = Token.create(tokenParams);
+        
+        Map<String, Object> source = new HashMap<String, Object>();
+        source.put("source", token.getId());
+        
+        a.getSources().create(source);
+ 
+        Map<String, Object> chargeParams = new HashMap<String, Object>();
+        //chargeParams.put("amount", l.getL().getPrixlivre());
+       
+        chargeParams.put("amount", Integer.parseInt(prix.getText()));
+       // chargeParams.put("amount", Float.(l.getL().getPrixlivre()));
+        chargeParams.put("currency", "usd");
+        chargeParams.put("customer", a.getId());
+       
+        Charge.create(chargeParams);
+        
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        System.out.println(gson.toJson(a));
+        
+            } catch (StripeException ex) {
+                Logger.getLogger(PaymentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                     
+            
+        });
+        
+     
+        
         datac= FXCollections.observableArrayList();
         affichercomd();
         loadDatacommande();
@@ -107,9 +201,8 @@ public class MycommandeController implements Initializable {
                 Logger.getLogger(MycommandeController.class.getName()).log(Level.SEVERE, null, ex);
             }
             });
-        payer.setOnAction(e->{
-                showMycommande();
-            });
+       
+           
        
     } 
     private void affichercomd(){
@@ -163,14 +256,30 @@ public void deletcommande() throws SQLException, AWTException, MalformedURLExcep
         return test;
     
 }
-   private void setCellValueFromTableToTextFieldprod(){
+  @FXML
+       private void handlebuttonAction(ActionEvent event){
+              if (event.getSource() == payer)
+           {
+               payment.toFront();
+           } 
+                 if (event.getSource() == annuler)
+           {
+               commande.toFront();
+           } 
+       }
+   public void setCellValueFromTableToTextFieldprod(){
     com_view.setOnMouseClicked(new EventHandler<MouseEvent>(){
         @Override
         public void handle(MouseEvent event) {
 Commande liv=com_view.getItems().get(com_view.getSelectionModel().getSelectedIndex());
-     
-         TableColumn.CellEditEvent edittedcell = null;
-            Commande l=gettempc(edittedcell);  
+            System.out.println(liv.getIdl());
+           ServiceLivre l=new ServiceLivre();  
+            try {
+                prix.setText(Integer.toString(l.getprixcmdbyId(liv.getIdl())));
+            } catch (SQLException ex) {
+                Logger.getLogger(MycommandeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+           
             
       
             
@@ -240,7 +349,7 @@ SmsSubmissionResponse response = client.getSmsClient().submitMessage(message);
         
         
     }
- private void showMycommande(){
+/* private void showMycommande(){
                         try {
        loader = new FXMLLoader();
     loader.setLocation(getClass().getResource("Payment.fxml"));
@@ -256,6 +365,51 @@ SmsSubmissionResponse response = client.getSmsClient().submitMessage(message);
     } catch (Exception e) {
         e.printStackTrace();
     }
-		} 
+		} */
+   private boolean controleDeSaisi() {  
+
+        if (carte.getText().isEmpty() || month.getText().isEmpty() || year.getText().isEmpty()
+                || cvc.getText().isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Données erronés", "Verifier les données", "Veuillez bien remplir tous les champs !");
+            return false;
+        } else {
+
+            if (!Pattern.matches("[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]", carte.getText())) {
+                showAlert(Alert.AlertType.ERROR, "Données erronés", "Verifier les données", "Vérifiez la reference ! ");
+                carte.requestFocus();
+                carte.selectEnd();
+                return false;
+            }
+
+           if (!Pattern.matches("[0-9]*", month.getText())) {
+                showAlert(Alert.AlertType.ERROR, "Données ", "Verifier les données", "Vérifiez le libelle du produit ! ");
+                month.requestFocus();
+                month.selectEnd();
+                return false;
+            }if (!Pattern.matches("[0-9]*", year.getText())) {
+                showAlert(Alert.AlertType.ERROR, "Données ", "Verifier les données", "Vérifiez le libelle du produit ! ");
+                year.requestFocus();
+                year.selectEnd();
+                return false;
+            }if (!Pattern.matches("[0-9]*", cvc.getText())) {
+                showAlert(Alert.AlertType.ERROR, "Données ", "Verifier les données", "Vérifiez le libelle du produit ! ");
+                cvc.requestFocus();
+                cvc.selectEnd();
+                return false;
+            }
+           
+        }
+        return true;
+    }
+    
+    public static void showAlert(Alert.AlertType type, String title, String header, String text) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(text);
+        alert.showAndWait();
+
+    }
+    
  
 }

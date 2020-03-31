@@ -31,7 +31,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-
+import com.bibliotheque.test.MycommandeController;
+import javafx.scene.control.TableColumn;
 /**
  * FXML Controller class
  *
@@ -42,7 +43,7 @@ public class PaymentController implements Initializable {
     @FXML
     private TextField carte;
     @FXML
-    private TextField prix;
+    public TextField prix;
     @FXML
     private TextField cvc;
     @FXML
@@ -62,8 +63,8 @@ public class PaymentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
       
-  
-        
+  /*MycommandeController cont= new MycommandeController();
+   cont.setCellValueFromTableToTextFieldprod();*/
         valider.setOnAction((ActionEvent event) -> {
            
             
@@ -105,9 +106,10 @@ public class PaymentController implements Initializable {
         source.put("source", token.getId());
         
         a.getSources().create(source);
-
+ 
         Map<String, Object> chargeParams = new HashMap<String, Object>();
         //chargeParams.put("amount", l.getL().getPrixlivre());
+       
         chargeParams.put("amount", Integer.parseInt(prix.getText()));
        // chargeParams.put("amount", Float.(l.getL().getPrixlivre()));
         chargeParams.put("currency", "usd");

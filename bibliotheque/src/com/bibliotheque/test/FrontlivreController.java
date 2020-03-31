@@ -111,7 +111,7 @@ search.setOnKeyReleased(e->{
         {
           int idlivre=rs.getInt("idlivre");  
          String titre=rs.getString("nomlivre");
-         Float prix=rs.getFloat("prixlivre");
+         int prix=rs.getInt("prixlivre");
          int quantite=rs.getInt("quantitelivre");
                  ;
     
@@ -140,7 +140,7 @@ search.setOnKeyReleased(e->{
 
     rs=pst.executeQuery();
      while (rs.next()) {                
-             data.add(new  Livre(rs.getInt("idlivre"), rs.getString("nomlivre"), rs.getFloat("prixlivre"), rs.getInt("quantitelivre")));
+             data.add(new  Livre(rs.getInt("idlivre"), rs.getString("nomlivre"), rs.getInt("prixlivre"), rs.getInt("quantitelivre")));
      }       }
        catch (SQLException ex) {
            Logger.getLogger(ServiceLivre.class.getName()).log(Level.SEVERE, null, ex);

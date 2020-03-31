@@ -9,6 +9,7 @@ import com.bibliotheque.Entite.Commande;
 import com.bibliotheque.Entite.Livraison;
 import com.bibliotheque.Entite.Livre;
 import com.bibliotheque.Service.ServiceCommande;
+import com.bibliotheque.test.PaymentController;
 import com.bibliotheque.Service.ServiceLivraison;
 import com.bibliotheque.Service.ServiceLivre;
 import java.awt.image.BufferedImage;
@@ -191,7 +192,7 @@ private ObservableList<Livraison> dataL;
          String titre = tf_titre.getText();
           String auteur = tf_auteur.getText();
           int quantite = Integer.valueOf(tf_quantite.getText());
-           float prix = Float.valueOf(tf_prix.getText());
+           int prix = Integer.valueOf(tf_prix.getText());
              String contenu = tf_contenu.getText();
 Image image1=null;
              image1= imgview.getImage();
@@ -226,7 +227,7 @@ private void loadDataLivre() {
 
     rs=pst.executeQuery();
      while (rs.next()) {                
-             data.add(new  Livre(rs.getInt("idlivre"), rs.getString("nomlivre"), rs.getFloat("prixlivre"), rs.getInt("quantitelivre")));
+             data.add(new  Livre(rs.getInt("idlivre"), rs.getString("nomlivre"), rs.getInt("prixlivre"), rs.getInt("quantitelivre")));
      }       }
        catch (SQLException ex) {
            Logger.getLogger(ServiceLivre.class.getName()).log(Level.SEVERE, null, ex);
@@ -254,6 +255,7 @@ private void loadDatacommande() {
        }
         com_view.setItems(datac);
     }
+  
      private void setCellValueFromTableToTextFieldprod(){
     tab_livre.setOnMouseClicked(new EventHandler<MouseEvent>(){
         @Override
@@ -310,7 +312,7 @@ tf_prix.setText(Float.toString(liv.getPrixlivre()));
            int c=x.getIdlivre();
             //String idp = tf_idprod.getText();
             String Nomp = tf_titre.getText();
-            Float Pricep=Float.valueOf(tf_prix.getText());
+            int Pricep=Integer.valueOf(tf_prix.getText());
             int quantite=Integer.valueOf(tf_quantite.getText());
            Image image1=null;
              image1= imgview.getImage();
