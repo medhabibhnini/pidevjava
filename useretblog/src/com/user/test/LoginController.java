@@ -75,30 +75,18 @@ PasswordUtils p= new PasswordUtils();
         if (event.getSource() == btnSignin) 
         {
             
-            if (logIn().equals("admin")) 
-            {
+            
               
               
                           
      Parent loader =  FXMLLoader.load(getClass().getResource("User.fxml"));
-      Scene s= new Scene(loader);
-      Stage Window= (Stage)((Node)event.getSource()).getScene().getWindow();
+     Scene s= new Scene(loader);
+     Stage Window= (Stage)((Node)event.getSource()).getScene().getWindow();
      Window.setScene(s);
      Window.show(); 
-            }
             
-            else  if (logIn().equals("client")) 
-            {
-                
-                
-                Parent loader =  FXMLLoader.load(getClass().getResource("User.fxml"));
-                
-      
-      Scene s= new Scene(loader);
-      Stage Window= (Stage)((Node)event.getSource()).getScene().getWindow();
-        Window.setScene(s);
-        Window.show(); 
-            }
+            
+         
             }
         }
     
@@ -128,7 +116,7 @@ PasswordUtils p= new PasswordUtils();
         con = DataBase.getInstance().getConnection();
     }
 
-    //we gonna use string to check for status
+    
     private String logIn() throws SQLException 
     {
         String email = txtUsername.getText();
@@ -183,7 +171,8 @@ PasswordUtils p= new PasswordUtils();
      public void Sign(ActionEvent event) throws SQLException  
      {
 
-        if (event.getSource() == btnSignup) {
+        if (event.getSource() == btnSignup) 
+        {
               
             try {
                 
@@ -192,19 +181,21 @@ PasswordUtils p= new PasswordUtils();
                 Stage Window= (Stage)((Node)event.getSource()).getScene().getWindow();
                 Window.setScene(s);
                 Window.show();
-            } catch (IOException ex) {
+            } 
+            catch (IOException ex)
+            {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
                
       
     }
-     }
+    }
      
      
     
     
-       // public int getidLogin() throws SQLException
+       
        
     public User getUserLogin() throws SQLException
       {
