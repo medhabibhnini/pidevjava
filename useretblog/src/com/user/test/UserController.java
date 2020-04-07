@@ -118,12 +118,12 @@ public class UserController implements Initializable {
         int i=0;
         String username =tf_name.getText();    
         String mail =tf_email.getText();
-           String password = tf_password.getText();
-             String role = tf_role.getText();
+        String password = tf_password.getText();
+        String role = tf_role.getText();
         ServiceUser sl = new ServiceUser();
         User u = new User(username, mail, password, role);
-            System.out.println(u);
-         i=sl.ajouterUser(u);
+        System.out.println(u);
+        i=sl.ajouterUser(u);
 if (i == 1)
     {
         
@@ -132,7 +132,7 @@ if (i == 1)
                 alert.setHeaderText(null);
                 alert.setContentText("User ajouter");
                 alert.showAndWait();
-                 afficheruser();
+                afficheruser();
                 loadDataUser();
 
     }
@@ -227,7 +227,7 @@ public void deleteUser(ActionEvent event) throws SQLException, AWTException, Mal
                 alert.showAndWait();
            afficheruser();
            loadDataUser();
-            System.out.println(s);
+           System.out.println(s);
         }
                 
            
@@ -245,6 +245,7 @@ public void deleteUser(ActionEvent event) throws SQLException, AWTException, Mal
         {
        tab_view.setOnMouseClicked(new EventHandler<MouseEvent>()
        {
+           
         @Override
         public void handle(MouseEvent event) {
 User us=tab_view.getItems().get(tab_view.getSelectionModel().getSelectedIndex());

@@ -60,7 +60,8 @@ public class ServiceUser
      finally{ste.close();}
       return i;  
     }
-    public int modifier(User U) {
+    public int modifier(User U) 
+    {
                    int e = 0;
 
         try {
@@ -75,25 +76,12 @@ public class ServiceUser
         }
         return e;
     }
-  /*
-    public List<User> afficherUser() {
-        List<User> list = new ArrayList<>();
-
-        try {
-            String requete = "SELECT * FROM fos_user";
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(requete);
-            while (rs.next()) {
-                list.add(new User(rs.getInt("id"), rs.getString("username"), rs.getString("email"), rs.getString("role")));
-            }
-
-        } catch (SQLException ex) {
-            System.err.println(ex.getMessage());
-        }
-
-        return list;
-    }*/
     
+    
+    
+    
+ 
+     
         
     
   
