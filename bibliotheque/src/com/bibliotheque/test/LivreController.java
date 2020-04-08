@@ -145,12 +145,7 @@ private ObservableList<Livraison> dataL;
        loadDataLivre();
        loadDataLivraison();
         afficherLivraison();
-            payer.setOnAction(new EventHandler<ActionEvent>() {
-           @Override
-           public void handle(ActionEvent e) {
-               showMycommande();
-           }
-       });
+    
             
     }  
      @FXML
@@ -210,6 +205,8 @@ Image image1=null;
                 alert.setHeaderText(null);
                 alert.setContentText("book added");
                 alert.showAndWait();
+                    afficherLivre();
+       loadDataLivre();
 
     }
      

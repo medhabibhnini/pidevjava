@@ -168,8 +168,14 @@ public class MycommandeController implements Initializable {
         
             } catch (StripeException ex) {
                 Logger.getLogger(PaymentController.class.getName()).log(Level.SEVERE, null, ex);
+                
             }
-                     
+                
+              Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("achat avec success");
+                alert.showAndWait();
             
         });
         
@@ -288,14 +294,7 @@ Commande liv=com_view.getItems().get(com_view.getSelectionModel().getSelectedInd
 
     }
  public void Livrer() throws SQLException, AWTException, MalformedURLException {
-        //boolean isIdEmpty=validation.TextFieldvalidation.istextFieldTypeNumber(tf_idcat, error_idcat, "id must be number");
-        //boolean isNameEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_nomcat, error_namecat, "Name is require");
-    // boolean isIdEmpty=validation.TextFieldvalidation.istextFieldTypeNumber(tf_idprod, error_idprod, "id must be number");
-        //boolean isNameEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_nameprod, error_nameprod, "Name is require");
-         //boolean isPriceEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_prodprice, error_priceprod, "price is require");
-       /**
-        * tl
-        */ 
+   
        
         int i;
            
@@ -303,12 +302,7 @@ Commande liv=com_view.getItems().get(com_view.getSelectionModel().getSelectedInd
     TableColumn.CellEditEvent edittedcell = null;
            Commande x=gettempc(edittedcell);
 
-            //String idp = tf_idprod.getText();
-          
-           
-             
-   
-              //Category c = new Category(0,Namecat);
+
             ServiceLivraison cmd=new ServiceLivraison();
             
          

@@ -179,8 +179,8 @@
                         <TableView fx:id="livraison_view" layoutX="287.0" layoutY="74.0" prefHeight="399.0" prefWidth="655.0">
                           <columns>
                             <TableColumn fx:id="idlivraison_colum" prefWidth="211.0" text="id livraison" />
-                              <TableColumn fx:id="userlivraison_colum" prefWidth="227.0" text="id_user" />
-                              <TableColumn fx:id="comlivraison_colum" prefWidth="216.0" text="id commande" />
+                              <TableColumn fx:id="userlivraison_colum" prefWidth="227.0" text="idCommande" />
+                              <TableColumn fx:id="comlivraison_colum" prefWidth="216.0" text="id_user" />
                           </columns>
                            <cursor>
                               <Cursor fx:constant="HAND" />
