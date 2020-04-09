@@ -46,7 +46,8 @@ import javax.swing.JOptionPane;
  *
  * @author Daly
  */
-public class UserController implements Initializable {
+public class UserController implements Initializable 
+{
     
     private ObservableList<User> data;
     private ObservableList<Blog> datab;
@@ -92,7 +93,8 @@ public class UserController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb) 
+    {
         // TODO
         con = DataBase.getInstance().getConnection();
         data= FXCollections.observableArrayList();
@@ -346,29 +348,35 @@ public void deleteBlog(ActionEvent event) throws SQLException, AWTException, Mal
         
     }
         
-        public Blog getttemp(TableColumn.CellEditEvent edittedCell) {
+        public Blog getttemp(TableColumn.CellEditEvent edittedCell) 
+        {
         Blog test = t_view.getSelectionModel().getSelectedItem();
         
         return test;
     }
         
           
-        public void searchBlog(){
-search.setOnKeyReleased(e->{
-    if(search.getText().equals("")){
+        public void searchBlog()
+        {
+search.setOnKeyReleased(e->
+{
+    if(search.getText().equals(""))
+    {
         loadDataBlog();
     }
-    else{
+    else
+    {
         datab.clear();
           String sql = "Select * from blog where sujet LIKE '%"+search.getText()+"%'"
                 + "UNION Select * from blog where description LIKE '%"+search.getText()+"%'" ;
-    try {
+    try 
+    {
       
         pst=con.prepareStatement(sql);
         rs=pst.executeQuery();
         while(rs.next())
         {
-          String sujet =rs.getString("sujet");  
+         String sujet =rs.getString("sujet");  
          String description=rs.getString("description");
          String type=rs.getString("type");
          
@@ -379,7 +387,9 @@ search.setOnKeyReleased(e->{
  
         }
         t_view.setItems(datab);
-    } catch (SQLException ex) {
+    } 
+    catch (SQLException ex) 
+    {
         Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
     }
     
