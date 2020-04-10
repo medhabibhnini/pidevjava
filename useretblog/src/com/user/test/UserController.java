@@ -12,6 +12,7 @@ import java.awt.AWTException;
 import com.user.Entite.Blog;
 import com.user.Service.ServiceBlog;
 import java.io.File;
+import java.io.IOException;
 
 
 
@@ -29,7 +30,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -37,6 +41,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -114,7 +119,6 @@ public class UserController implements Initializable
     
     /* -----------------------------User------------------------------------------*/
     
-    @FXML
     private void Adduser(ActionEvent event) throws SQLException {
             
         int i=0;
@@ -200,7 +204,7 @@ private void loadDataUser() {
            
         }
           
-        
+        ResetU();
         
     }
      
@@ -262,6 +266,28 @@ tf_name.setText(us.getUsername());
 });
     
 }
+        
+ private void ResetU()
+{
+    
+    tf_name.setText(null);
+    tf_email.setText(null);
+    tf_password.setText(null);
+    tf_role.setText(null);
+    
+}
+ 
+        @FXML
+    private void DecoU(javafx.scene.input.MouseEvent event) throws IOException {
+        Node node = (Node) event.getSource();
+                    Stage stage = (Stage) node.getScene().getWindow();
+                    stage.close();
+
+                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("Login.fxml")));
+                    stage.setScene(scene);
+                    stage.show();
+    }
+ 
        /* -----------------------------Blog------------------------------------------*/
          @FXML
     private void AddBlog(ActionEvent event) throws SQLException {
@@ -289,7 +315,7 @@ if (i == 1)
                 
 
     }
- 
+ ResetB();
  }
   public void afficherblog(){
 
@@ -430,6 +456,31 @@ private String filen()
         }
 
         
+    }
+ private void ResetB()
+{
+    
+    tf_sujet.setText(null);
+    tf_description.setText(null);
+    timage.setText(null);
+    
+    
+}
+ 
+    
+
+    
+
+    @FXML
+    private void DecoB(javafx.scene.input.MouseEvent event) throws IOException 
+    {
+        Node node = (Node) event.getSource();
+                    Stage stage = (Stage) node.getScene().getWindow();
+                    stage.close();
+
+                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("Login.fxml")));
+                    stage.setScene(scene);
+                    stage.show();
     }
         
 }

@@ -100,7 +100,7 @@ public class InscriptionController implements Initializable
                     Stage stage = (Stage) node.getScene().getWindow();
                     stage.close();
 
-                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("Front.fxml")));
+                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("Login.fxml")));
                     stage.setScene(scene);
                     stage.show();
                 
@@ -110,7 +110,7 @@ public class InscriptionController implements Initializable
                     Stage stage = (Stage) node.getScene().getWindow();
                     stage.close();
 
-                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("User.fxml")));
+                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("Login.fxml")));
                     stage.setScene(scene);
                     stage.show();
                 
