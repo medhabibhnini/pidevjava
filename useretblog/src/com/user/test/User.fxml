@@ -2,39 +2,41 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="441.0" prefWidth="632.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.user.test.UserController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="740.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.user.test.UserController">
    <children>
-      <TabPane prefHeight="441.0" prefWidth="645.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="400.0" prefWidth="740.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Utilisateur">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <VBox layoutX="65.0" layoutY="63.0" prefHeight="216.0" prefWidth="164.0">
+                        <VBox layoutX="66.0" layoutY="74.0" prefHeight="216.0" prefWidth="164.0">
                            <children>
                               <Label text="Nom d'utilisateur :" />
                               <TextField fx:id="tf_name" />
                               <Label text="Email :" />
                               <TextField fx:id="tf_email" />
                               <Label text="Mot de passe :" />
-                              <TextField fx:id="tf_password" />
+                              <PasswordField fx:id="tf_password" />
                               <Label text="Role :" />
                               <TextField fx:id="tf_role" />
                            </children>
                         </VBox>
-                        <TableView fx:id="tab_view" layoutX="323.0" layoutY="49.0" prefHeight="230.0" prefWidth="273.0">
+                        <TableView fx:id="tab_view" layoutX="315.0" layoutY="24.0" prefHeight="277.0" prefWidth="316.0">
                           <columns>
                             <TableColumn fx:id="username_colum" prefWidth="75.0" text="Utilisateur" />
                             <TableColumn fx:id="email_colum" prefWidth="133.0" text="Email" />
-                              <TableColumn fx:id="role_colum" prefWidth="64.0" text="Role" />
+                              <TableColumn fx:id="role_colum" prefWidth="107.0" text="Role" />
                           </columns>
                         </TableView>
                         <Button layoutX="412.0" layoutY="322.0" mnemonicParsing="false" onAction="#deleteUser" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: black;" text="Supprimer" textFill="WHITE" />
@@ -48,7 +50,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <VBox layoutX="54.0" layoutY="84.0" prefHeight="122.0" prefWidth="189.0">
+                        <VBox layoutX="14.0" layoutY="27.0" prefHeight="122.0" prefWidth="189.0">
                            <children>
                               <Label text="Sujet :" />
                               <TextField fx:id="tf_sujet" />
@@ -56,20 +58,20 @@
                               <TextField fx:id="tf_description" />
                            </children>
                         </VBox>
-                        <TableView fx:id="t_view" layoutX="323.0" layoutY="75.0" prefHeight="247.0" prefWidth="284.0">
+                        <TableView fx:id="t_view" layoutX="335.0" layoutY="48.0" prefHeight="247.0" prefWidth="369.0">
                           <columns>
                             <TableColumn fx:id="sujet_colum" prefWidth="75.0" text="Sujet" />
-                            <TableColumn fx:id="description_colum" prefWidth="208.0" text="Description" />
+                            <TableColumn fx:id="description_colum" prefWidth="293.0" text="Description" />
                           </columns>
                         </TableView>
-                        <Button layoutX="95.0" layoutY="277.0" mnemonicParsing="false" onAction="#AddBlog" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: black;" text="ajouter" textFill="WHITE" />
-                        <Button layoutX="407.0" layoutY="344.0" mnemonicParsing="false" onAction="#deleteBlog" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: black;" text="supprimer" textFill="WHITE" />
-                        <TextField fx:id="search" layoutX="418.0" layoutY="35.0" />
-                        <Label layoutX="323.0" layoutY="39.0" text="Chercher :" />
-                        <Button fx:id="browse" layoutX="224.0" layoutY="231.0" mnemonicParsing="false" onAction="#browse" style="-fx-background-color: black;" text="importer " textFill="WHITE" />
-                        <TextField fx:id="timage" layoutX="54.0" layoutY="231.0" />
-                        <Label layoutX="54.0" layoutY="198.0" text="Image :" />
-                        <Button layoutX="14.0" layoutY="35.0" mnemonicParsing="false" onMouseClicked="#DecoB" style="-fx-background-color: black;" text="déconnexion" textFill="WHITE" />
+                        <Button layoutX="190.0" layoutY="320.0" mnemonicParsing="false" onAction="#AddBlog" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: black;" text="ajouter" textFill="WHITE" />
+                        <Button layoutX="463.0" layoutY="320.0" mnemonicParsing="false" onAction="#deleteBlog" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: black;" text="supprimer" textFill="WHITE" />
+                        <TextField fx:id="search" layoutX="463.0" layoutY="14.0" />
+                        <Label layoutX="370.0" layoutY="18.0" text="Chercher :" />
+                        <Button fx:id="browse" layoutX="204.0" layoutY="270.0" mnemonicParsing="false" onAction="#addImage" style="-fx-background-color: black;" text="importer " textFill="WHITE" />
+                        <Label layoutX="14.0" layoutY="149.0" text="Image :" />
+                        <Button layoutX="602.0" layoutY="320.0" mnemonicParsing="false" onMouseClicked="#DecoB" style="-fx-background-color: black;" text="déconnexion" textFill="WHITE" />
+                        <ImageView fx:id="imgview" fitHeight="137.0" fitWidth="178.0" layoutX="20.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true" />
                      </children></AnchorPane>
             </content>
           </Tab>

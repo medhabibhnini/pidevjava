@@ -11,6 +11,7 @@ import com.user.Utils.DataBase;
 import java.awt.AWTException;
 import com.user.Entite.Blog;
 import com.user.Service.ServiceBlog;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -22,11 +23,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -40,10 +43,15 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import org.apache.commons.lang3.RandomStringUtils;
 
 
 /**
@@ -93,6 +101,8 @@ public class UserController implements Initializable
     private Button browse;
     @FXML
     private TextField timage;
+    @FXML
+    private ImageView imgview;
 
     /**
      * Initializes the controller class.
@@ -107,6 +117,7 @@ public class UserController implements Initializable
         afficheruser();
         loadDataUser();
         setCellValueFromTableToTextFieldUser();
+        setCellValueFromTableToTextFieldprod();
         afficherblog();
         loadDataBlog();
         searchBlog();
@@ -235,7 +246,8 @@ public void deleteUser(ActionEvent event) throws SQLException, AWTException, Mal
            loadDataUser();
            System.out.println(s);
         }
-                
+            
+              ResetU();
            
         
     }
@@ -289,18 +301,26 @@ tf_name.setText(us.getUsername());
     }
  
        /* -----------------------------Blog------------------------------------------*/
+    
          @FXML
     private void AddBlog(ActionEvent event) throws SQLException {
             
         int i=0;
+        String photo = null;
         String sujet =tf_sujet.getText();    
         String description =tf_description.getText();
-        String type =timage.getText();
+
         ServiceBlog Bl = new ServiceBlog();
-        Blog B = new Blog(sujet, description, type);
-         System.out.println(B);
-         i=Bl.ajouterBlog(B);
-         B.setType(timage.getText());
+       
+       
+         Image image1=null;
+         image1= imgview.getImage();
+         
+          photo = saveToFileImageNormal(image1);
+           Blog B = new Blog(sujet, description, photo);
+             System.out.println(B);
+            i=Bl.ajouterBlog(B);
+         
 if (i == 1)
     {
         
@@ -424,46 +444,49 @@ search.setOnKeyReleased(e->
    
       
         
-        }   
+        }  
         
-private String filen() 
-      {
-        try 
-	{
-            JFileChooser chooser = new JFileChooser();
-            chooser.showOpenDialog(null);
-            File f = chooser.getSelectedFile();
-            String filename = null;
-            filename = f.getAbsolutePath();
-            path = filename;
-        } 
-	catch (Exception e) 
-	{
-            JOptionPane.showMessageDialog(null, "Veuillez mettre une image");
+        public static String saveToFileImageNormal(Image image)throws SQLException  {
+
+        String ext = "jpg";
+        File dir = new File("C:\\wamp64\\www\\pidevjava\\useretblog\\src\\com\\user\\images");
+        String name;
+        name = String.format("%s.%s", RandomStringUtils.randomAlphanumeric(8), ext);
+        File outputFile = new File(dir, name);
+        BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
+        try {
+            ImageIO.write(bImage, "png", outputFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        return path;
+        return name;
     }
-
-    @FXML
-    private void browse(ActionEvent event) {
         
         
-            String path1 = filen();
-        if (path1 == null) {
+         @FXML
+    private void addImage(ActionEvent event) throws IOException{
+        FileChooser fc = new FileChooser();
 
-        } else {
-            timage.setText(path1);
+        FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+        FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
+        fc.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
+        File selectedFile = fc.showOpenDialog(null);
+        try {
+            BufferedImage bufferedImage = ImageIO.read(selectedFile);
+              Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+             imgview.setImage(image);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
-
-        
     }
+    
+    
  private void ResetB()
 {
     
     tf_sujet.setText(null);
     tf_description.setText(null);
-    timage.setText(null);
-    
+       
     
 }
  
@@ -482,5 +505,72 @@ private String filen()
                     stage.setScene(scene);
                     stage.show();
     }
-        
+    
+    
+    private void setCellValueFromTableToTextFieldprod()
+{
+    t_view.setOnMouseClicked(new EventHandler<MouseEvent>()
+    {
+        @Override
+        public void handle(MouseEvent event) {
+        Blog B=t_view.getItems().get(t_view.getSelectionModel().getSelectedIndex());
+
+   
+         TableColumn.CellEditEvent edittedcell = null;
+            Blog l=getttemp(edittedcell);  
+            
+      
+            String photo;
+            try {
+                photo = getImagebyId(l.getIdb());
+                System.out.println(photo);
+           
+           
+           
+            Image imageURL= new Image("file:///C:/wamp64/www/pidevjava/useretblog/src/com/user/images/" + photo);
+
+                    
+       
+        imgview.setImage(imageURL);
+             } catch (SQLException ex) 
+             {
+                Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+});
+
+    }
+    
+    
+    public String getImagebyId(int ide) throws SQLException
+    {
+        String i="";
+          Statement ste;
+        String  id=null;
+           String query="SELECT type as type FROM blog WHERE idb LIKE '%"+ide+"%'";
+           ste=con.createStatement();
+        ResultSet rst = ste.executeQuery(query); 
+         while(rst.next())
+        {
+             i=rst.getString("type");
+
+        }
+
+
+        return i;
+    }
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
 }

@@ -15,12 +15,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -30,6 +32,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 
@@ -55,6 +60,8 @@ public class FrontController implements Initializable
     private TableColumn<Blog, ?> description_colum;
     @FXML
     private TextField search;
+    @FXML
+    private ImageView imgview;
     
     /**
      * Initializes the controller class.
@@ -67,6 +74,7 @@ public class FrontController implements Initializable
         afficherblogg();
         loadDataBlogg();
         searchBlogg();
+        setCellValueFromTableToTextFieldprod();
     }    
     
        
@@ -162,6 +170,61 @@ search.setOnKeyReleased(e->
                     stage.setScene(scene);
                     stage.show();
         
+    }
+    
+    
+    private void setCellValueFromTableToTextFieldprod()
+{
+    t_view.setOnMouseClicked(new EventHandler<MouseEvent>()
+    {
+        @Override
+        public void handle(MouseEvent event) {
+        Blog B=t_view.getItems().get(t_view.getSelectionModel().getSelectedIndex());
+
+   
+         TableColumn.CellEditEvent edittedcell = null;
+            Blog l=getttemp(edittedcell);  
+            
+      
+            String photo;
+            try {
+                photo = getImagebyId(l.getIdb());
+                System.out.println(photo);
+           
+           
+           
+            Image imageURL= new Image("file:///C:/wamp64/www/pidevjava/useretblog/src/com/user/images/" + photo);
+
+                    
+       
+        imgview.setImage(imageURL);
+             } catch (SQLException ex) 
+             {
+                Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+});
+
+    }
+    
+    
+    public String getImagebyId(int ide) throws SQLException
+    {
+        String i="";
+          Statement ste;
+        String  id=null;
+           String query="SELECT type as type FROM blog WHERE idb LIKE '%"+ide+"%'";
+           ste=con.createStatement();
+        ResultSet rst = ste.executeQuery(query); 
+         while(rst.next())
+        {
+             i=rst.getString("type");
+
+        }
+
+
+        return i;
     }
     
     
