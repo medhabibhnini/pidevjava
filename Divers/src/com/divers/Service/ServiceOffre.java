@@ -97,6 +97,23 @@ public class ServiceOffre {
 
         return list;
     }
+     public List<Offre> displayClause(String cls) {
+        List<Offre> list = new ArrayList<>();
+
+        try {
+            String requete = "SELECT * FROM offre"+cls;
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                list.add(new Offre(rs.getInt(1), rs.getDouble(2), rs.getDate(3), rs.getDate(4), rs.getString(5)));
+            }
+
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+
+        return list;
+    }
     
     
 }

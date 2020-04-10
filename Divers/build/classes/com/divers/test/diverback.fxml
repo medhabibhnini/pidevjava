@@ -44,6 +44,7 @@
                         </TableView>
                         <Button layoutX="492.0" layoutY="486.0" mnemonicParsing="false" onAction="#deleteOffre" prefHeight="31.0" prefWidth="231.0" text="supprimer" />
                         <Button layoutX="262.0" layoutY="486.0" mnemonicParsing="false" onAction="#updateOffre" prefHeight="31.0" prefWidth="230.0" text="modifier" />
+                        <TextField fx:id="searchOffre" layoutX="902.0" layoutY="14.0" onKeyReleased="#search_offre" />
                      </children>
                   </AnchorPane>
             </content>
@@ -70,6 +71,10 @@
                               <TableColumn fx:id="enseignant_col" prefWidth="210.0" text="Enseignant" />
                           </columns>
                         </TableView>
+                        <Button layoutX="23.0" layoutY="418.0" mnemonicParsing="false" onAction="#AddEvenement" prefHeight="31.0" prefWidth="230.0" text="Ajouter" />
+                        <Button layoutX="328.0" layoutY="420.0" mnemonicParsing="false" onAction="#deleteEvent" prefHeight="31.0" prefWidth="231.0" text="supprimer" />
+                        <Button layoutX="559.0" layoutY="420.0" mnemonicParsing="false" onAction="#updateEvent" prefHeight="31.0" prefWidth="230.0" text="modifier" />
+                        <TextField fx:id="searchEvent" layoutX="865.0" layoutY="40.0" onKeyReleased="#search_event" />
                      </children></AnchorPane>
             </content>
           </Tab>

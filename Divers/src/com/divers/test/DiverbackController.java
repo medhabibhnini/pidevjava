@@ -7,8 +7,10 @@ package com.divers.test;
 
 import com.divers.Entite.Offre;
 import com.divers.Entite.Evenement;
+import com.divers.Entite.Enseignant;
 import com.divers.Service.ServiceOffre;
 import com.divers.Service.ServiceEvenement;
+import com.divers.Service.ServiceEnseignant;
 import com.divers.Utils.DataBase;
 import java.awt.AWTException;
 import javafx.scene.input.MouseEvent;
@@ -21,6 +23,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,6 +43,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.converter.LocalDateStringConverter;
 
 
 /**
@@ -96,6 +102,11 @@ public class DiverbackController implements Initializable
     @FXML
     private TableColumn<Evenement, ?> enseignant_col;
     
+    @FXML
+    private TextField searchOffre;
+    @FXML
+    private TextField searchEvent;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
@@ -103,6 +114,7 @@ public class DiverbackController implements Initializable
        data= FXCollections.observableArrayList();
        data1= FXCollections.observableArrayList();
        setCellValueFromTableToTextFieldprod();
+       setCellValueFromTableToTextFieldevent();
        afficherOffre();
        loadDataOffre();
        afficherEvenement();
@@ -141,12 +153,14 @@ if (i == 1)
     private void AddEvenement(ActionEvent event) throws SQLException {
         
         int i=0;
-         
+        ServiceEnseignant se= new ServiceEnseignant();
         Date dateevenemet = Date.valueOf(datepicker11.getValue());
         String description =tf_desc1.getText();
-        
+        Enseignant tmp=se.getByUsername(ENS.getSelectionModel().getSelectedItem().toString());
+        int id_es=tmp.getId();
+        System.out.print(id_es);
         ServiceEvenement Bl = new ServiceEvenement();
-        Evenement B = new Evenement(dateevenemet,description);
+        Evenement B = new Evenement(dateevenemet,description,id_es);
          System.out.println(B);
          i=Bl.ajouterevenement(B);
          
@@ -160,6 +174,7 @@ if (i == 1)
                 
         
     }
+    loadDataEvenement();
  }   
      
     
@@ -187,6 +202,7 @@ if (i == 1)
            Logger.getLogger(ServiceOffre.class.getName()).log(Level.SEVERE, null, ex);
        }
         tab_Offre.setItems(data);
+        searchOffre.setText("");
     }
     
     
@@ -207,11 +223,21 @@ if (i == 1)
     rs=pst.executeQuery();
      while (rs.next()) {                
              data1.add(new  Evenement(rs.getInt("id"),rs.getDate("date"),rs.getString("description"),rs.getInt("IdEnseignant")));
-     }       }
+     }   
+     ServiceEnseignant SE=new ServiceEnseignant();
+     List<Enseignant> ls= SE.getList();
+     ObservableList<Enseignant> cls4 = FXCollections.observableArrayList();
+     for (Enseignant tmp : ls)
+     {
+         cls4.add(tmp);
+     }
+     ENS.setItems(cls4);
+         }
        catch (SQLException ex) {
            Logger.getLogger(ServiceEvenement.class.getName()).log(Level.SEVERE, null, ex);
        }
         tab_Evenement.setItems(data1);
+        searchEvent.setText("");
     }
     
    
@@ -233,9 +259,32 @@ if (i == 1)
        Offre o=tab_Offre.getItems().get(tab_Offre.getSelectionModel().getSelectedIndex());
        tf_prix.setText(Double.toString(o.getPrixoffre()));
        tf_desc.setText(o.getDescription());
+       String dtstr=o.getDate_debut().toString();
+       String dtstr1=o.getDate_fin().toString();       
+            LocalDate dt=new LocalDateStringConverter().fromString(dtstr.substring(5,7)+"/"+dtstr.substring(8,10)+"/"+dtstr.substring(0,4));
+            LocalDate dt1=new LocalDateStringConverter().fromString(dtstr1.substring(5,7)+"/"+dtstr1.substring(8,10)+"/"+dtstr1.substring(0,4));
+            datepicker.setValue(dt);
+            datepicker1.setValue(dt1);
                     }
                });
        }
+     
+     private void setCellValueFromTableToTextFieldevent()
+        {
+       tab_Evenement.setOnMouseClicked(new EventHandler<MouseEvent>()
+             {
+        @Override
+        public void handle(MouseEvent event) {
+       Evenement ev=tab_Evenement.getItems().get(tab_Evenement.getSelectionModel().getSelectedIndex());
+       tf_desc1.setText(ev.getDescription());
+       String dtstr=ev.getDateevenement().toString();
+            LocalDate dt=new LocalDateStringConverter().fromString(dtstr.substring(5,7)+"/"+dtstr.substring(8,10)+"/"+dtstr.substring(0,4));
+            datepicker11.setValue(dt);
+                    }
+               });
+       }
+     
+     
 
     
     @FXML
@@ -303,6 +352,90 @@ if (i == 1)
 
     }
      
+     @FXML
+     public void deleteEvent(){
+         ServiceEvenement se=new ServiceEvenement();
+         Evenement tmp=tab_Evenement.getSelectionModel().getSelectedItem();
+         try{
+         int i =se.deleteevenement(tmp.getIdevenement());
+        if (i == 1)
+    {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("Evenement Supprimé");
+                alert.showAndWait();
+                
+        
+    }
+    loadDataEvenement();
+         }
+         catch(SQLException ex)
+         {
+             
+         }
+         
+         
+         
+     }
+     
+     @FXML
+     public void updateEvent(){
+         
+         int i=0;
+        ServiceEnseignant se= new ServiceEnseignant();
+        Date dateevenemet = Date.valueOf(datepicker11.getValue());
+        String description =tf_desc1.getText();
+        Enseignant tmp=se.getByUsername(ENS.getSelectionModel().getSelectedItem().toString());
+        int id_es=tmp.getId();
+        System.out.print(id_es);
+        ServiceEvenement Bl = new ServiceEvenement();
+         Evenement tmp2=tab_Evenement.getSelectionModel().getSelectedItem();
+        Evenement B = new Evenement(tmp2.getIdevenement(),dateevenemet,description,id_es);
+         System.out.println(B);
+       
+         i=Bl.modifierevenement(B);
+         
+if (i == 1)
+    {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("Evenement modifié");
+                alert.showAndWait();
+                
+        
+    }
+    loadDataEvenement();
+     }
+    @FXML
+    public void search_offre(){            
+                 ServiceOffre ser = new ServiceOffre();
+                     List<Offre> list = ser.displayClause(" WHERE id LIKE '%"+searchOffre.getText()+"%' or prix LIKE '%"+searchOffre.getText()+"%' or dateDebut LIKE '%"+searchOffre.getText()+"%' or dateFin LIKE '%"+searchOffre.getText()+"%' or description LIKE '%"+searchOffre.getText()+"%'");
+                     ObservableList<Offre> cls = FXCollections.observableArrayList();
+                     for (Offre aux : list)
+                     {
+                      cls.add(new Offre(aux.getIdoffre(),aux.getPrixoffre(), aux.getDate_debut(), aux.getDate_fin(), aux.getDescription()));  
+                     }
+                     tab_Offre.setItems(cls);
+                    
+                 }
+        
+    @FXML void search_event(){
+        ServiceEvenement ser = new ServiceEvenement();
+                     List<Evenement> list = ser.displayClause(" WHERE id LIKE '%"+searchEvent.getText()+"%' or date LIKE '%"+searchEvent.getText()+"%' or description LIKE '%"+searchEvent.getText()+"%' or idEnseignant LIKE '%"+searchEvent.getText()+"%'");
+                     ObservableList<Evenement> cls = FXCollections.observableArrayList();
+                     for (Evenement aux : list)
+                     {
+                          cls.add(new Evenement(aux.getIdevenement(),aux.getDateevenement(), aux.getDescription(), aux.getIdenseignant()));  
+                     }
+                     tab_Evenement.setItems(cls);
+    }
+     
+ }
+
+
+     
 
 
 
@@ -341,7 +474,6 @@ if (i == 1)
 
 
 
-}
     
     
     

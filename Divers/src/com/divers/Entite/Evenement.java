@@ -59,9 +59,10 @@ public class Evenement {
         return "Evenement{" + "idevenement=" + idevenement + ", dateevenement=" + dateevenement + ", description=" + description + ", idenseignant=" + idenseignant + '}';
     }
 
-    public Evenement(Date dateevenement, String description) {
+    public Evenement(Date dateevenement, String description,int idEsg) {
         this.dateevenement = dateevenement;
         this.description = description;
+        this.idenseignant=idEsg;
     }
      
      
