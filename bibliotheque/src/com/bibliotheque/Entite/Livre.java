@@ -16,13 +16,13 @@ public class Livre {
     private String nomlivre;
     private String auteurlivre;
     private Date datelivre;
-    private float prixlivre;
+    private int prixlivre;
     private String contenu;
     private int quantitelivre;
     private String image_name;
     
 
-    public Livre(int idlivre, String nomlivre, String auteurlivre,Date datelivre,float prixlivre,String contenu,int quantitelivre,String image_name) {
+    public Livre(int idlivre, String nomlivre, String auteurlivre,Date datelivre,int prixlivre,String contenu,int quantitelivre,String image_name) {
         this.idlivre=idlivre;
         this.nomlivre=nomlivre;
         this.auteurlivre=auteurlivre;
@@ -34,7 +34,7 @@ public class Livre {
     }
 
     
-        public Livre(String nomlivre, String auteurlivre,Date datelivre,float prixlivre,String contenu,int quantitelivre,String image_name) {
+        public Livre(String nomlivre, String auteurlivre,Date datelivre,int prixlivre,String contenu,int quantitelivre,String image_name) {
         this.nomlivre=nomlivre;
         this.auteurlivre=auteurlivre;
         this.datelivre=datelivre;
@@ -46,14 +46,14 @@ public class Livre {
 
 
 
-    public Livre(int idlivre, String nomlivre, float prixlivre, int quantitelivre) {
+    public Livre(int idlivre, String nomlivre, int prixlivre, int quantitelivre) {
         this.idlivre = idlivre;
         this.nomlivre = nomlivre;
         this.prixlivre = prixlivre;
         this.quantitelivre = quantitelivre;
     }
 
-    public Livre(int idlivre, String nomlivre, float prixlivre, int quantitelivre, String image_name) {
+    public Livre(int idlivre, String nomlivre, int prixlivre, int quantitelivre, String image_name) {
         this.idlivre = idlivre;
         this.nomlivre = nomlivre;
         this.prixlivre = prixlivre;
@@ -90,7 +90,7 @@ public class Livre {
     public void setDatelivre(Date datelivre) {
         this.datelivre = datelivre;
     }
-       public float getPrixlivre() {
+       public int getPrixlivre() {
         return prixlivre;
     }
 
@@ -126,7 +126,7 @@ public class Livre {
         this.image_name = image_name;
     }
     
-      public void setPrixlivre(float prixlivre) {
+      public void setPrixlivre(int prixlivre) {
         this.prixlivre = prixlivre;
     }
 

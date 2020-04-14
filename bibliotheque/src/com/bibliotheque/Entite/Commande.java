@@ -20,10 +20,17 @@ public class Commande {
  private int idl;
  private LocalDate date;
  
+ 
     public Commande(Livre l, int user) {
         this.l = l;
         this.user = user;
     }
+
+    public Commande(Livre l) {
+     this.l = l;
+    }
+
+  
 
     public int getIdl() {
         return idl;

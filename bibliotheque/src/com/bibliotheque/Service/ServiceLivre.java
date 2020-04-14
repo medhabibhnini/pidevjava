@@ -82,7 +82,7 @@ public class ServiceLivre {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(requete);
             while (rs.next()) {
-                list.add(new Livre(rs.getInt(1), rs.getString(2), rs.getFloat(5), rs.getInt(7)));
+                list.add(new Livre(rs.getInt(1), rs.getString(2), rs.getInt(5), rs.getInt(7)));
             }
 
         } catch (SQLException ex) {
@@ -92,6 +92,22 @@ public class ServiceLivre {
         return list;
     }
     
-        
+    public int getprixcmdbyId(int id) throws SQLException
+            
+    { 
+           int i=0;
+        String name="";
+           String query="SELECT prixlivre as prixlivre FROM livre WHERE idlivre='"+id+"'";
+           ste=con.createStatement();
+           
+        ResultSet rst = ste.executeQuery(query); 
+        while(rst.next())
+        {
+             name=rst.getString("prixlivre");
+            i=Integer.valueOf(name);
+        }
+      
+      return i;  
+    }     
 
 }

@@ -9,6 +9,7 @@ import com.bibliotheque.Entite.Commande;
 import com.bibliotheque.Entite.Livraison;
 import com.bibliotheque.Entite.Livre;
 import com.bibliotheque.Service.ServiceCommande;
+import com.bibliotheque.test.PaymentController;
 import com.bibliotheque.Service.ServiceLivraison;
 import com.bibliotheque.Service.ServiceLivre;
 import java.awt.image.BufferedImage;
@@ -25,6 +26,10 @@ import javafx.collections.FXCollections;
 import javafx.embed.swing.SwingFXUtils;
 import java.sql.Connection;
 import com.bibliotheque.Utils.DataBase;
+import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
+import com.stripe.model.Charge;
+import com.stripe.net.RequestOptions;
 import java.awt.AWTException;
 import java.net.MalformedURLException;
 import javafx.scene.input.MouseEvent;
@@ -34,13 +39,17 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 import javafx.collections.ObservableList;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -51,6 +60,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import static org.apache.commons.lang3.time.FastDateParserSDFTest.data;
 import static org.apache.commons.lang3.time.FastDatePrinterTimeZonesTest.data;
@@ -65,6 +76,7 @@ public class LivreController implements Initializable {
 private ObservableList<Livre> data;
 private ObservableList<Commande> datac;
 private ObservableList<Livraison> dataL;
+    private FXMLLoader loader;
    private Connection con;
     private ResultSet rs=null;
     private PreparedStatement pst;
@@ -95,8 +107,6 @@ private ObservableList<Livraison> dataL;
     @FXML
     private TableColumn<Livre,?> quantite;
     @FXML
-    private Button commender;
-    @FXML
     private TableView<Commande> com_view;
     @FXML
     private TableColumn<Commande, ?> idcom_view;
@@ -114,6 +124,8 @@ private ObservableList<Livraison> dataL;
     private TableColumn<Livraison, ?> userlivraison_colum;
     @FXML
     private TableColumn<Commande, ?> comlivraison_colum;
+    @FXML
+    private Button payer;
   
  
 
@@ -133,6 +145,8 @@ private ObservableList<Livraison> dataL;
        loadDataLivre();
        loadDataLivraison();
         afficherLivraison();
+    
+            
     }  
      @FXML
     private void addImage(ActionEvent event) throws IOException{
@@ -168,12 +182,12 @@ private ObservableList<Livraison> dataL;
         @FXML
     private void AddLivre(ActionEvent event) throws SQLException {
 
-        // int id = Integer.valueOf(Ab_IdAb.getText());
+ 
         Date date = Date.valueOf(datepicker.getValue());
          String titre = tf_titre.getText();
           String auteur = tf_auteur.getText();
           int quantite = Integer.valueOf(tf_quantite.getText());
-           float prix = Float.valueOf(tf_prix.getText());
+           int prix = Integer.valueOf(tf_prix.getText());
              String contenu = tf_contenu.getText();
 Image image1=null;
              image1= imgview.getImage();
@@ -191,12 +205,14 @@ Image image1=null;
                 alert.setHeaderText(null);
                 alert.setContentText("book added");
                 alert.showAndWait();
+                    afficherLivre();
+       loadDataLivre();
 
     }
      
 private void afficherLivre(){
 
-             idlivre.setCellValueFactory(new PropertyValueFactory <>("idlivre"));
+             //idlivre.setCellValueFactory(new PropertyValueFactory <>("idlivre"));
              titre.setCellValueFactory(new PropertyValueFactory <>("nomlivre"));
              prix.setCellValueFactory(new PropertyValueFactory <>("prixlivre"));
              quantite.setCellValueFactory(new PropertyValueFactory <>("quantitelivre"));
@@ -208,7 +224,7 @@ private void loadDataLivre() {
 
     rs=pst.executeQuery();
      while (rs.next()) {                
-             data.add(new  Livre(rs.getInt("idlivre"), rs.getString("nomlivre"), rs.getFloat("prixlivre"), rs.getInt("quantitelivre")));
+             data.add(new  Livre(rs.getInt("idlivre"), rs.getString("nomlivre"), rs.getInt("prixlivre"), rs.getInt("quantitelivre")));
      }       }
        catch (SQLException ex) {
            Logger.getLogger(ServiceLivre.class.getName()).log(Level.SEVERE, null, ex);
@@ -217,7 +233,7 @@ private void loadDataLivre() {
     }
 private void affichercomd(){
 
-             idcom_view.setCellValueFactory(new PropertyValueFactory <>("idcommande"));
+            // idcom_view.setCellValueFactory(new PropertyValueFactory <>("idcommande"));
              idliv_view.setCellValueFactory(new PropertyValueFactory <>("idl"));
              iduser_view.setCellValueFactory(new PropertyValueFactory <>("user"));
              datecom_view.setCellValueFactory(new PropertyValueFactory <>("datecommande"));
@@ -236,13 +252,14 @@ private void loadDatacommande() {
        }
         com_view.setItems(datac);
     }
-     private void setCellValueFromTableToTextFieldprod(){
+  
+    private void setCellValueFromTableToTextFieldprod(){
     tab_livre.setOnMouseClicked(new EventHandler<MouseEvent>(){
         @Override
         public void handle(MouseEvent event) {
 Livre liv=tab_livre.getItems().get(tab_livre.getSelectionModel().getSelectedIndex());
 
-//tf_rate.setText(idprod);
+
 
 
 
@@ -292,7 +309,7 @@ tf_prix.setText(Float.toString(liv.getPrixlivre()));
            int c=x.getIdlivre();
             //String idp = tf_idprod.getText();
             String Nomp = tf_titre.getText();
-            Float Pricep=Float.valueOf(tf_prix.getText());
+            int Pricep=Integer.valueOf(tf_prix.getText());
             int quantite=Integer.valueOf(tf_quantite.getText());
            Image image1=null;
              image1= imgview.getImage();
@@ -322,16 +339,14 @@ tf_prix.setText(Float.toString(liv.getPrixlivre()));
         
         
     }
-      @FXML
+    /*  @FXML
      public void commander(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
         //boolean isIdEmpty=validation.TextFieldvalidation.istextFieldTypeNumber(tf_idcat, error_idcat, "id must be number");
         //boolean isNameEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_nomcat, error_namecat, "Name is require");
     // boolean isIdEmpty=validation.TextFieldvalidation.istextFieldTypeNumber(tf_idprod, error_idprod, "id must be number");
         //boolean isNameEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_nameprod, error_nameprod, "Name is require");
          //boolean isPriceEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_prodprice, error_priceprod, "price is require");
-       /**
-        * tl
-        */ 
+     
        
         int i;
            
@@ -370,9 +385,9 @@ System.out.println(formatter.format(date));
           
         
         
-    }
+    }*/
                   @FXML
-public void deleteprod(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
+public void deletelivre(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
         
         
  TableColumn.CellEditEvent edittedcell = null;
@@ -400,6 +415,7 @@ public void deleteprod(ActionEvent event) throws SQLException, AWTException, Mal
            
         
     }
+@FXML
 public void deletcommande(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
         
         
@@ -484,15 +500,14 @@ private void loadDataLivraison() {
        }
         livraison_view.setItems(dataL);
     }    
+/*@FXML
  public void Livrer(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
         //boolean isIdEmpty=validation.TextFieldvalidation.istextFieldTypeNumber(tf_idcat, error_idcat, "id must be number");
         //boolean isNameEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_nomcat, error_namecat, "Name is require");
     // boolean isIdEmpty=validation.TextFieldvalidation.istextFieldTypeNumber(tf_idprod, error_idprod, "id must be number");
         //boolean isNameEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_nameprod, error_nameprod, "Name is require");
          //boolean isPriceEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_prodprice, error_priceprod, "price is require");
-       /**
-        * tl
-        */ 
+     
        
         int i;
            
@@ -532,7 +547,69 @@ private void loadDataLivraison() {
           
         
         
+    }*/
+@FXML
+ public void deletlivraison(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
+        
+        
+ TableColumn.CellEditEvent edittedcell = null;
+            Livraison x=gettempt(edittedcell);         
+            int i=x.getIdlivraison();
+            ServiceLivraison cmd=new ServiceLivraison();
+           
+           
+            
+            int s=cmd.deleteLivraison(i);
+              if(s==1)
+        {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("order deleted");
+                alert.showAndWait();
+         loadDataLivraison();
+        afficherLivraison();
+        }
+              
+          
+             
+          
+           
+        
     }
+ /*
+ public void charge() throws StripeException
+ {
+     Stripe.apiKey = "pk_test_u9EXruHrMT2njpoJCfZrNib500V6stJCjf";
 
- 
+Map<String, Object> chargeParams = new HashMap<>();
+chargeParams.put("amount",500 );
+chargeParams.put("currency", "usd");
+chargeParams.put("description", "My First Test Charge (created for API docs)");
+chargeParams.put("source", "tok_mastercard");
+// ^ obtained with Stripe.js
+
+RequestOptions options = RequestOptions
+  .builder()
+  .setIdempotencyKey("3XmtVJIIGuqVXrog")
+  .build();
+
+Charge.create(chargeParams, options);
+ }
+*/
+ private void showMycommande(){
+                        try {
+       loader = new FXMLLoader();
+    loader.setLocation(getClass().getResource("Payment.fxml"));
+                            Object load = loader.load();
+    Scene scene= new Scene(loader.getRoot());
+    Stage stage = new Stage();
+    stage.setScene(scene);
+    stage.initModality(Modality.APPLICATION_MODAL);
+    stage.show();            
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+		} 
 }
+
