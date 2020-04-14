@@ -142,8 +142,8 @@ private ObservableList<Livraison> dataL;
         loadDatacommande();
         setCellValueFromTableToTextFieldprod();
         afficherLivre();
-       loadDataLivre();
-       loadDataLivraison();
+        loadDataLivre();
+        loadDataLivraison();
         afficherLivraison();
     
             

@@ -21,8 +21,9 @@ import java.util.List;
  *
  * @author Mohamedhabib - pc
  */
-public class ServiceLivre {
-       private Connection con;
+public class ServiceLivre 
+{
+    private Connection con;
     private Statement ste;
     private PreparedStatement pst;
 
