@@ -212,7 +212,7 @@ Image image1=null;
      
 private void afficherLivre(){
 
-             idlivre.setCellValueFactory(new PropertyValueFactory <>("idlivre"));
+             //idlivre.setCellValueFactory(new PropertyValueFactory <>("idlivre"));
              titre.setCellValueFactory(new PropertyValueFactory <>("nomlivre"));
              prix.setCellValueFactory(new PropertyValueFactory <>("prixlivre"));
              quantite.setCellValueFactory(new PropertyValueFactory <>("quantitelivre"));
@@ -233,7 +233,7 @@ private void loadDataLivre() {
     }
 private void affichercomd(){
 
-             idcom_view.setCellValueFactory(new PropertyValueFactory <>("idcommande"));
+            // idcom_view.setCellValueFactory(new PropertyValueFactory <>("idcommande"));
              idliv_view.setCellValueFactory(new PropertyValueFactory <>("idl"));
              iduser_view.setCellValueFactory(new PropertyValueFactory <>("user"));
              datecom_view.setCellValueFactory(new PropertyValueFactory <>("datecommande"));
@@ -253,7 +253,7 @@ private void loadDatacommande() {
         com_view.setItems(datac);
     }
   
-     private void setCellValueFromTableToTextFieldprod(){
+    private void setCellValueFromTableToTextFieldprod(){
     tab_livre.setOnMouseClicked(new EventHandler<MouseEvent>(){
         @Override
         public void handle(MouseEvent event) {

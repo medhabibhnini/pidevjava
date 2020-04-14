@@ -154,7 +154,7 @@ search.setOnKeyReleased(e->{
         
         return test;
     }
-            public String getImagebyId(int ide) throws SQLException
+           public String getImagebyId(int ide) throws SQLException
     {
         String i="";
           Statement ste;
