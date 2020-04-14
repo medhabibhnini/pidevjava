@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="bibliotheque.jar" size="50364937" download="eager" />
+    <jar href="bibliotheque.jar" size="50364179" download="eager" />
     <jar href="lib\Bulk_SMS_Library.jar" size="3292" download="eager" />
     <jar href="lib\NotificationAPI.jar" size="2821" download="eager" />
     <jar href="lib\annotations-13.0.jar" size="17536" download="eager" />

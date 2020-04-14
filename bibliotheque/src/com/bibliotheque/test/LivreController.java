@@ -140,7 +140,7 @@ private ObservableList<Livraison> dataL;
         dataL= FXCollections.observableArrayList();
         affichercomd();
         loadDatacommande();
-        setCellValueFromTableToTextFieldprod();
+        setCellValueFromTableToTextFieldlivre();
         afficherLivre();
         loadDataLivre();
         loadDataLivraison();
@@ -167,7 +167,7 @@ private ObservableList<Livraison> dataL;
         public static String saveToFileImageNormal(Image image)throws SQLException  {
 
         String ext = "jpg";
-        File dir = new File("C:\\wamp64\\www\\pidev\\bibliotheque\\src\\com\\bibliotheque\\images");
+        File dir = new File("C:\\wamp64\\www\\pidev\\bibliotheque\\src\\com\\school\\images");
         String name;
         name = String.format("%s.%s", RandomStringUtils.randomAlphanumeric(8), ext);
         File outputFile = new File(dir, name);
@@ -253,7 +253,7 @@ private void loadDatacommande() {
         com_view.setItems(datac);
     }
   
-    private void setCellValueFromTableToTextFieldprod(){
+    private void setCellValueFromTableToTextFieldlivre(){
     tab_livre.setOnMouseClicked(new EventHandler<MouseEvent>(){
         @Override
         public void handle(MouseEvent event) {

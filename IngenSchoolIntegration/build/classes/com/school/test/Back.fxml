@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane id="AnchorPane" prefHeight="755.0" prefWidth="1228.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.school.test.BackController">
+   <children>
+      <Accordion />
+      <TabPane layoutY="38.0" prefHeight="717.0" prefWidth="1228.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab text="Livre">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="645.0" prefWidth="1228.0" style="-fx-background-color: C176E9;">
+                     <children>
+                        <Label layoutX="68.0" layoutY="99.0" />
+                        <ImageView fx:id="imgview" fitHeight="220.0" fitWidth="184.0" layoutX="362.0" layoutY="261.0" pickOnBounds="true" preserveRatio="true" />
+                        <TableView fx:id="tab_livre" layoutX="658.0" layoutY="14.0" prefHeight="453.0" prefWidth="491.0">
+                           <columns>
+                              <TableColumn fx:id="titre" prefWidth="216.0" text="titre" />
+                              <TableColumn fx:id="prix" prefWidth="103.0" text="prix" />
+                              <TableColumn fx:id="quantite" prefWidth="86.0" text="quantite" />
+                           </columns>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </TableView>
+                        <VBox layoutX="112.0" layoutY="21.0" prefHeight="481.0" prefWidth="204.0" style="-fx-background-color: white;">
+                           <children>
+                              <TextField fx:id="tf_titre" prefHeight="30.0" prefWidth="158.0">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <TextField fx:id="tf_auteur" prefHeight="23.0" prefWidth="158.0">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="35.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <TextField fx:id="tf_prix">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="35.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <DatePicker fx:id="datepicker">
+                                 <VBox.margin>
+                                    <Insets left="10.0" top="35.0" />
+                                 </VBox.margin>
+                              </DatePicker>
+                              <TextField fx:id="tf_contenu">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="35.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <TextField fx:id="tf_quantite">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="35.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <Button fx:id="btn_import" mnemonicParsing="false" onAction="#addImage" prefHeight="32.0" prefWidth="96.0" style="-fx-background-color: purple;" text="import">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="55.0" top="35.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
+                        <VBox layoutX="18.0" layoutY="21.0" prefHeight="497.0" prefWidth="100.0" style="-fx-background-color: white;">
+                           <children>
+                              <Label text="titre :">
+                                 <VBox.margin>
+                                    <Insets left="35.0" top="15.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label text="auteur :">
+                                 <VBox.margin>
+                                    <Insets left="35.0" top="50.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label text="prix :">
+                                 <VBox.margin>
+                                    <Insets left="35.0" top="50.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label text="Date :">
+                                 <VBox.margin>
+                                    <Insets left="35.0" top="50.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label text="contenu :">
+                                 <VBox.margin>
+                                    <Insets left="35.0" top="50.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label text="quantité:">
+                                 <VBox.margin>
+                                    <Insets left="35.0" top="50.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label text="image :">
+                                 <VBox.margin>
+                                    <Insets left="35.0" top="50.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <HBox layoutX="139.0" layoutY="565.0" prefHeight="103.0" prefWidth="1010.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#AddLivre" prefHeight="75.0" prefWidth="262.0" style="-fx-background-color: purple;" text="ajouter">
+                                 <HBox.margin>
+                                    <Insets right="70.0" />
+                                 </HBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#updatelivre" prefHeight="75.0" prefWidth="262.0" style="-fx-background-color: purple;" text="modifier">
+                                 <HBox.margin>
+                                    <Insets right="70.0" />
+                                 </HBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#deletelivre" prefHeight="75.0" prefWidth="262.0" style="-fx-background-color: purple;" text="supprimer">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="commende">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: C176E9;">
+                     <children>
+                        <TableView fx:id="com_view" layoutX="272.0" layoutY="47.0" prefHeight="443.0" prefWidth="686.0">
+                           <columns>
+                              <TableColumn fx:id="idliv_view" prefWidth="233.0" text="id livre" />
+                              <TableColumn fx:id="iduser_view" prefWidth="260.0" text="id user" />
+                              <TableColumn fx:id="datecom_view" prefWidth="266.0" text="date commande" />
+                           </columns>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </TableView>
+                        <Button layoutX="476.0" layoutY="515.0" mnemonicParsing="false" onAction="#deletcommande" prefHeight="75.0" prefWidth="278.0" style="-fx-background-color: purple;" text="annuler la commande">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="livraison">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: C176E9;">
+                     <children>
+                        <Button layoutX="475.0" layoutY="514.0" mnemonicParsing="false" onAction="#deletlivraison" prefHeight="75.0" prefWidth="278.0" style="-fx-background-color: purple;" text="annuler la livraison">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <TableView fx:id="livraison_view" layoutX="287.0" layoutY="74.0" prefHeight="399.0" prefWidth="655.0">
+                           <columns>
+                              <TableColumn fx:id="idlivraison_colum" prefWidth="211.0" text="id livraison" />
+                              <TableColumn fx:id="userlivraison_colum" prefWidth="227.0" text="idCommande" />
+                              <TableColumn fx:id="comlivraison_colum" prefWidth="216.0" text="id_user" />
+                           </columns>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Utilisateur">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox layoutX="66.0" layoutY="74.0" prefHeight="216.0" prefWidth="164.0">
+                           <children>
+                              <Label text="Nom d'utilisateur :" />
+                              <TextField fx:id="tf_name" />
+                              <Label text="Email :" />
+                              <TextField fx:id="tf_email" />
+                              <Label text="Mot de passe :" />
+                              <PasswordField fx:id="tf_password" />
+                              <Label text="Role :" />
+                              <TextField fx:id="tf_role" />
+                           </children>
+                        </VBox>
+                        <TableView fx:id="tab_viewU" layoutX="315.0" layoutY="24.0" prefHeight="277.0" prefWidth="316.0">
+                           <columns>
+                              <TableColumn fx:id="username_colum" prefWidth="75.0" text="Utilisateur" />
+                              <TableColumn fx:id="email_colum" prefWidth="133.0" text="Email" />
+                              <TableColumn fx:id="role_colum" prefWidth="107.0" text="Role" />
+                           </columns>
+                        </TableView>
+                        <Button layoutX="412.0" layoutY="322.0" mnemonicParsing="false" onAction="#deleteUser" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: black;" text="Supprimer" textFill="WHITE" />
+                        <Button layoutX="100.0" layoutY="297.0" mnemonicParsing="false" onAction="#updateUser" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: black;" text="Modifier" textFill="WHITE" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Blog">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox layoutX="14.0" layoutY="27.0" prefHeight="122.0" prefWidth="189.0">
+                           <children>
+                              <Label text="Sujet :" />
+                              <TextField fx:id="tf_sujet" />
+                              <Label text="Description :" />
+                              <TextField fx:id="tf_description" />
+                           </children>
+                        </VBox>
+                        <TableView fx:id="t_view" layoutX="335.0" layoutY="48.0" prefHeight="247.0" prefWidth="369.0">
+                           <columns>
+                              <TableColumn fx:id="sujet_colum" prefWidth="75.0" text="Sujet" />
+                              <TableColumn fx:id="description_colum" prefWidth="293.0" text="Description" />
+                           </columns>
+                        </TableView>
+                        <Button layoutX="190.0" layoutY="320.0" mnemonicParsing="false" onAction="#AddBlog" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: black;" text="ajouter" textFill="WHITE" />
+                        <Button layoutX="463.0" layoutY="320.0" mnemonicParsing="false" onAction="#afficherblog" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: black;" text="supprimer" textFill="WHITE" />
+                        <TextField fx:id="searchb" layoutX="463.0" layoutY="14.0" />
+                        <Label layoutX="370.0" layoutY="18.0" text="Chercher :" />
+                        <Button fx:id="browse" layoutX="204.0" layoutY="270.0" mnemonicParsing="false" onAction="#addImageblog" style="-fx-background-color: black;" text="importer " textFill="WHITE" />
+                        <Label layoutX="14.0" layoutY="149.0" text="Image :" />
+                        <ImageView fx:id="imgviewb" fitHeight="137.0" fitWidth="178.0" layoutX="20.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+      <Button layoutX="1101.0" layoutY="7.0" mnemonicParsing="false" onAction="#DecoU" style="-fx-background-color: black;" text="déconnexion" textFill="WHITE" />
+   </children>
+</AnchorPane>

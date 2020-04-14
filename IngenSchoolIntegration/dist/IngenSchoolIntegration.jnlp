@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="IngenSchoolIntegration.jar" size="50364170" download="eager" />
+    <jar href="IngenSchoolIntegration.jar" size="51290442" download="eager" />
     <jar href="lib\NotificationAPI.jar" size="2821" download="eager" />
     <jar href="lib\annotations-13.0.jar" size="17536" download="eager" />
     <jar href="lib\client-5.2.1.jar" size="332373" download="eager" />
@@ -50,6 +50,6 @@
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="IngenSchoolIntegration" >
     <param name="requiredFXVersion" value="8.0+"/>
   </applet-desc>
-  <jfx:javafx-desc  width="800" height="600" main-class="com.bibliotheque.test.Main"  name="IngenSchoolIntegration" />
+  <jfx:javafx-desc  width="800" height="600" main-class="com.school.test.Main"  name="IngenSchoolIntegration" />
   <update check="always"/>
 </jnlp>
