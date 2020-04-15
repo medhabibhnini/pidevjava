@@ -133,7 +133,8 @@ private ObservableList<Livraison> dataL;
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)
+    {
        con = DataBase.getInstance().getConnection();
          data= FXCollections.observableArrayList();
         datac= FXCollections.observableArrayList();
