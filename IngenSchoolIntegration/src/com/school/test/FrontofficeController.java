@@ -5,6 +5,7 @@
  */
 package com.school.test;
 
+import com.school.Entite.Attestation;
 import com.school.Entite.Commande;
 import com.school.Entite.Livre;
 import com.school.Service.ServiceCommande;
@@ -48,7 +49,14 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import com.school.Entite.Blog;
+import com.school.Entite.Reclamation;
+import com.school.Entite.Service;
+import com.school.Service.ServiceAttestation;
 import com.school.Service.ServiceBlog;
+import com.school.Service.ServiceReclamation;
+import com.school.Service.ServiceService;
+import javafx.scene.control.Alert;
+import javafx.scene.control.DatePicker;
 
 /**
  * FXML Controller class
@@ -62,6 +70,9 @@ public class FrontofficeController implements Initializable {
     private PreparedStatement pst;
     private FXMLLoader loader;
        private ObservableList<Blog> databl;
+           private ObservableList<Reclamation> dataR;
+    private ObservableList<Attestation> dataA;
+    private ObservableList<Service> dataS;
 
     
    
@@ -116,6 +127,38 @@ public class FrontofficeController implements Initializable {
     private ImageView homebtn;
     @FXML
     private ImageView bib_img;
+    @FXML
+    private TableView<Reclamation> tab_view;
+    @FXML
+    private TableColumn<Reclamation, ?> nom_col;
+    @FXML
+    private TableColumn<Reclamation, ?> sujet_col;
+    @FXML
+    private TableColumn<Reclamation, ?> date_col;
+    @FXML
+    private TextField tf_nomr;
+    @FXML
+    private TextField tf_sujetr;
+    @FXML
+    private DatePicker datepicker;
+    @FXML
+    private TableView<Attestation> tab_view1;
+    @FXML
+    private TableColumn<Attestation, ?> nom_col1;
+    @FXML
+    private TableColumn<Attestation, ?> sujet_col1;
+    @FXML
+    private TextField tff_langue;
+    @FXML
+    private TextField tff_langue1;
+    @FXML
+    private TableView<Service> tab_view2;
+    @FXML
+    private TableColumn<Service, ?> des_col;
+    @FXML
+    private TableColumn<Service, ?> ida_col;
+    @FXML
+    private TableColumn<Service, ?> date_col1;
 
     /**
      * Initializes the controller class.
@@ -136,6 +179,15 @@ public class FrontofficeController implements Initializable {
         loadDataBlogg();
         searchBlogg();
         setCellValueFromTableToTextFieldprod();
+           dataR= FXCollections.observableArrayList();
+          dataA= FXCollections.observableArrayList();
+          dataS= FXCollections.observableArrayList();
+            afficherReclamation();  
+            loadDataReclamation();
+            afficherAttestation();  
+            loadDataAttestation();
+              afficherService();  
+               loadDataService();
        
         btnnn.setOnAction(e->{
                 showMycommande();
@@ -521,6 +573,265 @@ search1.setOnKeyReleased(e->
 
         return i;
     }
+/*-----------Scolarite-------------*/
+     
+    @FXML
+    private void AddReclamation(ActionEvent event) throws SQLException
+    {
 
+        // int id = Integer.valueOf(Ab_IdAb.getText());
+        Date dater = Date.valueOf(datepicker.getValue());
+         String nomr = tf_nomr.getText();
+          String sujetr = tf_sujetr.getText();
+         ServiceReclamation sl = new ServiceReclamation();
+        Reclamation l = new Reclamation(nomr,sujetr,dater);
+            System.out.println(l);
+         sl.ajouterReclamation(l);
+
+      
+        
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("Reclamation added");
+                alert.showAndWait();
+                   afficherReclamation();
+           loadDataReclamation();
+
+    }
+       
+
+ @FXML
+    private void ResetR()
+{
+    
+    tf_nomr.setText(null);
+    tf_sujetr.setText(null);
+    datepicker.setValue(null);
+}
+    private void afficherReclamation()
+    {
+
+             nom_col.setCellValueFactory(new PropertyValueFactory <>("nomr"));
+             sujet_col.setCellValueFactory(new PropertyValueFactory <>("sujetr"));
+             date_col.setCellValueFactory(new PropertyValueFactory <>("dater"));
+    }
+private void loadDataReclamation() 
+{
+   dataR.clear();
+         try {
+           pst =con.prepareStatement("Select * from reclamation");
+
+    rs=pst.executeQuery();
+     while (rs.next()) {                
+             dataR.add(new  Reclamation(rs.getInt("idr"), rs.getString("nomr"), rs.getString("sujetr"), rs.getDate("dater")));
+     }       }
+       catch (SQLException ex) {
+           Logger.getLogger(ServiceReclamation.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        tab_view.setItems(dataR);
+    }
+
+public Reclamation gettempR(TableColumn.CellEditEvent edittedCell) 
+      {
+        Reclamation test = (Reclamation) tab_view.getSelectionModel().getSelectedItem();
+        
+        return test;
+    }
+      
+    @FXML
+public void deleteReclamation(ActionEvent event) throws SQLException, AWTException, MalformedURLException 
+{
+        
+        
+ TableColumn.CellEditEvent edittedcell = null;
+            Reclamation x=gettempR(edittedcell);  
+            System.out.println(x);
+            int i=x.getIdr();
+             System.out.println(i);
+            ServiceReclamation liv=new ServiceReclamation();
+           
+           
+            
+            int s=liv.deleteReclamation(i);
+                     
+              if(s==1)
+        {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("Reclamation deleted");
+                alert.showAndWait();
+           afficherReclamation();
+           loadDataReclamation();
+            System.out.println(s);
+        }
+                
+           
+        
+    }
+
+ 
+    @FXML
+    private void AddAttestation(ActionEvent event) throws SQLException
+    {
+
+        // int id = Integer.valueOf(Ab_IdAb.getText());
+        
+        String typea = tff_langue1.getText();
+          String langue = tff_langue.getText();
+         ServiceAttestation sa = new ServiceAttestation();
+       Attestation a = new Attestation(typea,langue);
+            System.out.println(a);
+         sa.ajouterAttestation(a);
+
+      
+        
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("Atteastation added");
+                alert.showAndWait();
+                   afficherAttestation();
+                 loadDataAttestation();
+
+    }
+    
+ @FXML
+    private void ResetA()
+{
+    
+    tff_langue1.setText(null);
+    tff_langue.setText(null);
+   
+}
+  
+    private void afficherAttestation()
+    {
+
+             nom_col1.setCellValueFactory(new PropertyValueFactory <>("typea"));
+             sujet_col1.setCellValueFactory(new PropertyValueFactory <>("langue"));
+           
+    }
+private void loadDataAttestation() 
+{
+   dataA.clear();
+         try {
+           pst =con.prepareStatement("Select * from attestation");
+
+    rs=pst.executeQuery();
+     while (rs.next()) {                
+             dataA.add(new  Attestation( rs.getInt("ida"),rs.getString("typea"), rs.getString("langue")));
+     }      
+         }
+       catch (SQLException ex) {
+           Logger.getLogger(ServiceAttestation.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        tab_view1.setItems(dataA);
+    }
+
+public Attestation getttempA(TableColumn.CellEditEvent edittedCell) 
+      {
+        Attestation test = (Attestation) tab_view1.getSelectionModel().getSelectedItem();
+        
+        return test;
+    }
+
+
+    @FXML 
+    public void deleteAttestation(ActionEvent event) throws SQLException, AWTException, MalformedURLException 
+{
+        
+        
+ TableColumn.CellEditEvent edittedcell = null;
+            Attestation x=getttempA(edittedcell);  
+            System.out.println(x);
+            int i=x.getIda();
+             System.out.println(i);
+            ServiceAttestation liv=new ServiceAttestation();
+           
+           
+            
+            int s=liv.deleteAttestation(i);
+                     
+              if(s==1)
+        {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("Attestation deleted");
+                alert.showAndWait();
+           afficherAttestation();
+           loadDataAttestation();
+            System.out.println(s);
+        }
+                
+           
+        
+    }
+
+
+private void afficherService(){
+
+            
+            
+                des_col.setCellValueFactory(new PropertyValueFactory <>("description"));
+              date_col1.setCellValueFactory(new PropertyValueFactory <>("date"));
+
+                ida_col.setCellValueFactory(new PropertyValueFactory <>("ida"));
+    }
+
+private void loadDataService() {
+   dataS.clear();
+         try {
+           pst =con.prepareStatement("Select * from service");
+
+    rs=pst.executeQuery();
+     while (rs.next()) {                
+             dataS.add(new  Service(rs.getInt("ids"), rs.getString("description"), rs.getDate("date"),rs.getInt("ida")));
+     }       }
+       catch (SQLException ex) {
+           Logger.getLogger(ServiceService.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        tab_view2.setItems(dataS);
+    }  
+public Service gettttemp(TableColumn.CellEditEvent edittedCell) 
+      {
+        Service test = (Service) tab_view2.getSelectionModel().getSelectedItem();
+        
+        return test;
+ 
+}
+    @FXML 
+    public void deleteService(ActionEvent event) throws SQLException, AWTException, MalformedURLException 
+{
+        
+        
+ TableColumn.CellEditEvent edittedcell = null;
+            Service x=gettttemp(edittedcell);  
+            System.out.println(x);
+            int i=x.getIds();
+             System.out.println(i);
+            ServiceService liv=new ServiceService();
+           
+           
+            
+            int s=liv.deleteService(i);
+                     
+              if(s==1)
+        {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("Service deleted");
+                alert.showAndWait();
+           afficherService();
+           loadDataService();
+            System.out.println(s);
+        }
+                
+           
+        
+    }
     
 }

@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -85,55 +86,6 @@
                   <ImageView fx:id="imgview1" fitHeight="202.0" fitWidth="257.0" layoutX="301.0" layoutY="430.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
-            <Pane fx:id="reclam_pane" prefHeight="724.0" prefWidth="912.0" style="-fx-background-color: white;">
-               <children>
-                  <ImageView fitHeight="609.0" fitWidth="912.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@../images/reclamation.jpg" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Pane fx:id="attest_pane" prefHeight="724.0" prefWidth="912.0" style="-fx-background-color: white;">
-               <children>
-                  <ImageView fitHeight="639.0" fitWidth="905.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@../images/attestation.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Pane fx:id="Servi_pane" prefHeight="734.0" prefWidth="922.0" style="-fx-background-color: white;">
-               <children>
-                  <ImageView fitHeight="655.0" fitWidth="912.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@../images/service.jpg" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Pane fx:id="home_pane" prefHeight="734.0" prefWidth="922.0" style="-fx-background-color: white;">
-               <children>
-                  <ImageView fitHeight="645.0" fitWidth="701.0" layoutX="91.0" layoutY="74.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@../images/homepage.png" />
-                     </image>
-                  </ImageView>
-                  <Label layoutX="166.0" layoutY="26.0" prefHeight="21.0" prefWidth="567.0" text="WELCOME TO OUR SCHOOL APPLICATION">
-                     <font>
-                        <Font name="Agency FB Bold" size="39.0" />
-                     </font>
-                  </Label>
-                  <ImageView fx:id="bib_img" fitHeight="150.0" fitWidth="138.0" layoutX="109.0" layoutY="151.0" onMouseClicked="#biblioimgAction" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/books.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </ImageView>
-               </children>
-            </Pane>
             <Pane fx:id="biblio_pane" prefHeight="724.0" prefWidth="912.0" style="-fx-background-color: white;">
                <children>
                   <ImageView fitHeight="616.0" fitWidth="912.0" pickOnBounds="true" preserveRatio="true">
@@ -161,6 +113,105 @@
                         <Image url="@../images/ordernow.png" />
                      </image>
                   </ImageView>
+               </children>
+            </Pane>
+            <Pane fx:id="home_pane" prefHeight="734.0" prefWidth="922.0" style="-fx-background-color: white;">
+               <children>
+                  <ImageView fitHeight="645.0" fitWidth="701.0" layoutX="91.0" layoutY="74.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../images/homepage.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="166.0" layoutY="26.0" prefHeight="21.0" prefWidth="567.0" text="WELCOME TO OUR SCHOOL APPLICATION">
+                     <font>
+                        <Font name="Agency FB Bold" size="39.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="bib_img" fitHeight="150.0" fitWidth="138.0" layoutX="109.0" layoutY="151.0" onMouseClicked="#biblioimgAction" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/books.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane fx:id="reclam_pane" prefHeight="724.0" prefWidth="912.0" style="-fx-background-color: white;">
+               <children>
+                  <ImageView fitHeight="609.0" fitWidth="912.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../images/reclamation.jpg" />
+                     </image>
+                  </ImageView>
+                  <Button layoutX="109.0" layoutY="352.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#AddReclamation" prefHeight="0.0" style="-fx-background-color: black;" text="ajouter" textFill="#f58f00" />
+                  <TableView fx:id="tab_view" layoutX="537.0" layoutY="184.0" prefHeight="137.0" prefWidth="253.0">
+                     <columns>
+                        <TableColumn fx:id="nom_col" text="nom" />
+                        <TableColumn fx:id="sujet_col" prefWidth="106.0" text="sujet" />
+                        <TableColumn fx:id="date_col" prefWidth="90.0" sortType="DESCENDING" text="date" />
+                     </columns>
+                  </TableView>
+                  <Button layoutX="593.0" layoutY="368.0" mnemonicParsing="false" onAction="#deleteReclamation" style="-fx-background-color: black;" text="supprimer" textFill="#ffac06" />
+                  <VBox layoutX="34.0" layoutY="133.0" prefHeight="168.0" prefWidth="203.0">
+                     <children>
+                        <Label text="Nom Reclamation" />
+                        <TextField fx:id="tf_nomr" />
+                        <Label text="Sujet" />
+                        <TextField fx:id="tf_sujetr" />
+                        <Label text="Date" />
+                        <DatePicker fx:id="datepicker" />
+                     </children>
+                  </VBox>
+                  <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="60.0" layoutY="87.0" text="Ajouter une Réclamation" textFill="#0d0d0d" textOverrun="CLIP" />
+                  <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="607.0" layoutY="133.0" text="Les Réclamations" textFill="#0d0d0d" textOverrun="CLIP" />
+                  <Button layoutX="718.0" layoutY="368.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#ResetR" prefHeight="0.0" style="-fx-background-color: black;" text="actualise" textFill="#f58f00" />
+               </children>
+            </Pane>
+            <Pane fx:id="attest_pane" prefHeight="724.0" prefWidth="912.0" style="-fx-background-color: white;">
+               <children>
+                  <ImageView fitHeight="639.0" fitWidth="905.0" layoutX="4.0" layoutY="6.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../images/attestation.png" />
+                     </image>
+                  </ImageView>
+                  <TableView fx:id="tab_view1" layoutX="524.0" layoutY="219.0" prefHeight="127.0" prefWidth="262.0">
+                     <columns>
+                        <TableColumn fx:id="nom_col1" prefWidth="127.0" text="nom" />
+                        <TableColumn fx:id="sujet_col1" prefWidth="134.0" text="sujet" />
+                     </columns>
+                  </TableView>
+                  <VBox layoutX="67.0" layoutY="294.0" prefHeight="149.0" prefWidth="203.0">
+                     <children>
+                        <Label text="type d'attestation" />
+                        <TextField fx:id="tff_langue" />
+                        <Label text="langue" />
+                        <TextField fx:id="tff_langue1" />
+                     </children>
+                  </VBox>
+                  <Button layoutX="102.0" layoutY="457.0" mnemonicParsing="false" onAction="#AddAttestation" style="-fx-background-color: black;" text="ajouter" textFill="#eb9009" />
+                  <Button layoutX="547.0" layoutY="397.0" mnemonicParsing="false" onAction="#deleteAttestation" style="-fx-background-color: black;" text="supprimer" textFill="#ed7c02" />
+                  <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="67.0" layoutY="244.0" text="Demande de service : Attestation" textFill="#0d0d0d" textOverrun="CLIP" />
+                  <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="615.0" layoutY="173.0" prefHeight="21.0" prefWidth="96.0" text="Les Demandes" textFill="#0d0d0d" textOverrun="CLIP" />
+                  <Button layoutX="685.0" layoutY="397.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#ResetA" prefHeight="0.0" style="-fx-background-color: black;" text="actualiser" textFill="#f58f00" />
+               </children>
+            </Pane>
+            <Pane fx:id="Servi_pane" prefHeight="734.0" prefWidth="922.0" style="-fx-background-color: white;">
+               <children>
+                  <ImageView fitHeight="655.0" fitWidth="912.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../images/service.jpg" />
+                     </image>
+                  </ImageView>
+                  <TableView fx:id="tab_view2" layoutX="238.0" layoutY="180.0" prefHeight="226.0" prefWidth="398.0">
+                     <columns>
+                        <TableColumn fx:id="des_col" prefWidth="246.0" text="decription" />
+                        <TableColumn fx:id="ida_col" prefWidth="93.0" text="ida" />
+                        <TableColumn fx:id="date_col1" prefWidth="57.0" text="date" />
+                     </columns>
+                  </TableView>
+                  <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="360.0" layoutY="120.0" prefHeight="21.0" prefWidth="110.0" text="Les  Services" textFill="#0d0d0d" textOverrun="CLIP" />
+                  <Button layoutX="393.0" layoutY="444.0" mnemonicParsing="false" onAction="#deleteService" style="-fx-background-color: black;" text="supprimer" textFill="#ed7c02" />
                </children>
             </Pane>
          </children>

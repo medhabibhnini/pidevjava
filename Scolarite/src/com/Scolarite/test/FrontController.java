@@ -48,7 +48,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
  * @author syrin
  */
 public class FrontController implements Initializable {
-    private ObservableList<Reclamation> data;
+    private ObservableList<Reclamation> dataR;
     private ObservableList<Attestation> dataA;
     private ObservableList<Service> dataS;
    private Connection con;
@@ -95,7 +95,7 @@ public class FrontController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) 
     {
         con = DataBase.getInstance().getConnection();
-         data= FXCollections.observableArrayList();
+         dataR= FXCollections.observableArrayList();
           dataA= FXCollections.observableArrayList();
           dataS= FXCollections.observableArrayList();
             afficherReclamation();  
@@ -149,21 +149,21 @@ public class FrontController implements Initializable {
     }
 private void loadDataReclamation() 
 {
-   data.clear();
+   dataR.clear();
          try {
            pst =con.prepareStatement("Select * from reclamation");
 
     rs=pst.executeQuery();
      while (rs.next()) {                
-             data.add(new  Reclamation(rs.getInt("idr"), rs.getString("nomr"), rs.getString("sujetr"), rs.getDate("dater")));
+             dataR.add(new  Reclamation(rs.getInt("idr"), rs.getString("nomr"), rs.getString("sujetr"), rs.getDate("dater")));
      }       }
        catch (SQLException ex) {
            Logger.getLogger(ServiceReclamation.class.getName()).log(Level.SEVERE, null, ex);
        }
-        tab_view.setItems(data);
+        tab_view.setItems(dataR);
     }
 
-public Reclamation gettemp(TableColumn.CellEditEvent edittedCell) 
+public Reclamation gettempR(TableColumn.CellEditEvent edittedCell) 
       {
         Reclamation test = (Reclamation) tab_view.getSelectionModel().getSelectedItem();
         
@@ -176,7 +176,7 @@ public void deleteReclamation(ActionEvent event) throws SQLException, AWTExcepti
         
         
  TableColumn.CellEditEvent edittedcell = null;
-            Reclamation x=gettemp(edittedcell);  
+            Reclamation x=gettempR(edittedcell);  
             System.out.println(x);
             int i=x.getIdr();
              System.out.println(i);
@@ -261,7 +261,7 @@ private void loadDataAttestation()
         tab_view1.setItems(dataA);
     }
 
-public Attestation getttemp(TableColumn.CellEditEvent edittedCell) 
+public Attestation getttempA(TableColumn.CellEditEvent edittedCell) 
       {
         Attestation test = (Attestation) tab_view1.getSelectionModel().getSelectedItem();
         
@@ -274,7 +274,7 @@ public void deleteAttestation(ActionEvent event) throws SQLException, AWTExcepti
         
         
  TableColumn.CellEditEvent edittedcell = null;
-            Attestation x=getttemp(edittedcell);  
+            Attestation x=getttempA(edittedcell);  
             System.out.println(x);
             int i=x.getIda();
              System.out.println(i);

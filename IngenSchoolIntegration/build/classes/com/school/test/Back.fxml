@@ -4,6 +4,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -11,6 +12,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -245,6 +247,69 @@
                         <Button fx:id="browse" layoutX="204.0" layoutY="270.0" mnemonicParsing="false" onAction="#addImageblog" style="-fx-background-color: black;" text="importer " textFill="WHITE" />
                         <Label layoutX="14.0" layoutY="149.0" text="Image :" />
                         <ImageView fx:id="imgviewb" fitHeight="137.0" fitWidth="178.0" layoutX="20.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Reclamation">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tab_view1" layoutX="355.0" layoutY="101.0" prefHeight="266.0" prefWidth="488.0">
+                           <columns>
+                              <TableColumn fx:id="nom_col1" text="nom" />
+                              <TableColumn fx:id="sujet_col1" prefWidth="282.0" text="sujet" />
+                              <TableColumn fx:id="date_col1" prefWidth="124.0" sortType="DESCENDING" text="date" />
+                           </columns>
+                        </TableView>
+                        <Button layoutX="555.0" layoutY="479.0" mnemonicParsing="false" onAction="#deleteReclamation" style="-fx-background-color: black;" text="supprimer" textFill="#ffac06" />
+                        <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="524.0" layoutY="63.0" text="Les Réclamations" textFill="#0d0d0d" textOverrun="CLIP" />
+                        <TextField fx:id="search" layoutX="506.0" layoutY="411.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Attestation">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tab_view11" layoutX="142.0" layoutY="227.0" prefHeight="122.0" prefWidth="251.0">
+                           <columns>
+                              <TableColumn fx:id="nom_col111" prefWidth="70.0" text="id" />
+                              <TableColumn fx:id="nom_col11" prefWidth="91.0" text="type" />
+                              <TableColumn fx:id="sujet_col11" prefWidth="89.0" text="langue" />
+                           </columns>
+                        </TableView>
+                        <Button layoutX="795.0" layoutY="461.0" mnemonicParsing="false" onAction="#Ajouter" style="-fx-background-color: black;" text="ajouter" textFill="#eb9009" />
+                        <Button layoutX="202.0" layoutY="417.0" mnemonicParsing="false" onAction="#deleteAttestation" style="-fx-background-color: black;" text="supprimer" textFill="#ed7c02" />
+                        <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="118.0" layoutY="130.0" prefHeight="21.0" prefWidth="226.0" text="Les Demandes d'attestations" textFill="#0d0d0d" textOverrun="CLIP" />
+                        <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="788.0" layoutY="178.0" prefHeight="21.0" prefWidth="226.0" text="Confirmation des demandes" textFill="#0d0d0d" textOverrun="CLIP" />
+                        <TextArea fx:id="des_area" layoutX="818.0" layoutY="325.0" prefHeight="107.0" prefWidth="196.0" />
+                        <DatePicker fx:id="datepicker1" layoutX="818.0" layoutY="272.0" prefHeight="31.0" prefWidth="195.0" />
+                        <TextField fx:id="search1" layoutX="174.0" layoutY="173.0" />
+                        <ComboBox fx:id="w" layoutX="841.0" layoutY="218.0" prefWidth="150.0" />
+                        <Button layoutX="950.0" layoutY="461.0" mnemonicParsing="false" onAction="#ResetS" style="-fx-background-color: black;" text="actualiser" textFill="#eb9009" />
+                        <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="751.0" layoutY="223.0" prefHeight="21.0" prefWidth="67.0" text="id" textFill="#0d0d0d" textOverrun="CLIP" />
+                        <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="709.0" layoutY="368.0" prefHeight="21.0" prefWidth="99.0" text="description" textFill="#0d0d0d" textOverrun="CLIP" />
+                        <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="741.0" layoutY="277.0" prefHeight="21.0" prefWidth="54.0" text="Date" textFill="#0d0d0d" textOverrun="CLIP" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Service">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tab_view21" layoutX="310.0" layoutY="172.0" prefHeight="139.0" prefWidth="462.0">
+                           <columns>
+                              <TableColumn fx:id="ida_col1" minWidth="0.0" prefWidth="115.0" text="id" />
+                              <TableColumn fx:id="des_col1" prefWidth="188.0" text="description" />
+                              <TableColumn fx:id="date_col11" minWidth="0.0" prefWidth="155.0" text="date" />
+                           </columns>
+                        </TableView>
+                        <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="486.0" layoutY="76.0" prefHeight="21.0" prefWidth="110.0" text="Les  Services" textFill="#0d0d0d" textOverrun="CLIP" />
+                        <TextField fx:id="search11" layoutX="460.0" layoutY="115.0" />
+                        <Button layoutX="509.0" layoutY="362.0" mnemonicParsing="false" onAction="#deleteService" style="-fx-background-color: black;" text="supprimer" textFill="#ffac06" />
                      </children>
                   </AnchorPane>
                </content>

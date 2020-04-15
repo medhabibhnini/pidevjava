@@ -67,7 +67,7 @@ import javax.swing.JOptionPane;
  */
 public class BackController implements Initializable {
 
-     private ObservableList<Reclamation> data;
+     private ObservableList<Reclamation> dataR;
     private ObservableList<Attestation> dataA;
     private ObservableList<Service> dataS;
    private Connection con;
@@ -116,7 +116,7 @@ public class BackController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        con = DataBase.getInstance().getConnection();
-         data= FXCollections.observableArrayList();
+         dataR= FXCollections.observableArrayList();
           dataA= FXCollections.observableArrayList();
           dataS= FXCollections.observableArrayList();
             afficherReclamation();  
@@ -150,18 +150,18 @@ w.getSelectionModel().select("ida");
     }
 private void loadDataReclamation() 
 {
-   data.clear();
+   dataR.clear();
          try {
            pst =con.prepareStatement("Select * from reclamation");
 
     rs=pst.executeQuery();
      while (rs.next()) {                
-             data.add(new  Reclamation(rs.getInt("idr"), rs.getString("nomr"), rs.getString("sujetr"), rs.getDate("dater")));
+             dataR.add(new  Reclamation(rs.getInt("idr"), rs.getString("nomr"), rs.getString("sujetr"), rs.getDate("dater")));
      }       }
        catch (SQLException ex) {
            Logger.getLogger(ServiceReclamation.class.getName()).log(Level.SEVERE, null, ex);
        }
-        tab_view1.setItems(data);
+        tab_view1.setItems(dataR);
     }
 
 public Reclamation gettemp(TableColumn.CellEditEvent edittedCell) 
@@ -280,7 +280,7 @@ search.setOnKeyReleased(e->{
         loadDataReclamation();
     }
     else{
-        data.clear();
+        dataR.clear();
           String sql = "Select * from reclamation where nomr LIKE '%"+search.getText()+"%'"
                 + "UNION Select * from reclamation where sujetr LIKE '%"+search.getText()+"%'" ;
     try {
@@ -296,10 +296,10 @@ search.setOnKeyReleased(e->{
      
                       
     
-             data.add(new Reclamation(nomr, sujetr, dater));
+             dataR.add(new Reclamation(nomr, sujetr, dater));
  
         }
-        tab_view1.setItems(data);
+        tab_view1.setItems(dataR);
     } catch (SQLException ex) {
         Logger.getLogger(BackController.class.getName()).log(Level.SEVERE, null, ex);
     }

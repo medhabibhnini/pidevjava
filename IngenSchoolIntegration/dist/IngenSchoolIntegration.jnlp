@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="IngenSchoolIntegration.jar" size="50825737" download="eager" />
+    <jar href="IngenSchoolIntegration.jar" size="50846428" download="eager" />
     <jar href="lib\NotificationAPI.jar" size="2821" download="eager" />
     <jar href="lib\annotations-13.0.jar" size="17536" download="eager" />
     <jar href="lib\client-5.2.1.jar" size="332373" download="eager" />
@@ -33,6 +33,7 @@
     <jar href="lib\jackson-jaxrs-base-2.8.5.jar" size="32607" download="eager" />
     <jar href="lib\jackson-jaxrs-json-provider-2.8.5.jar" size="15869" download="eager" />
     <jar href="lib\jackson-module-jaxb-annotations-2.8.5.jar" size="34576" download="eager" />
+    <jar href="lib\javax.mail.jar" size="659033" download="eager" />
     <jar href="lib\jaxb-api-2.3.0.jar" size="125632" download="eager" />
     <jar href="lib\jjwt-api-0.10.5.jar" size="74767" download="eager" />
     <jar href="lib\jjwt-impl-0.10.5.jar" size="68019" download="eager" />
