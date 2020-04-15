@@ -1,19 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="300.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.school.test.LoginController">
+<AnchorPane id="AnchorPane" prefHeight="671.0" prefWidth="471.0" style="-fx-background-color: brown;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.school.test.LoginController">
    <children>
-      <TextField fx:id="user" layoutX="60.0" layoutY="186.0" />
-      <PasswordField fx:id="pw" layoutX="60.0" layoutY="257.0" />
-      <Button fx:id="log" layoutX="73.0" layoutY="359.0" mnemonicParsing="false" onMouseClicked="#Login" prefHeight="31.0" prefWidth="155.0" style="-fx-background-color: black;" text="Se Connecter" textFill="WHITE" />
-      <Label fx:id="check" layoutX="30.0" layoutY="316.0" prefHeight="17.0" prefWidth="241.0" />
-      <Label fx:id="registre" layoutX="43.0" layoutY="432.0" onMouseClicked="#Register" prefHeight="17.0" prefWidth="214.0" text="           Créer un compte" />
-      <Label layoutX="57.0" layoutY="153.0" text="Email :" />
-      <Label layoutX="57.0" layoutY="226.0" text="Mot de Passe :" />
+      <VBox layoutX="15.0" layoutY="132.0" prefHeight="519.0" prefWidth="444.0" style="-fx-background-color: orange;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="132.0">
+         <children>
+            <Label fx:id="check" prefHeight="17.0" prefWidth="241.0" />
+            <Label text="Email :">
+               <VBox.margin>
+                  <Insets bottom="20.0" left="30.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="user">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin>
+            </TextField>
+            <Label text="Mot de Passe :">
+               <VBox.margin>
+                  <Insets bottom="20.0" left="30.0" top="20.0" />
+               </VBox.margin>
+            </Label>
+            <PasswordField fx:id="pw">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin>
+            </PasswordField>
+            <Button fx:id="log" blendMode="OVERLAY" mnemonicParsing="false" onMouseClicked="#Login" prefHeight="31.0" prefWidth="320.0" style="-fx-background-color: brown;" text="Se Connecter" textFill="WHITE">
+               <VBox.margin>
+                  <Insets left="65.0" top="50.0" />
+               </VBox.margin>
+            </Button>
+            <Label fx:id="registre" onMouseClicked="#Register" prefHeight="21.0" prefWidth="332.0" text="                             Créer un compte">
+               <VBox.margin>
+                  <Insets left="45.0" top="20.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
+      <ImageView fitHeight="100.0" fitWidth="200.0" layoutX="186.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" smooth="false" AnchorPane.bottomAnchor="557.0" AnchorPane.leftAnchor="186.0" AnchorPane.rightAnchor="185.0" AnchorPane.topAnchor="14.0">
+         <image>
+            <Image url="@../images/log.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

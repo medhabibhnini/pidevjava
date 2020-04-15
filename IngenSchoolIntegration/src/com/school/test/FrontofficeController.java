@@ -98,6 +98,24 @@ public class FrontofficeController implements Initializable {
     private TextField search1;
     @FXML
     private ImageView imgview1;
+    @FXML
+    private Button Recl_btn;
+    @FXML
+    private Button Attes_btn;
+    @FXML
+    private Button Service_pane;
+    @FXML
+    private Pane reclam_pane;
+    @FXML
+    private Pane attest_pane;
+    @FXML
+    private Pane Servi_pane;
+    @FXML
+    private Pane home_pane;
+    @FXML
+    private ImageView homebtn;
+    @FXML
+    private ImageView bib_img;
 
     /**
      * Initializes the controller class.
@@ -124,6 +142,71 @@ public class FrontofficeController implements Initializable {
             });
         
     }  
+      @FXML
+       private void bibliobuttonAction(ActionEvent event){
+              if (event.getSource() == biblio_btn)
+           {
+               biblio_pane.toFront();
+           } 
+          
+              
+         
+       }
+       @FXML
+       private void biblioimgAction(MouseEvent event){
+              if (event.getSource() == bib_img)
+           {
+               biblio_pane.toFront();
+           } 
+          
+              
+         
+       }
+       @FXML
+       private void homeAction(MouseEvent event){
+         
+                 if (event.getSource() == homebtn)
+           {
+               home_pane.toFront();
+           } 
+              
+         
+       }
+         @FXML
+       private void blogbuttonAction(ActionEvent event){
+           
+                 if (event.getSource() == blog_btn)
+           {
+               blog_pane.toFront();
+           } 
+       }
+         @FXML
+       private void reclambuttonAction(ActionEvent event){
+              if (event.getSource() == Recl_btn)
+           {
+               reclam_pane.toFront();
+           } 
+              
+         
+       }
+         @FXML
+       private void attestbuttonAction(ActionEvent event){
+           
+                 if (event.getSource() == Attes_btn)
+           {
+               attest_pane.toFront();
+           } 
+       }
+         @FXML
+       private void servicebuttonAction(ActionEvent event){
+              if (event.getSource() == Service_pane)
+           {
+               Servi_pane.toFront();
+           } 
+              
+         
+       }
+       
     public void searchLivre(){
 search.setOnKeyReleased(e->{
     if(search.getText().equals("")){
@@ -202,7 +285,7 @@ search.setOnKeyReleased(e->{
         return i;
     }
                @FXML
-     public void commander(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
+     public void commander(MouseEvent event) throws SQLException, AWTException, MalformedURLException {
   
        
         int i;
@@ -286,23 +369,7 @@ private void showMycommande(){
     }
 		} 
 
-       @FXML
-       private void bibliobuttonAction(ActionEvent event){
-              if (event.getSource() == biblio_btn)
-           {
-               biblio_pane.toFront();
-           } 
-              
-         
-       }
-         @FXML
-       private void blogbuttonAction(ActionEvent event){
-           
-                 if (event.getSource() == blog_btn)
-           {
-               blog_pane.toFront();
-           } 
-       }
+     
 
   
        
@@ -454,5 +521,6 @@ search1.setOnKeyReleased(e->
 
         return i;
     }
+
     
 }
