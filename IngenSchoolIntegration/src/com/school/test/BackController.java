@@ -350,7 +350,10 @@ private void loadDatacommande() {
 
     rs=pst.executeQuery();
      while (rs.next()) {                
-             datac.add(new  Commande(rs.getInt("idcommande"), rs.getInt("id_user"), rs.getInt("idlivre"), rs.getDate("datecommande")));
+            datac.add(new  Commande(rs.getInt("idcommande"), rs.getInt("id_user"), rs.getInt("idlivre"), rs.getDate("datecommande")));
+            /*ServiceLivre liv = new ServiceLivre();
+              int l=rs.getInt("idlivre");
+               datac.add(new  Commande(rs.getInt("idcommande"), rs.getInt("id_user"),liv.getnomcmdbyId(l) , rs.getDate("datecommande")));*/
      }       }
        catch (SQLException ex) {
            Logger.getLogger(ServiceLivre.class.getName()).log(Level.SEVERE, null, ex);

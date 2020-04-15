@@ -135,6 +135,10 @@ public class Livre {
         return "Livre{" + "idlivre=" + idlivre + ", nomlivre=" + nomlivre + ", auteurlivre=" + auteurlivre + ", datelivre=" + datelivre + ", prixlivre=" + prixlivre + ", contenu=" + contenu + ", quantitelivre=" + quantitelivre + ", image_name=" + image_name + '}';
     }
 
+    public int getnomcmdbyId(Commande c) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 
   
     

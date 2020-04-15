@@ -115,28 +115,6 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane fx:id="home_pane" prefHeight="734.0" prefWidth="922.0" style="-fx-background-color: white;">
-               <children>
-                  <ImageView fitHeight="645.0" fitWidth="701.0" layoutX="91.0" layoutY="74.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@../images/homepage.png" />
-                     </image>
-                  </ImageView>
-                  <Label layoutX="166.0" layoutY="26.0" prefHeight="21.0" prefWidth="567.0" text="WELCOME TO OUR SCHOOL APPLICATION">
-                     <font>
-                        <Font name="Agency FB Bold" size="39.0" />
-                     </font>
-                  </Label>
-                  <ImageView fx:id="bib_img" fitHeight="150.0" fitWidth="138.0" layoutX="109.0" layoutY="151.0" onMouseClicked="#biblioimgAction" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/books.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </ImageView>
-               </children>
-            </Pane>
             <Pane fx:id="reclam_pane" prefHeight="724.0" prefWidth="912.0" style="-fx-background-color: white;">
                <children>
                   <ImageView fitHeight="609.0" fitWidth="912.0" pickOnBounds="true">
@@ -212,6 +190,28 @@
                   </TableView>
                   <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="360.0" layoutY="120.0" prefHeight="21.0" prefWidth="110.0" text="Les  Services" textFill="#0d0d0d" textOverrun="CLIP" />
                   <Button layoutX="393.0" layoutY="444.0" mnemonicParsing="false" onAction="#deleteService" style="-fx-background-color: black;" text="supprimer" textFill="#ed7c02" />
+               </children>
+            </Pane>
+            <Pane fx:id="home_pane" prefHeight="734.0" prefWidth="922.0" style="-fx-background-color: white;">
+               <children>
+                  <ImageView fitHeight="645.0" fitWidth="701.0" layoutX="91.0" layoutY="74.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../images/homepage.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="166.0" layoutY="26.0" prefHeight="21.0" prefWidth="567.0" text="WELCOME TO OUR SCHOOL APPLICATION">
+                     <font>
+                        <Font name="Agency FB Bold" size="39.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="bib_img" fitHeight="150.0" fitWidth="138.0" layoutX="109.0" layoutY="151.0" onMouseClicked="#biblioimgAction" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/books.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
                </children>
             </Pane>
          </children>

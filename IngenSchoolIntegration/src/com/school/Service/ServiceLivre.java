@@ -110,5 +110,21 @@ public class ServiceLivre
       
       return i;  
     }     
-
+   public String getnomcmdbyId(int id) throws SQLException
+            
+    { 
+          
+        String name="";
+           String query="SELECT nomlivre as livre FROM livre WHERE idlivre='"+id+"'";
+           ste=con.createStatement();
+           
+        ResultSet rst = ste.executeQuery(query); 
+        while(rst.next())
+        {
+             name=rst.getString("nomlivre");
+          
+        }
+      
+      return(name);  
+    } 
 }

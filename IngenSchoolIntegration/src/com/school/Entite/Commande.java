@@ -18,6 +18,7 @@ public class Commande {
     private Date datecommande;
     private int user;
  private int idl;
+ private String idln;
  private LocalDate date;
  
  
@@ -30,6 +31,24 @@ public class Commande {
      this.l = l;
     }
 
+    public String getIdln() {
+        return idln;
+    }
+
+    public void setIdln(String idln) {
+        this.idln = idln;
+    }
+
+    public Commande(int idcommande, int user, String idln, Date datecommande) {
+        this.idcommande = idcommande;
+        this.datecommande = datecommande;
+        this.user = user;
+        this.idln = idln;
+    }
+
+   
+
+  
   
 
     public int getIdl() {
@@ -46,6 +65,13 @@ public class Commande {
         this.idl = idl;
         this.datecommande = datecommande;
         
+    }
+
+    public Commande(int idcommande, int user, Livre livre, Date datecommande) {
+        this.idcommande = idcommande;
+        this.l = livre;
+        this.datecommande = datecommande;
+        this.user = user;
     }
 
     public Commande(Livre l, int user, Date datecommande) {
@@ -81,10 +107,11 @@ public class Commande {
     public void setDatecommande(Date datecommande) {
         this.datecommande = datecommande;
     }
-    @Override
+  
+      @Override
     public String toString()
     {
-         return "livraison{" + "id commande=" + idcommande + ", Livre=" + l + ", datecommande=" + datecommande + '}';
+         return "livraison{" + "id commande=" + idcommande + ", Livre=" + l + ",  User=" + user + ", datecommande=" + datecommande + '}';
     }
     
     

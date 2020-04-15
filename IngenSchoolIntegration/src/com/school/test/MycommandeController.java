@@ -17,6 +17,7 @@ import com.nexmo.client.NexmoClient;
 import com.nexmo.client.sms.MessageStatus;
 import com.nexmo.client.sms.SmsSubmissionResponse;
 import com.nexmo.client.sms.messages.TextMessage;
+import com.school.Entite.Livre;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
@@ -29,6 +30,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -67,11 +69,12 @@ public class MycommandeController implements Initializable {
   private ObservableList<Commande> datac;
    private Connection con;
     private ResultSet rs=null;
+    private Commande C;
       private PreparedStatement pst;
     @FXML
     private TableView<Commande> com_view;
     @FXML
-    private TableColumn<Commande, ?> idliv_view;
+    private TableColumn<Livre, ?> idliv_view;
     @FXML
     private TableColumn<Commande, ?> iduser_view;
     @FXML
@@ -211,23 +214,34 @@ public class MycommandeController implements Initializable {
        
     } 
     private void affichercomd(){
-
            
-             idliv_view.setCellValueFactory(new PropertyValueFactory <>("idl"));
+           
+             idliv_view.setCellValueFactory(new PropertyValueFactory <>("idln"));
              iduser_view.setCellValueFactory(new PropertyValueFactory <>("user"));
              datecom_view.setCellValueFactory(new PropertyValueFactory <>("datecommande"));
     }
 private void loadDatacommande() {
+    
    datac.clear();
          try {
            pst =con.prepareStatement("Select * from commande");
 
     rs=pst.executeQuery();
-     while (rs.next()) {                
-             datac.add(new  Commande(rs.getInt("idcommande"), rs.getInt("id_user"), rs.getInt("idlivre"), rs.getDate("datecommande")));
+     while (rs.next()) { 
+          
+            
+              int l=rs.getInt("idlivre");
+              int idcommande=rs.getInt("idcommande");
+              int id_user=rs.getInt("id_user");
+              Date datecommande=rs.getDate("datecommande");
+              ServiceLivre liv = new ServiceLivre();
+              
+                datac.add(new Commande(idcommande, id_user, liv.getnomcmdbyId(l), datecommande ));
+               //datac.add(new  Commande(rs.getInt("idcommande"), rs.getInt("id_user"),rs.getInt("idlivre") , rs.getDate("datecommande")));
+             //  datac.add(new Commande(rs.getInt("idcommande"), liv.getnomcmdbyId(l), rs.getDate("datecommande"), rs.getInt("id_user")));
      }       }
        catch (SQLException ex) {
-           Logger.getLogger(ServiceLivre.class.getName()).log(Level.SEVERE, null, ex);
+           Logger.getLogger(ServiceCommande.class.getName()).log(Level.SEVERE, null, ex);
        }
         com_view.setItems(datac);
     }
