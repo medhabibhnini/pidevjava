@@ -5,6 +5,7 @@
  */
 package com.divers.Entite;
 import java.util.Date;
+import com.divers.Entite.Enseignant;
 /**
  *
  * @author farouk
@@ -13,13 +14,13 @@ public class Evenement {
      private int idevenement;
      private Date dateevenement;
      private String description;
-     private int idenseignant;
+     private Enseignant idenseignant;
 
     public Evenement(int idevenement, Date dateevenement, String description, int idenseignant) {
         this.idevenement = idevenement;
         this.dateevenement = dateevenement;
         this.description = description;
-        this.idenseignant = idenseignant;
+        this.idenseignant = new Enseignant(idenseignant);
     }
 
     public int getIdevenement() {
@@ -35,9 +36,11 @@ public class Evenement {
     }
 
     public int getIdenseignant() {
-        return idenseignant;
+        return idenseignant.getId();
     }
-
+    public String getEnseignant(){
+        return this.idenseignant.getUsername();
+    }
     public void setIdevenement(int idevenement) {
         this.idevenement = idevenement;
     }
@@ -51,7 +54,10 @@ public class Evenement {
     }
 
     public void setIdenseignant(int idenseignant) {
-        this.idenseignant = idenseignant;
+        this.idenseignant.setId(idenseignant);
+    }
+    public void setEnseignant(Enseignant ens){
+        this.idenseignant=ens;
     }
 
     @Override
@@ -62,8 +68,9 @@ public class Evenement {
     public Evenement(Date dateevenement, String description,int idEsg) {
         this.dateevenement = dateevenement;
         this.description = description;
-        this.idenseignant=idEsg;
+        this.idenseignant=new Enseignant(idEsg);
     }
+    
      
      
      

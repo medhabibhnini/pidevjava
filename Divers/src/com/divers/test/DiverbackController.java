@@ -8,11 +8,18 @@ package com.divers.test;
 import com.divers.Entite.Offre;
 import com.divers.Entite.Evenement;
 import com.divers.Entite.Enseignant;
+import com.divers.Entite.Participation;
 import com.divers.Service.ServiceOffre;
 import com.divers.Service.ServiceEvenement;
 import com.divers.Service.ServiceEnseignant;
+import com.divers.Service.ServiceParticipation;
 import com.divers.Utils.DataBase;
+import static com.itextpdf.text.Annotation.FILE;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.AWTException;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import javafx.scene.input.MouseEvent;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
@@ -44,7 +51,22 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.converter.LocalDateStringConverter;
-
+import com.divers.test.pdf;
+import com.jfoenix.controls.JFXListView;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import javafx.geometry.Pos;
+import javafx.scene.text.TextFlow;
+import javafx.stage.FileChooser;
+import javafx.util.Duration;
+import rsscreator.ui.main.FXMLDocumentController;
+import static rsscreator.ui.main.FXMLDocumentController.createFeedListItem;
+import rsscreator.ui.resourses.FeedMessage;
+import rsscreator.ui.resourses.filesHandler;
+import org.controlsfx.control.Notifications;
 
 /**
  * FXML Controller class
@@ -80,6 +102,17 @@ public class DiverbackController implements Initializable
     @FXML
     private TableColumn<Offre, ?> description_col;
     
+    @FXML
+    private TableView<Participation> tab_participation;
+    @FXML
+    private TableColumn<Participation, ?> event;
+    @FXML
+    private TableColumn<Participation, ?> participant;
+    @FXML
+    private Label errorOffre;
+    @FXML
+    private Label errorEvent;
+    
     
     
     
@@ -106,10 +139,17 @@ public class DiverbackController implements Initializable
     private TextField searchOffre;
     @FXML
     private TextField searchEvent;
+    @FXML
+    private TextField searchParticipation;
+    @FXML
+    private Label fileName;
+    
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) 
+    public void initialize(URL location, ResourceBundle rb) 
     {
+        
+        
        con = DataBase.getInstance().getConnection();
        data= FXCollections.observableArrayList();
        data1= FXCollections.observableArrayList();
@@ -119,13 +159,15 @@ public class DiverbackController implements Initializable
        loadDataOffre();
        afficherEvenement();
        loadDataEvenement();
+       afficherParticipation();
+       loadDataParticipation();
        
     }    
     
             
 @FXML
     private void Addoffre(ActionEvent event) throws SQLException {
-        
+        if(Validchamp(tf_desc) && fileName.getText()!="Choisir Image" && Validchamp(tf_prix)){
         int i=0;
          double prixoffre = Float.valueOf(tf_prix.getText());
          Date date_debut = Date.valueOf(datepicker.getValue());
@@ -133,6 +175,7 @@ public class DiverbackController implements Initializable
         String description =tf_desc.getText();
         ServiceOffre Bl = new ServiceOffre();
         Offre B = new Offre(prixoffre,date_debut,date_fin,description);
+        B.setImage(fileName.getText());
          System.out.println(B);
          i=Bl.ajouteroffre(B);
          
@@ -145,13 +188,28 @@ if (i == 1)
                 alert.showAndWait();
                 afficherOffre();
                 loadDataOffre();
+                errorOffre.setText("");
+
+                // PUSH NOTIFICATION
+                Notifications notificationBuilder=  Notifications.create()
+                        .title("Nouvelle Offre")
+                        .text("Consulter La Nouvelle Offre !!")
+                        .graphic(null)
+                        .hideAfter(Duration.seconds(5))
+                        .position(Pos.BOTTOM_RIGHT);
+                notificationBuilder.darkStyle();
+                notificationBuilder.show();
         
     }
+        }
+        else{
+            errorOffre.setText("Input Invalide");
+        }
  }
     
  @FXML
     private void AddEvenement(ActionEvent event) throws SQLException {
-        
+        if(Validchamp(tf_desc1)){
         int i=0;
         ServiceEnseignant se= new ServiceEnseignant();
         Date dateevenemet = Date.valueOf(datepicker11.getValue());
@@ -163,7 +221,7 @@ if (i == 1)
         Evenement B = new Evenement(dateevenemet,description,id_es);
          System.out.println(B);
          i=Bl.ajouterevenement(B);
-         
+         errorEvent.setText("");
 if (i == 1)
     {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -175,19 +233,44 @@ if (i == 1)
         
     }
     loadDataEvenement();
+        }
+        else
+        {
+            errorEvent.setText("Input Invalide");
+        }
  }   
      
     
     
     private void afficherOffre(){
 
-             idoffre_col.setCellValueFactory(new PropertyValueFactory <>("idoffre"));
+             
              prix_col.setCellValueFactory(new PropertyValueFactory <>("prixoffre"));
              date_debut_col.setCellValueFactory(new PropertyValueFactory <>("date_debut"));
              date_fin_col.setCellValueFactory(new PropertyValueFactory <>("date_fin"));
              description_col.setCellValueFactory(new PropertyValueFactory <>("description"));
     }
     
+    private void afficherParticipation(){
+
+             event.setCellValueFactory(new PropertyValueFactory <>("IdEvent"));
+             participant.setCellValueFactory(new PropertyValueFactory <>("User"));
+    }
+    private void loadDataParticipation(){
+        
+         
+        ServiceParticipation sp=new ServiceParticipation();
+        ServiceEnseignant SE=new ServiceEnseignant();
+        List<Participation> list = sp.afficherparticipation();
+        ObservableList<Participation> cls = FXCollections.observableArrayList();
+        for (Participation aux : list)
+        {
+          Participation P=new Participation(aux.getId(),aux.getIdUser(), aux.getIdEvent());
+          P.setUser(SE.getById(P.getIdUser()));
+          cls.add(P);  
+        }
+        tab_participation.setItems(cls);
+    }
     
      private void loadDataOffre() {
    data.clear();
@@ -211,7 +294,7 @@ if (i == 1)
              idvenement_col.setCellValueFactory(new PropertyValueFactory <>("idevenement"));
              date_event_col.setCellValueFactory(new PropertyValueFactory <>("dateevenement"));
              descriptionE_col.setCellValueFactory(new PropertyValueFactory <>("description"));
-             enseignant_col.setCellValueFactory(new PropertyValueFactory <>("idenseignant"));
+             enseignant_col.setCellValueFactory(new PropertyValueFactory <>("enseignant"));
              
     }
     
@@ -219,12 +302,14 @@ if (i == 1)
    data1.clear();
          try {
            pst =con.prepareStatement("Select * from evenement");
-
+           ServiceEnseignant SE=new ServiceEnseignant();
     rs=pst.executeQuery();
-     while (rs.next()) {                
-             data1.add(new  Evenement(rs.getInt("id"),rs.getDate("date"),rs.getString("description"),rs.getInt("IdEnseignant")));
+     while (rs.next()) {
+             Evenement tmp= new Evenement(rs.getInt("id"),rs.getDate("date"),rs.getString("description"),rs.getInt("IdEnseignant"));
+             tmp.setEnseignant(SE.getById(tmp.getIdenseignant()));
+             data1.add(tmp);
      }   
-     ServiceEnseignant SE=new ServiceEnseignant();
+     
      List<Enseignant> ls= SE.getList();
      ObservableList<Enseignant> cls4 = FXCollections.observableArrayList();
      for (Enseignant tmp : ls)
@@ -289,7 +374,8 @@ if (i == 1)
     
     @FXML
    public void deleteOffre(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
-        
+                 if(tab_Offre.getSelectionModel().getSelectedIndex()!=-1){
+
          TableColumn.CellEditEvent edittedcell = null;
          Offre x=gettemp(edittedcell);         
          int i=x.getIdoffre();
@@ -307,14 +393,20 @@ if (i == 1)
                 alert.showAndWait();
            afficherOffre();
            loadDataOffre();
+           errorOffre.setText("");
         }
+                 }
+                 else{
+                                 errorOffre.setText("Choix Invalide");
+
+                 }
                
     }
 
     @FXML
      public void updateOffre(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
        
-       
+       if(Validchamp(tf_desc) && fileName.getText()!="Choisir Image" && Validchamp(tf_prix) &&tab_Offre.getSelectionModel().getSelectedIndex()!=-1){
         int i;
            
             
@@ -330,6 +422,7 @@ if (i == 1)
               //Category c = new Category(0,Namecat);
             ServiceOffre prod=new ServiceOffre();
             Offre u=new Offre(c,prixoffre,date_debut,date_fin ,description);
+            u.setImage(fileName.getText());
          
        
             System.out.println(u);
@@ -344,8 +437,14 @@ if (i == 1)
                 alert.showAndWait();
            afficherOffre();
            loadDataOffre();
+           errorOffre.setText("");
            
         }
+       }
+       else{
+                       errorOffre.setText("Input ou Choix Invalide");
+
+       }
           
         
         
@@ -354,6 +453,7 @@ if (i == 1)
      
      @FXML
      public void deleteEvent(){
+         if(tab_Evenement.getSelectionModel().getSelectedIndex()!=-1){
          ServiceEvenement se=new ServiceEvenement();
          Evenement tmp=tab_Evenement.getSelectionModel().getSelectedItem();
          try{
@@ -369,19 +469,25 @@ if (i == 1)
         
     }
     loadDataEvenement();
+    loadDataParticipation();
+    errorEvent.setText("");
          }
          catch(SQLException ex)
          {
              
          }
-         
+         }
+         else{
+                         errorEvent.setText("Choix Invalide");
+
+         }
          
          
      }
      
      @FXML
      public void updateEvent(){
-         
+         if(Validchamp(tf_desc1)){
          int i=0;
         ServiceEnseignant se= new ServiceEnseignant();
         Date dateevenemet = Date.valueOf(datepicker11.getValue());
@@ -407,6 +513,11 @@ if (i == 1)
         
     }
     loadDataEvenement();
+    errorEvent.setText("");
+         }
+         else{
+             errorEvent.setText("Input ou Choix Invalide");
+         }
      }
     @FXML
     public void search_offre(){            
@@ -425,12 +536,120 @@ if (i == 1)
         ServiceEvenement ser = new ServiceEvenement();
                      List<Evenement> list = ser.displayClause(" WHERE id LIKE '%"+searchEvent.getText()+"%' or date LIKE '%"+searchEvent.getText()+"%' or description LIKE '%"+searchEvent.getText()+"%' or idEnseignant LIKE '%"+searchEvent.getText()+"%'");
                      ObservableList<Evenement> cls = FXCollections.observableArrayList();
+                     ServiceEnseignant se= new ServiceEnseignant();
                      for (Evenement aux : list)
                      {
-                          cls.add(new Evenement(aux.getIdevenement(),aux.getDateevenement(), aux.getDescription(), aux.getIdenseignant()));  
+                         Evenement tmp= new Evenement(aux.getIdevenement(),aux.getDateevenement(), aux.getDescription(), aux.getIdenseignant());
+                          tmp.setEnseignant(se.getById(tmp.getIdenseignant()));
+                          cls.add(tmp);  
                      }
                      tab_Evenement.setItems(cls);
     }
+    
+    @FXML void search_participation(){
+        ServiceParticipation ser = new ServiceParticipation();
+                     List<Participation> list = ser.displayClause(" WHERE idUser LIKE '%"+searchParticipation.getText()+"%' or idEvent LIKE '%"+searchParticipation.getText()+"%'");
+                     ObservableList<Participation> cls = FXCollections.observableArrayList();
+                     ServiceEnseignant se= new ServiceEnseignant();
+                     for (Participation aux : list)
+                     {
+                          aux.setUser(se.getById(aux.getIdUser()));
+                          cls.add(aux);  
+                     }
+                     tab_participation.setItems(cls);
+    }
+    
+    
+    
+    @FXML
+    public void print_offre(){
+        ServiceOffre se= new ServiceOffre();
+        try{
+         List<Offre> list = se.afficheroffre();
+       
+                        FileChooser fileChooser = new FileChooser();
+                        fileChooser.getExtensionFilters().addAll(
+                        new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf"));
+                        File saveFile = fileChooser.showSaveDialog(tab_Offre.getScene().getWindow());
+                        System.out.println(saveFile.getAbsolutePath());
+                        OutputStream file= new FileOutputStream(new File(saveFile.getAbsolutePath()));
+                        Document document = new Document();
+                        PdfWriter.getInstance(document,file);
+                        document.open();
+                        pdf.addMetaData(document);
+                        pdf.addTitlePage(document, list);
+                        document.close(); 
+                        file.close();
+          }
+        catch(Exception ex)
+        {
+            
+        }
+
+
+    }
+    
+    @FXML
+    public void print_event(){
+                        
+        ServiceEvenement se= new ServiceEvenement();
+        try{
+         List<Evenement> list = se.afficherevenement();
+          ServiceEnseignant SE= new ServiceEnseignant();
+                     for (Evenement aux : list)
+                     {
+                         aux.setEnseignant(SE.getById(aux.getIdenseignant()));
+                     }
+                        FileChooser fileChooser = new FileChooser();
+                        fileChooser.getExtensionFilters().addAll(
+                        new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf"));
+                        File saveFile = fileChooser.showSaveDialog(tab_Offre.getScene().getWindow());
+                        System.out.println(saveFile.getAbsolutePath());
+                        OutputStream file= new FileOutputStream(new File(saveFile.getAbsolutePath()));
+                        Document document = new Document();
+                        PdfWriter.getInstance(document,file);
+                        document.open();
+                        pdf.addMetaData2(document);
+                        pdf.addTitlePage2(document, list);
+                        document.close(); 
+                        file.close();
+          }
+        catch(Exception ex)
+        {
+            
+        }
+        
+                        
+                        
+
+    }
+    @FXML
+    public void open_image(){
+        try{
+        FileChooser fileChooser = new FileChooser();
+                        fileChooser.getExtensionFilters().addAll(
+                        new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.jpg"),
+                        new FileChooser.ExtensionFilter("JPEG files (*.jpeg)", "*.jpeg"),
+                        new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png")
+                        );
+                        File saveFile = fileChooser.showOpenDialog(tab_Offre.getScene().getWindow());
+                        System.out.println(saveFile.getName());
+                        fileName.setText(saveFile.getName());
+                        File output = new File("./src/uploads/"+saveFile.getName());
+                        Files.copy(saveFile.toPath(),output.toPath());
+        }
+                        catch(Exception ex)
+        {
+            
+        }
+    }
+    
+    private boolean Validchamp(TextField T){
+        return !T.getText().isEmpty() && T.getLength() > 3;
+    }
+
+    
+    
      
  }
 

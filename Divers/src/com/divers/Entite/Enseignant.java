@@ -7,7 +7,7 @@ package com.divers.Entite;
 
 /**
  *
- * @author farouk
+ * @author MrStealYourMom
  */
 public class Enseignant {
     private int id;
@@ -17,6 +17,9 @@ public class Enseignant {
     public Enseignant(){
         
     };
+    public Enseignant(int id){
+        this.id=id;
+    }
     public Enseignant(int id, String username, String email){
         this.id=id;
         this.username=username;
@@ -37,5 +40,8 @@ public class Enseignant {
     public String toString(){
         return this.username;
     }
-    
+    public void setId(int id)
+    {
+        this.id=id;
+    }
 }

@@ -35,7 +35,7 @@ public class ServiceOffre {
     
     public int ajouteroffre(Offre O) throws SQLException  {
 
-        String requeteInsert = "INSERT INTO offre (prix,dateDebut,dateFin,description) VALUES ( '" + O.getPrixoffre()+ "','" + O.getDate_debut()+ "','" + O.getDate_fin()+ "','" + O.getDescription()+ "');";
+        String requeteInsert = "INSERT INTO offre (prix,dateDebut,dateFin,description,photo) VALUES ( '" + O.getPrixoffre()+ "','" + O.getDate_debut()+ "','" + O.getDate_fin()+ "','" + O.getDescription()+ "','" + O.getImage()+ "');";
         int i = 0;   
        try {
            ste = con.createStatement();
@@ -68,7 +68,7 @@ public class ServiceOffre {
                    int e = 0;
 
         try {
-            String requete = "UPDATE offre SET prix='" + O.getPrixoffre()+   "',dateDebut='" + O.getDate_debut()+ "',dateFin='" + O.getDate_fin()+"',description='" + O.getDescription()+ "' WHERE id=" + O.getIdoffre();
+            String requete = "UPDATE offre SET prix='" + O.getPrixoffre()+   "',dateDebut='" + O.getDate_debut()+ "',dateFin='" + O.getDate_fin()+"',description='" + O.getDescription()+ "',photo='" + O.getImage()+   "' WHERE id=" + O.getIdoffre();
             Statement st = con.createStatement();
             e=st.executeUpdate(requete);
             System.out.println("Offre modifiée !");
@@ -88,7 +88,9 @@ public class ServiceOffre {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(requete);
             while (rs.next()) {
-                list.add(new Offre(rs.getInt(1), rs.getDouble(2), rs.getDate(3), rs.getDate(4), rs.getString(5)));
+                Offre O = new Offre(rs.getInt(1), rs.getDouble(2), rs.getDate(3), rs.getDate(4), rs.getString(5));
+                O.setImage(rs.getString(6));
+                list.add(O);
             }
 
         } catch (SQLException ex) {
@@ -105,7 +107,9 @@ public class ServiceOffre {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(requete);
             while (rs.next()) {
-                list.add(new Offre(rs.getInt(1), rs.getDouble(2), rs.getDate(3), rs.getDate(4), rs.getString(5)));
+                Offre O = new Offre(rs.getInt(1), rs.getDouble(2), rs.getDate(3), rs.getDate(4), rs.getString(5));
+                O.setImage(rs.getString(6));
+                list.add(O);
             }
 
         } catch (SQLException ex) {

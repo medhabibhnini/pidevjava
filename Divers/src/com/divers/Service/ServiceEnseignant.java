@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 /**
  *
- * @author farouk
+ * @author MrStealYourMom
  */
 public class ServiceEnseignant {
     
@@ -57,7 +57,22 @@ public class ServiceEnseignant {
             ResultSet rs = st.executeQuery(requete);
             while (rs.next()) {
                 tmp=new Enseignant(rs.getInt(1), rs.getString(2), rs.getString(3));
-                System.out.print(tmp.getId());
+            }
+
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return tmp;
+    }
+    
+    public Enseignant getById(int id){
+        Enseignant tmp = new Enseignant();
+        try {
+            String requete = "SELECT id,username,email FROM fos_user where id='"+id+"'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                tmp=new Enseignant(rs.getInt(1), rs.getString(2), rs.getString(3));
             }
 
         } catch (SQLException ex) {

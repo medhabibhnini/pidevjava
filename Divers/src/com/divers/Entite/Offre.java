@@ -17,6 +17,7 @@ public class Offre {
     private Date date_debut ;
     private Date date_fin ;
     private String description ;
+    private String image;
 
     public Offre(int idoffre, double prixoffre, Date date_debut, Date date_fin, String description) {
         this.idoffre = idoffre;
@@ -57,7 +58,9 @@ public class Offre {
     public String getDescription() {
         return description;
     }
-
+    public String getImage(){
+    return this.image;
+    }
     public void setIdoffre(int idoffre) {
         this.idoffre = idoffre;
     }
@@ -76,6 +79,9 @@ public class Offre {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    public void setImage(String image){
+        this.image= image;
     }
 
     @Override

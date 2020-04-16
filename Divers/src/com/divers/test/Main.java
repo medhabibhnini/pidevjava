@@ -27,7 +27,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-       Parent root = FXMLLoader.load(getClass().getResource("diverback.fxml"));
+       Parent root = FXMLLoader.load(getClass().getResource("diverfront.fxml"));
             
             Scene scene = new Scene(root);
             
@@ -36,6 +36,8 @@ public class Main extends Application {
         primaryStage.setTitle("IngenSchool");
         primaryStage.setScene(scene);
         primaryStage.show();
+        
+        
     }
     /**
      * @param args the command line arguments
