@@ -213,7 +213,6 @@ public class FrontofficeController implements Initializable {
     private TableColumn<Evenement, ?> dateEvent;
     @FXML
     private TableColumn<Evenement, ?> ensEvent;
-    @FXML
     private ListView<TextFlow> listView;
     @FXML
     private Label errorParticipation;
@@ -225,6 +224,14 @@ public class FrontofficeController implements Initializable {
     private Button event_btn;
     @FXML
     private TextField searchoffre;
+    @FXML
+    private Label error_nomr;
+    @FXML
+    private Label error_sujetr;
+    @FXML
+    private Label error_attes;
+    @FXML
+    private Label error_langue;
 
     /**
      * Initializes the controller class.
@@ -709,13 +716,17 @@ search1.setOnKeyReleased(e->
     @FXML
     private void AddReclamation(ActionEvent event) throws SQLException
     {
+boolean issujetnEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_nomr,error_nomr, "field is require");
+boolean isdesciprtionEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_sujetr,error_sujetr, "field is require");
 
+          if(isdesciprtionEmpty && issujetnEmpty)
+          {
         // int id = Integer.valueOf(Ab_IdAb.getText());
         Date dater = Date.valueOf(datepicker.getValue());
          String nomr = tf_nomr.getText();
           String sujetr = tf_sujetr.getText();
          ServiceReclamation sl = new ServiceReclamation();
-        Reclamation l = new Reclamation(nomr,sujetr,dater);
+        Reclamation l = new Reclamation(nomr,sujetr,dater,id_user);
             System.out.println(l);
          sl.ajouterReclamation(l);
 
@@ -730,7 +741,7 @@ search1.setOnKeyReleased(e->
            loadDataReclamation();
 
     }
-       
+    }
 
  @FXML
     private void ResetR()
@@ -806,13 +817,15 @@ public void deleteReclamation(ActionEvent event) throws SQLException, AWTExcepti
     @FXML
     private void AddAttestation(ActionEvent event) throws SQLException
     {
-
+boolean isdesciprtionEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tff_langue,error_attes, "field is require");
+boolean islangueEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tff_langue1,error_langue, "field is require");
         // int id = Integer.valueOf(Ab_IdAb.getText());
-        
+        if(isdesciprtionEmpty && islangueEmpty)
+        {
         String typea = tff_langue1.getText();
           String langue = tff_langue.getText();
          ServiceAttestation sa = new ServiceAttestation();
-       Attestation a = new Attestation(typea,langue);
+       Attestation a = new Attestation(typea,langue,id_user);
             System.out.println(a);
          sa.ajouterAttestation(a);
 
@@ -827,7 +840,7 @@ public void deleteReclamation(ActionEvent event) throws SQLException, AWTExcepti
                  loadDataAttestation();
 
     }
-    
+    }
  @FXML
     private void ResetA()
 {
@@ -1152,8 +1165,6 @@ if (i == 1)
 }
     
     
-     @FXML 
-    
     public void sendnotificationforevent() {
         try {
             String jsonResponse;
@@ -1208,5 +1219,9 @@ if (i == 1)
     
     
 }
+
+    @FXML
+    private void ResetR(ActionEvent event) {
+    }
     
 }

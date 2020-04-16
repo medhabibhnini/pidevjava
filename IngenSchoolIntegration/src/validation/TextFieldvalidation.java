@@ -6,7 +6,10 @@
 package validation;
 //import com.jfoenix.controls.JFXTextField;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 /**
  *
  * @author ghassen
@@ -16,6 +19,15 @@ public class TextFieldvalidation {
     boolean b=false;
     
     if(tf.getText().length() !=0 || !tf.getText().isEmpty())
+        {
+        b= true;
+        }
+    return b;
+    }
+      public static boolean isTextAreaNoEmpty( TextArea ta){
+    boolean b=false;
+    
+    if(ta.getText().length() !=0 || !ta.getText().isEmpty())
         {
         b= true;
         }
@@ -82,6 +94,15 @@ public class TextFieldvalidation {
     return b;
    }    
     
-    
+      public static boolean isValidEmailAddress(String email) {
+   boolean result = true;
+   try {
+      InternetAddress emailAddr = new InternetAddress(email);
+      emailAddr.validate();
+ } catch (AddressException ex) {
+      result = false;
+   }
+   return result;
+}
    
 }

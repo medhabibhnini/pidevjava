@@ -87,6 +87,8 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.controlsfx.control.Notifications;
 import com.school.Entite.Participation;
 import static com.school.test.FrontofficeController.id_user;
+import javafx.scene.paint.Color;
+import static validation.TextFieldvalidation.isValidEmailAddress;
 /**
  * FXML Controller class
  *
@@ -201,7 +203,7 @@ public class BackController implements Initializable {
     @FXML
     private TableColumn<Attestation, ?> sujet_col11;
     @FXML
-    private TextArea des_area;
+    private TextField des_area;
     @FXML
     private DatePicker datepicker1;
     @FXML
@@ -280,6 +282,18 @@ public class BackController implements Initializable {
     private Label errorEvent;
     @FXML
     private DatePicker datepickerattes;
+    @FXML
+    private Label error_sujetblo;
+    @FXML
+    private Label error_descblo;
+    @FXML
+    private Label error_username;
+    @FXML
+    private Label error_email;
+    @FXML
+    private Label error_mdp;
+    @FXML
+    private Label error_descripServ;
 
     /**
      * Initializes the controller class.
@@ -774,11 +788,20 @@ private void loadDataUser() {
        }
         tab_viewU.setItems(datau);
     } 
+private void setLblError(Color color, String text) {
+        error_email.setTextFill(color);
+        error_email.setText(text);
+        System.out.println(text);
+    }
 
   @FXML
      public void updateUser(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
      
-       
+    boolean issujetEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_name,error_username, "name is require");
+    boolean isdescripEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_email, error_email, "email is require");
+    boolean ispwdEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_password, error_mdp, "mot de passe is require");
+   
+    if(issujetEmpty && isdescripEmpty && ispwdEmpty){
         int i;
            
             
@@ -789,12 +812,17 @@ private void loadDataUser() {
             String Nomp = tf_name.getText();
            String mail=tf_email.getText();
            String pswd = tf_password.getText();
-           String role=tf_role.getText();            
+           //String role=tf_role.getText();   
+           if (!isValidEmailAddress(tf_email.getText()))
+          {
+                setLblError(Color.OLDLACE, "email is not valid"); 
+          }
+                    
             
    
             
             ServiceUser prod=new ServiceUser();
-            User u=new User(c, Nomp, mail, pswd, role);
+            User u=new User(c, Nomp, mail, pswd);
          
        
             System.out.println(u);
@@ -811,7 +839,7 @@ private void loadDataUser() {
            loadDataUser();
            
         }
-          
+    }
         ResetU();
         
     }
@@ -899,7 +927,10 @@ tf_name.setText(us.getUsername());
     
          @FXML
     private void AddBlog(ActionEvent event) throws SQLException {
-            
+    boolean issujetEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_sujet,error_sujetblo, "sujet is require");
+    boolean isdescripEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_description, error_descblo, "description is require");
+    if(issujetEmpty && isdescripEmpty)
+    {
         int i=0;
         String photo = null;
         String sujet =tf_sujet.getText();    
@@ -928,7 +959,7 @@ if (i == 1)
                  loadDataBlog();
                  
                 
-
+    }
     }
  ResetB();
  }
@@ -1463,6 +1494,9 @@ w.setItems(dataA);
      @FXML
     private void Ajouter(ActionEvent event) {
         
+          boolean isdesciprtionEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(des_area,error_descripServ, "field is require");
+          if(isdesciprtionEmpty)
+          {
          String description = des_area.getText();
             Date date = Date.valueOf(datepickerattes.getValue());
        
@@ -1478,18 +1512,12 @@ w.setItems(dataA);
 
         }
 
-  
-   
-
-//       ServiceEvenement sp = new ServiceEvenement();
-       
-//        Evenement e = new Evenement(Name,dd,Location,number,Desc,Cat,u);
-       // sp.insertPST(e);
          JOptionPane.showMessageDialog(null, "ajout avec succes");
         afficherService();
          loadDataService();
          ServiceService sl = new ServiceService();
 sl.sendEmail();
+          }
     }
     @FXML
     public void deleteService(ActionEvent event) throws SQLException, AWTException, MalformedURLException 

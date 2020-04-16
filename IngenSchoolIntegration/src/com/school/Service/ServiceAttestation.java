@@ -35,7 +35,7 @@ public class ServiceAttestation {
     
     public int ajouterAttestation(Attestation R) throws SQLException  {
 
-        String requeteInsert = "INSERT INTO attestation (typea,langue) VALUES ('" +R.getLangue()+ "','" +R.getTypea()+ "');";
+        String requeteInsert = "INSERT INTO attestation (typea,langue,id_user) VALUES ('" +R.getLangue()+ "','" +R.getTypea()+ "''" +R.getIdu()+ "');";
         int i = 0;   
        try {
            ste = con.createStatement();

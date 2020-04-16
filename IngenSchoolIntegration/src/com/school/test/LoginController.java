@@ -6,6 +6,7 @@
 package com.school.test;
 
 import static com.school.Entite.Session.setIdSession;
+import com.school.Service.ServiceUser;
 import com.school.Utils.DataBase;
 import java.io.IOException;
 import java.net.URL;
@@ -14,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -119,5 +121,11 @@ public class LoginController implements Initializable
                     stage.setScene(scene);
                     stage.show();
     }
-    
+    @FXML
+    private void mdp(ActionEvent event)
+    {
+     ServiceUser s=new ServiceUser();
+     s.sendmail();
+
+}
 }

@@ -26,7 +26,9 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import static validation.TextFieldvalidation.isValidEmailAddress;
 
 /**
  * FXML Controller class
@@ -50,6 +52,12 @@ public class InscriptionController implements Initializable
     private Button register;
     @FXML
     private Label login;
+    @FXML
+    private Label error_username;
+    @FXML
+    private Label error_email;
+    @FXML
+    private Label error_mdp;
 
     /**
      * Initializes the controller class.
@@ -74,6 +82,11 @@ public class InscriptionController implements Initializable
 
           
     }
+    private void setLblError(Color color, String text) {
+        error_email.setTextFill(color);
+        error_email.setText(text);
+        System.out.println(text);
+    }
 
     @FXML
     private void register(MouseEvent event) throws SQLException, IOException 
@@ -85,7 +98,15 @@ public class InscriptionController implements Initializable
         if(roleEtudiant.isSelected()){
             leRole="Etudiant";
         }
-        
+           boolean issujetEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(userName,error_username, "name is require");
+    boolean isdescripEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(email, error_email, "email is require");
+    boolean ispwdEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(password, error_mdp, "mot de passe is require");
+   
+    if(issujetEmpty && isdescripEmpty && ispwdEmpty){
+          if (!isValidEmailAddress(email.getText()))
+          {
+                setLblError(Color.OLDLACE, "email is not valid"); 
+          }
         
         String req ="INSERT INTO `fos_user` (`id`, `username`, `email`,`password`,`roles`) VALUES (NULL,'"+userName.getText()+"','"+email.getText()+"','"+password.getText()+"','"+leRole+"');";
       PreparedStatement  ps = con.prepareStatement(req);
@@ -119,5 +140,5 @@ public class InscriptionController implements Initializable
         
         
     }
-    
+    }
 }

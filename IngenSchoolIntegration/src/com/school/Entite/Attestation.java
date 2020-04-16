@@ -17,6 +17,22 @@ public class Attestation
     private int ida;
     private String typea;
     private String langue;
+    private int idu;
+
+    public int getIdu() {
+        return idu;
+    }
+
+    public void setIdu(int idu) {
+        this.idu = idu;
+    }
+
+    public Attestation(String typea, String langue, int idu) {
+        this.typea = typea;
+        this.langue = langue;
+        this.idu = idu;
+    }
+    
 
     public Attestation(int ida, String typea, String langue) {
         this.ida = ida;

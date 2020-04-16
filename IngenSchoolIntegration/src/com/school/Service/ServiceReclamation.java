@@ -33,7 +33,7 @@ public class ServiceReclamation
     
     public void ajouterReclamation(Reclamation R) throws SQLException  {
 
-        String requeteInsert = "INSERT INTO reclamation (nomr,sujetr,dater) VALUES ( '" +R.getNomr()+ "','" +R.getSujetr()+ "','" +R.getDater()+ "');";
+        String requeteInsert = "INSERT INTO reclamation (nomr,sujetr,dater,idUser) VALUES ( '" +R.getNomr()+ "','" +R.getSujetr()+ "','" +R.getDater()+ "','" +R.getIdu()+ "');";
         int i = 0;   
        try {
            ste = con.createStatement();

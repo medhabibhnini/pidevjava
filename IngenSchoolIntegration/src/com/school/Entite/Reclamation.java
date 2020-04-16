@@ -17,6 +17,23 @@ public class Reclamation {
     private String nomr;
     private String sujetr;
     private Date dater;
+    private int idu;
+
+    public int getIdu() {
+        return idu;
+    }
+
+    public void setIdu(int idu) {
+        this.idu = idu;
+    }
+
+    public Reclamation(String nomr, String sujetr, Date dater, int idu) {
+        this.nomr = nomr;
+        this.sujetr = sujetr;
+        this.dater = dater;
+        this.idu = idu;
+    }
+    
 
     public Reclamation(int idr, String nomr, String sujetr, Date dater) {
         this.idr = idr;

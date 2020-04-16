@@ -40,6 +40,11 @@
                   <Insets left="65.0" top="50.0" />
                </VBox.margin>
             </Button>
+            <Button blendMode="OVERLAY" mnemonicParsing="false" onAction="#mdp" onMouseClicked="#Login" prefHeight="31.0" prefWidth="219.0" style="-fx-background-color: brown;" text="mot de passe oublié" textFill="WHITE">
+               <VBox.margin>
+                  <Insets left="120.0" top="30.0" />
+               </VBox.margin>
+            </Button>
             <Label fx:id="registre" onMouseClicked="#Register" prefHeight="21.0" prefWidth="332.0" text="                             Créer un compte">
                <VBox.margin>
                   <Insets left="45.0" top="20.0" />
