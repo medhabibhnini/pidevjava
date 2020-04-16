@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package com.school.test;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.school.Entite.Commande;
 import com.school.Entite.Livraison;
 import com.school.Entite.Livre;
@@ -15,9 +17,14 @@ import com.school.Service.ServiceBlog;
 import com.school.Service.ServiceLivraison;
 import com.school.Service.ServiceLivre;
 import com.school.Entite.Attestation;
+import com.school.Entite.Evenement;
+import com.school.Entite.Offre;
 import com.school.Entite.Reclamation;
 import com.school.Entite.Service;
 import com.school.Service.ServiceAttestation;
+import com.school.Service.ServiceEvenement;
+import com.school.Service.ServiceOffre;
+import com.school.Service.ServiceParticipation;
 import com.school.Service.ServiceReclamation;
 import com.school.Service.ServiceService;
 import com.school.Utils.DataBase;
@@ -26,15 +33,20 @@ import com.school.Utils.DataBase;
 import java.awt.AWTException;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,6 +59,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -65,11 +78,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import javafx.util.converter.LocalDateStringConverter;
 import javax.imageio.ImageIO;
 import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
 import org.apache.commons.lang3.RandomStringUtils;
-
+import org.controlsfx.control.Notifications;
+import com.school.Entite.Participation;
+import static com.school.test.FrontofficeController.id_user;
 /**
  * FXML Controller class
  *
@@ -84,6 +101,9 @@ public class BackController implements Initializable {
     private ObservableList<Reclamation> dataR;
     private ObservableList<Attestation> dataA;
     private ObservableList<Service> dataS;
+    private ObservableList<Offre> dataO;
+    private ObservableList<Evenement> dataE;
+    private ObservableList<Participation> dataP;
     private String path ;
     private FXMLLoader loader;
     private Connection con;
@@ -208,6 +228,56 @@ public class BackController implements Initializable {
     private Label error_quantite;
     @FXML
     private Label error_prix;
+    @FXML
+    private TextField tf_prix1;
+    @FXML
+    private DatePicker datepicker11;
+    @FXML
+    private TextField tf_desc;
+    @FXML
+    private Label fileName;
+    @FXML
+    private TableView<Offre> tab_Offre;
+    @FXML
+    private TableColumn<Offre, ?> prix_col;
+    @FXML
+    private TableColumn<Offre, ?> date_debut_col;
+    @FXML
+    private TableColumn<Offre, ?> date_fin_col;
+    @FXML
+    private TableColumn<Offre, ?> description_col;
+    @FXML
+    private TextField searchOffre;
+    @FXML
+    private Label errorOffre;
+    @FXML
+    private DatePicker datepicker111;
+    @FXML
+    private TextField tf_desc1;
+    @FXML
+    private ComboBox <User>ENS;
+    @FXML
+    private TableView<Evenement> tab_Evenement;
+    @FXML
+    private TableColumn<Evenement, ?> idvenement_col;
+    @FXML
+    private TableColumn<Evenement, ?> date_event_col;
+    @FXML
+    private TableColumn<Evenement, ?> enseignant_col;
+    @FXML
+    private TableColumn<Evenement, ?> descriptionE_col;
+    @FXML
+    private TextField searchEvent;
+    @FXML
+    private TableView<Participation> tab_participation;
+    @FXML
+    private TableColumn<Participation, ?> event;
+    @FXML
+    private TableColumn<Participation, ?> participant;
+    @FXML
+    private TextField searchParticipation;
+    @FXML
+    private Label errorEvent;
 
     /**
      * Initializes the controller class.
@@ -218,6 +288,7 @@ public class BackController implements Initializable {
          data= FXCollections.observableArrayList();
         datac= FXCollections.observableArrayList();
         dataL= FXCollections.observableArrayList();
+        dataP= FXCollections.observableArrayList();
         affichercomd();
         loadDatacommande();
         setCellValueFromTableToTextFieldlivre();
@@ -247,6 +318,16 @@ public class BackController implements Initializable {
             searchReclamation();
             searchAttestation();
             searchService();
+            dataO= FXCollections.observableArrayList();
+       dataE= FXCollections.observableArrayList();
+       setCellValueFromTableToTextFieldOffre();
+       setCellValueFromTableToTextFieldevent();
+       afficherOffre();
+       loadDataOffre();
+       afficherEvenement();
+       loadDataEvenement();
+       afficherParticipation();
+       loadDataParticipation();
             
   
 
@@ -604,7 +685,7 @@ private void loadDataLivraison() {
               String livre=liv.getnomcmdbyId(idlivre);
                String email = com.getnomuserbyId(u);
                
-            System.out.println(livre);
+           // System.out.println(livre);
              dataL.add(new  Livraison(idlivraison,email ,livre ));
              //dataL.add(new  Livraison(rs.getInt("idlivraison"),email ,rs.getInt("idcommande") ));
      }       }
@@ -1425,7 +1506,583 @@ sl.sendEmail();
     }
 
     
+          
+@FXML
+    private void Addoffre(ActionEvent event) throws SQLException {
+        if(Validchamp(tf_desc) && fileName.getText()!="Choisir Image" && Validchamp(tf_prix)){
+        int i=0;
+         double prixoffre = Float.valueOf(tf_prix1.getText());
+         Date date_debut = Date.valueOf(datepicker1.getValue());
+         Date date_fin = Date.valueOf(datepicker11.getValue());
+        String description =tf_desc.getText();
+        ServiceOffre Bl = new ServiceOffre();
+        Offre B = new Offre(prixoffre,date_debut,date_fin,description);
+       B.setImage(fileName.getText());
+         System.out.println(B);
+         i=Bl.ajouteroffre(B);
+         
+if (i == 1)
+    {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("Offre ajouter");
+                alert.showAndWait();
+                afficherOffre();
+                loadDataOffre();
+                errorOffre.setText("");
 
+                // PUSH NOTIFICATION
+                Notifications notificationBuilder=  Notifications.create()
+                        .title("Nouvelle Offre")
+                        .text("Consulter La Nouvelle Offre !!")
+                        .graphic(null)
+                        .hideAfter(Duration.seconds(5))
+                        .position(Pos.BOTTOM_RIGHT);
+                notificationBuilder.darkStyle();
+                notificationBuilder.show();
+        
+    }
+        }
+        else{
+            errorOffre.setText("Input Invalide");
+        }
+ }
+    
+    @FXML
+    private void AddEvenement(ActionEvent event) throws SQLException {
+        if(Validchamp(tf_desc1)){
+        int i=0;
+        ServiceUser se= new ServiceUser();
+        Date dateevenemet = Date.valueOf(datepicker111.getValue());
+        String description =tf_desc1.getText();
+       // User tmp=se.getByUsername(ENS.getSelectionModel().getSelectedItem().toString());
+       
+        //System.out.print(id_es);
+            User idenseignant =  ENS.getValue();
+     
+             int ide=idenseignant.getId();
+        ServiceEvenement Bl = new ServiceEvenement();
+        Evenement B = new Evenement(dateevenemet,description,ide);
+         System.out.println(B);
+         i=Bl.ajouterevenement(B);
+         errorEvent.setText("");
+if (i == 1)
+    {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("Evenement ajouter");
+                alert.showAndWait();
+                
+        
+    }
+    loadDataEvenement();
+        }
+        else
+        {
+            errorEvent.setText("Input Invalide");
+        }
+ }   
+     
+    
+    
+    private void afficherOffre(){
+
+             
+             prix_col.setCellValueFactory(new PropertyValueFactory <>("prixoffre"));
+             date_debut_col.setCellValueFactory(new PropertyValueFactory <>("date_debut"));
+             date_fin_col.setCellValueFactory(new PropertyValueFactory <>("date_fin"));
+             description_col.setCellValueFactory(new PropertyValueFactory <>("description"));
+    }
+    
+    private void afficherParticipation(){
+
+             event.setCellValueFactory(new PropertyValueFactory <>("IdEvent"));
+             participant.setCellValueFactory(new PropertyValueFactory <>("email"));
+    }
+    private void loadDataParticipation(){
+        
+        dataP.clear();
+         try {
+           pst =con.prepareStatement("SELECT * FROM participation");
+
+    rs=pst.executeQuery();
+     while (rs.next()) { 
+              
+              int id=rs.getInt("id");
+             
+             int idUser= rs.getInt("idUser");
+       
+              int idEvent =rs.getInt("idEvent");
+                 ServiceParticipation com = new ServiceParticipation();
+               String email = com.getnomuserbyId(idUser);
+
+               
+
+             dataP.add(new  Participation(id,email,idEvent));
+             //dataL.add(new  Livraison(rs.getInt("idlivraison"),email ,rs.getInt("idcommande") ));
+     }       }
+       catch (SQLException ex) {
+           Logger.getLogger(ServiceLivraison.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        tab_participation.setItems(dataP); 
+      
+     
+    }
+    
+     private void loadDataOffre() {
+   dataO.clear();
+         try {
+           pst =con.prepareStatement("Select * from offre");
+
+    rs=pst.executeQuery();
+     while (rs.next()) {                
+             dataO.add(new  Offre(rs.getInt("id"), rs.getInt("prix"), rs.getDate("datedebut"), rs.getDate("datefin"),rs.getString("description")));
+     }       }
+       catch (SQLException ex) {
+           Logger.getLogger(ServiceOffre.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        tab_Offre.setItems(dataO);
+        searchOffre.setText("");
+    }
+    
+    
+    private void afficherEvenement(){
+
+             idvenement_col.setCellValueFactory(new PropertyValueFactory <>("idevenement"));
+             date_event_col.setCellValueFactory(new PropertyValueFactory <>("dateevenement"));
+             descriptionE_col.setCellValueFactory(new PropertyValueFactory <>("description"));
+             enseignant_col.setCellValueFactory(new PropertyValueFactory <>("idenseignant"));
+             
+    }
+    
+    private void loadDataEvenement() {
+   dataE.clear();
+         try {
+           pst =con.prepareStatement("Select * from evenement");
+           ServiceUser SE=new ServiceUser();
+    rs=pst.executeQuery();
+     while (rs.next()) {
+             Evenement tmp= new Evenement(rs.getInt("id"),rs.getDate("date"),rs.getString("description"),rs.getInt("IdEnseignant"));
+//             tmp.setEnseignant(SE.getById(tmp.getIdenseignant()));
+             dataE.add(tmp);
+     }   
+     
+     List<User> ls= SE.getList();
+     ObservableList<User> cls4 = FXCollections.observableArrayList();
+     for (User tmp : ls)
+     {
+         cls4.add(tmp);
+     }
+     ENS.setItems(cls4);
+         }
+       catch (SQLException ex) {
+           Logger.getLogger(ServiceEvenement.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        tab_Evenement.setItems(dataE);
+        searchEvent.setText("");
+    }
+    
+   
+    
+    
+     public Offre gettempO(TableColumn.CellEditEvent edittedCell) {
+        Offre test = tab_Offre.getSelectionModel().getSelectedItem();
+        
+        return test;
+    }
+     
+     
+     private void setCellValueFromTableToTextFieldOffre()
+        {
+       tab_Offre.setOnMouseClicked(new EventHandler<MouseEvent>()
+             {
+        @Override
+        public void handle(MouseEvent event) {
+       Offre o=tab_Offre.getItems().get(tab_Offre.getSelectionModel().getSelectedIndex());
+       tf_prix.setText(Double.toString(o.getPrixoffre()));
+       tf_desc.setText(o.getDescription());
+       String dtstr=o.getDate_debut().toString();
+       String dtstr1=o.getDate_fin().toString();       
+            LocalDate dt=new LocalDateStringConverter().fromString(dtstr.substring(5,7)+"/"+dtstr.substring(8,10)+"/"+dtstr.substring(0,4));
+            LocalDate dt1=new LocalDateStringConverter().fromString(dtstr1.substring(5,7)+"/"+dtstr1.substring(8,10)+"/"+dtstr1.substring(0,4));
+            datepicker.setValue(dt);
+            datepicker1.setValue(dt1);
+                    }
+               });
+       }
+     
+     private void setCellValueFromTableToTextFieldevent()
+        {
+       tab_Evenement.setOnMouseClicked(new EventHandler<MouseEvent>()
+             {
+        @Override
+        public void handle(MouseEvent event) {
+       Evenement ev=tab_Evenement.getItems().get(tab_Evenement.getSelectionModel().getSelectedIndex());
+       tf_desc1.setText(ev.getDescription());
+       String dtstr=ev.getDateevenement().toString();
+            LocalDate dt=new LocalDateStringConverter().fromString(dtstr.substring(5,7)+"/"+dtstr.substring(8,10)+"/"+dtstr.substring(0,4));
+            datepicker11.setValue(dt);
+                    }
+               });
+       }
+     
+     
+
+    
+    @FXML
+   public void deleteOffre(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
+                 if(tab_Offre.getSelectionModel().getSelectedIndex()!=-1){
+
+         TableColumn.CellEditEvent edittedcell = null;
+         Offre x=gettempO(edittedcell);         
+         int i=x.getIdoffre();
+         ServiceOffre liv=new ServiceOffre();
+           
+           
+            
+            int s=liv.deleteoffre(i);
+              if(s==1)
+        {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("offre supprimé");
+                alert.showAndWait();
+           afficherOffre();
+           loadDataOffre();
+           errorOffre.setText("");
+        }
+                 }
+                 else{
+                                 errorOffre.setText("Choix Invalide");
+
+                 }
+               
+    }
+
+    @FXML
+     public void updateOffre(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
+       
+       if(Validchamp(tf_desc) && fileName.getText()!="Choisir Image" && Validchamp(tf_prix) &&tab_Offre.getSelectionModel().getSelectedIndex()!=-1){
+        int i;
+           
+            
+           TableColumn.CellEditEvent edittedcell = null;
+           Offre x=gettempO(edittedcell);
+           int c=x.getIdoffre();
+           Double prixoffre=Double.valueOf(tf_prix.getText());
+           Date date_debut=Date.valueOf(datepicker.getValue());
+           Date date_fin=Date.valueOf(datepicker1.getValue());
+           String description=String.valueOf(tf_desc.getText());            
+            
+   
+              //Category c = new Category(0,Namecat);
+            ServiceOffre prod=new ServiceOffre();
+            Offre u=new Offre(c,prixoffre,date_debut,date_fin ,description);
+            u.setImage(fileName.getText());
+         
+       
+            System.out.println(u);
+            i=prod.modifieroffre(u);
+              if(i==1)
+        {
+           
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("User modifier");
+                alert.showAndWait();
+           afficherOffre();
+           loadDataOffre();
+           errorOffre.setText("");
+           
+        }
+       }
+       else{
+                       errorOffre.setText("Input ou Choix Invalide");
+
+       }
+          
+        
+        
+
+    }
+     
+    @FXML
+     public void deleteEvent(){
+         if(tab_Evenement.getSelectionModel().getSelectedIndex()!=-1){
+         ServiceEvenement se=new ServiceEvenement();
+         Evenement tmp=tab_Evenement.getSelectionModel().getSelectedItem();
+         try{
+         int i =se.deleteevenement(tmp.getIdevenement());
+        if (i == 1)
+    {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("Evenement Supprimé");
+                alert.showAndWait();
+                
+        
+    }
+    loadDataEvenement();
+    loadDataParticipation();
+    errorEvent.setText("");
+         }
+         catch(SQLException ex)
+         {
+             
+         }
+         }
+         else{
+                         errorEvent.setText("Choix Invalide");
+
+         }
+         
+         
+     }
+     
+    @FXML
+     public void updateEvent(){
+         if(Validchamp(tf_desc1)){
+         int i=0;
+        ServiceUser se= new ServiceUser();
+        Date dateevenemet = Date.valueOf(datepicker11.getValue());
+        String description =tf_desc1.getText();
+              User idenseignant =  ENS.getValue();
+     
+             int ide=idenseignant.getId();
+        ServiceEvenement Bl = new ServiceEvenement();
+       
+        Evenement tmp2=tab_Evenement.getSelectionModel().getSelectedItem();
+       Evenement B = new Evenement(tmp2.getIdevenement(),dateevenemet,description,ide);
+         System.out.println(B);
+       
+         i=Bl.modifierevenement(B);
+         
+if (i == 1)
+    {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("Evenement modifié");
+                alert.showAndWait();
+                
+        
+    }
+    loadDataEvenement();
+    errorEvent.setText("");
+         }
+         else{
+             errorEvent.setText("Input ou Choix Invalide");
+         }
+     }
+    @FXML
+    public void search_offre(){            
+                 ServiceOffre ser = new ServiceOffre();
+                     List<Offre> list = ser.displayClause(" WHERE id LIKE '%"+searchOffre.getText()+"%' or prix LIKE '%"+searchOffre.getText()+"%' or dateDebut LIKE '%"+searchOffre.getText()+"%' or dateFin LIKE '%"+searchOffre.getText()+"%' or description LIKE '%"+searchOffre.getText()+"%'");
+                     ObservableList<Offre> cls = FXCollections.observableArrayList();
+                     for (Offre aux : list)
+                     {
+                      cls.add(new Offre(aux.getIdoffre(),aux.getPrixoffre(), aux.getDate_debut(), aux.getDate_fin(), aux.getDescription()));  
+                     }
+                     tab_Offre.setItems(cls);
+                    
+                 }
+        
+    @FXML
+    void search_event(){
+       ServiceEvenement ser = new ServiceEvenement();
+                     List<Evenement> list = ser.displayClause(" WHERE id LIKE '%"+searchEvent.getText()+"%' or date LIKE '%"+searchEvent.getText()+"%' or description LIKE '%"+searchEvent.getText()+"%' or idEnseignant LIKE '%"+searchEvent.getText()+"%'");
+                     ObservableList<Evenement> cls = FXCollections.observableArrayList();
+                     ServiceUser se= new ServiceUser();
+                     for (Evenement aux : list)
+                     {
+                         Evenement tmp= new Evenement(aux.getIdevenement(),aux.getDateevenement(), aux.getDescription(), aux.getIdenseignant());
+                         // tmp.setEnseignant(se.getById(tmp.getIdenseignant()));
+                          cls.add(tmp);  
+                     }
+                     tab_Evenement.setItems(cls);
+                      /*  searchEvent.setOnKeyReleased(e->{
+    if(searchEvent.getText().equals("")){
+        loadDataEvenement();
+    }
+    else{
+        dataE.clear();
+        String sql = "SELECT * FROM evenement WHERE `id` LIKE LIKE '%"+searchEvent.getText()+"%'"
+                + "UNION SELECT * FROM evenement where `description` LIKE '%"+searchEvent.getText()+"%'" ;
+    try {
+      
+        pst=con.prepareStatement(sql);
+        rs=pst.executeQuery();
+        while(rs.next())
+        {
+            int id=rs.getInt("id");
+             
+             Date date= rs.getDate("date");
+       String desc=rs.getString("description");
+              int idEvent =rs.getInt("idEvent");
+              int idUser =rs.getInt("idUser");
+                 ServiceParticipation com = new ServiceParticipation();
+               String email = com.getnomuserbyId(idUser);
+
+               
+
+             dataE.add(new  Evenement(id,date,desc,idEvent));
+ 
+        }
+        tab_Evenement.setItems(dataE);
+    } catch (SQLException ex) {
+        Logger.getLogger(BackController.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
+    }
+});
+    */
+       
+    }
+    
+    @FXML
+            
+    void search_participation(){
+      /*  ServiceParticipation ser = new ServiceParticipation();
+                     List<Participation> list = ser.displayClause(" WHERE idUser LIKE '%"+searchParticipation.getText()+"%' or idEvent LIKE '%"+searchParticipation.getText()+"%'");
+                     ObservableList<Participation> cls = FXCollections.observableArrayList();
+                     ServiceUser se= new ServiceUser();
+                     for (Participation aux : list)
+                     {
+                          aux.getEmail();
+                          cls.add(aux);  
+                     }
+                     tab_participation.setItems(cls);*/
+                     searchParticipation.setOnKeyReleased(e->{
+    if(searchParticipation.getText().equals("")){
+        loadDataParticipation();
+    }
+    else{
+        dataP.clear();
+          String sql = "Select * from participation where idUser LIKE '%"+searchParticipation.getText()+"%'"
+                + "UNION Select * from participation where idEvent LIKE '%"+searchParticipation.getText()+"%'" ;
+    try {
+      
+        pst=con.prepareStatement(sql);
+        rs=pst.executeQuery();
+        while(rs.next())
+        {
+            int id=rs.getInt("id");
+             
+             int idUser= rs.getInt("idUser");
+       
+              int idEvent =rs.getInt("idEvent");
+                 ServiceParticipation com = new ServiceParticipation();
+               String email = com.getnomuserbyId(idUser);
+
+               
+
+             dataP.add(new  Participation(id,email,idEvent));
+ 
+        }
+        tab_participation.setItems(dataP);
+    } catch (SQLException ex) {
+        Logger.getLogger(BackController.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
+    }
+});
+    }
+    
+    
+    
+    @FXML
+    public void print_offre(){
+        ServiceOffre se= new ServiceOffre();
+        try{
+         List<Offre> list = se.afficheroffre();
+       
+                        FileChooser fileChooser = new FileChooser();
+                        fileChooser.getExtensionFilters().addAll(
+                        new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf"));
+                        File saveFile = fileChooser.showSaveDialog(tab_Offre.getScene().getWindow());
+                        System.out.println(saveFile.getAbsolutePath());
+                        OutputStream file= new FileOutputStream(new File(saveFile.getAbsolutePath()));
+                        Document document = new Document();
+                        PdfWriter.getInstance(document,file);
+                        document.open();
+                        pdf.addMetaData(document);
+                        pdf.addTitlePage(document, list);
+                        document.close(); 
+                        file.close();
+          }
+        catch(Exception ex)
+        {
+            
+        }
+
+
+    }
+    
+    @FXML
+    public void print_event(){
+                        
+        ServiceEvenement se= new ServiceEvenement();
+        try{
+         List<Evenement> list = se.afficherevenement();
+          ServiceUser SE= new ServiceUser();
+                     for (Evenement aux : list)
+                     {
+                         aux.setEnseignant(SE.getById(aux.getIdenseignant()));
+                     }
+                        FileChooser fileChooser = new FileChooser();
+                        fileChooser.getExtensionFilters().addAll(
+                        new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf"));
+                        File saveFile = fileChooser.showSaveDialog(tab_Offre.getScene().getWindow());
+                        System.out.println(saveFile.getAbsolutePath());
+                        OutputStream file= new FileOutputStream(new File(saveFile.getAbsolutePath()));
+                        Document document = new Document();
+                        PdfWriter.getInstance(document,file);
+                        document.open();
+                        pdf.addMetaData2(document);
+                        pdf.addTitlePage2(document, list);
+                        document.close(); 
+                        file.close();
+          }
+        catch(Exception ex)
+        {
+            
+        }
+        
+                        
+                        
+
+    }
+    @FXML
+    public void open_image(){
+        try{
+        FileChooser fileChooser = new FileChooser();
+                        fileChooser.getExtensionFilters().addAll(
+                        new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.jpg"),
+                        new FileChooser.ExtensionFilter("JPEG files (*.jpeg)", "*.jpeg"),
+                        new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png")
+                        );
+                        File saveFile = fileChooser.showOpenDialog(tab_Offre.getScene().getWindow());
+                        System.out.println(saveFile.getName());
+                        fileName.setText(saveFile.getName());
+                        File output = new File("\"C:\\\\wamp64\\\\www\\\\pidev\\\\IngenSchoolIntegration\\\\src\\\\com\\\\school\\\\images\""+saveFile.getName());
+                        Files.copy(saveFile.toPath(),output.toPath());
+        }
+                        catch(Exception ex)
+        {
+            
+        }
+    }
+    
+    private boolean Validchamp(TextField T){
+        return !T.getText().isEmpty() && T.getLength() > 3;
+    }
+
+    
  
 
 

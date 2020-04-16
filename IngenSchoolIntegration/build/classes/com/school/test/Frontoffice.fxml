@@ -59,7 +59,12 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="74.0" prefWidth="231.0" style="-fx-background-color: white;" text="Cours">
+            <Button fx:id="event_btn" layoutX="20.0" layoutY="418.0" mnemonicParsing="false" onAction="#eventbuttonAction" prefHeight="74.0" prefWidth="231.0" style="-fx-background-color: white;" text="Evenement">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="offre_btn" mnemonicParsing="false" onAction="#offrebuttonAction" prefHeight="74.0" prefWidth="231.0" style="-fx-background-color: white;" text="Offre">
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
@@ -190,6 +195,48 @@
                   </TableView>
                   <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="360.0" layoutY="120.0" prefHeight="21.0" prefWidth="110.0" text="Les  Services" textFill="#0d0d0d" textOverrun="CLIP" />
                   <Button layoutX="393.0" layoutY="444.0" mnemonicParsing="false" onAction="#deleteService" style="-fx-background-color: black;" text="supprimer" textFill="#ed7c02" />
+               </children>
+            </Pane>
+            <Pane fx:id="evenement_pane" prefHeight="734.0" prefWidth="922.0" style="-fx-background-color: white;">
+               <children>
+                  <ImageView fitHeight="645.0" fitWidth="840.0" layoutX="37.0" layoutY="39.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../images/download.png" />
+                     </image>
+                  </ImageView>
+                  <TableView fx:id="tab_evenement" layoutX="165.0" layoutY="78.0" prefHeight="200.0" prefWidth="603.0">
+                    <columns>
+                      <TableColumn fx:id="descEvent" prefWidth="248.0" text="Description" />
+                      <TableColumn fx:id="dateEvent" prefWidth="178.0" text="Date" />
+                        <TableColumn fx:id="ensEvent" prefWidth="176.0" text="Enseignant" />
+                    </columns>
+                  </TableView>
+                  <Label fx:id="errorParticipation" layoutX="530.0" layoutY="416.0" prefHeight="21.0" prefWidth="156.0" />
+                  <Button layoutX="321.0" layoutY="379.0" mnemonicParsing="false" onAction="#participer" prefHeight="48.0" prefWidth="209.0" text="pariticiper" />
+               </children>
+            </Pane>
+            <Pane fx:id="offre_pane" prefHeight="734.0" prefWidth="922.0" style="-fx-background-color: white;">
+               <children>
+                  <ImageView fitHeight="627.0" fitWidth="898.0" layoutX="9.0" layoutY="16.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../images/offre-marketing.jpg" />
+                     </image>
+                  </ImageView>
+                  <TableView fx:id="tab_offre" layoutX="162.0" layoutY="138.0" prefHeight="200.0" prefWidth="574.0">
+                    <columns>
+                      <TableColumn fx:id="descOffre" prefWidth="166.0" text="description" />
+                      <TableColumn fx:id="duOffre" prefWidth="131.0" text="Du" />
+                        <TableColumn fx:id="aOffre" prefWidth="143.0" text="A" />
+                        <TableColumn fx:id="prixOffre" minWidth="0.0" prefWidth="133.0" text="prix" />
+                    </columns>
+                  </TableView>
+                  <TextField fx:id="searchoffre" layoutX="571.0" layoutY="94.0" onKeyReleased="#searchOffre" />
+                  <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" layoutX="344.0" layoutY="426.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="labelDesc" layoutX="103.0" layoutY="389.0" prefHeight="21.0" prefWidth="175.0" />
+                  <Label fx:id="labelDate" layoutX="103.0" layoutY="441.0" prefHeight="21.0" prefWidth="156.0" />
+                  <Label fx:id="labelPrix" layoutX="103.0" layoutY="480.0" prefHeight="21.0" prefWidth="175.0" />
+                  <Button layoutX="143.0" layoutY="592.0" mnemonicParsing="false" onAction="#acheter" text="Acheter" />
+                  <Label fx:id="errorOffre" layoutX="444.0" layoutY="357.0" prefHeight="21.0" prefWidth="119.0" />
                </children>
             </Pane>
             <Pane fx:id="home_pane" prefHeight="734.0" prefWidth="922.0" style="-fx-background-color: white;">

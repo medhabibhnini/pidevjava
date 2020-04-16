@@ -322,6 +322,81 @@
                   </AnchorPane>
                </content>
             </Tab>
+            <Tab text="Offre">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox layoutX="33.0" layoutY="81.0" prefHeight="433.0" prefWidth="230.0">
+                           <children>
+                              <Label prefHeight="35.0" prefWidth="44.0" text="Prix" />
+                              <TextField fx:id="tf_prix1" />
+                              <Label prefHeight="41.0" prefWidth="73.0" text="Date debut" />
+                              <DatePicker fx:id="datepicker1" prefHeight="31.0" prefWidth="345.0" />
+                              <Label prefHeight="35.0" prefWidth="51.0" text="Date fin" />
+                              <DatePicker fx:id="datepicker11" prefHeight="31.0" prefWidth="348.0" />
+                              <Label prefHeight="35.0" prefWidth="345.0" text="Description" />
+                              <TextField fx:id="tf_desc" prefHeight="115.0" prefWidth="230.0" />
+                              <Label fx:id="fileName" prefHeight="35.0" prefWidth="122.0" text="Choisir Image" />
+                              <Button mnemonicParsing="false" onAction="#open_image" prefHeight="32.0" prefWidth="233.0" text="Ouvrir" />
+                           </children>
+                        </VBox>
+                        <TableView fx:id="tab_Offre" layoutX="361.0" layoutY="81.0" prefHeight="433.0" prefWidth="835.0">
+                           <columns>
+                              <TableColumn fx:id="prix_col" prefWidth="75.0" text="Prix" />
+                              <TableColumn fx:id="date_debut_col" prefWidth="117.0" text="Date Debut" />
+                              <TableColumn fx:id="date_fin_col" prefWidth="163.0" text="Date Fin" />
+                              <TableColumn fx:id="description_col" prefWidth="416.0" text="Description" />
+                           </columns>
+                        </TableView>
+                        <Button layoutX="619.0" layoutY="514.0" mnemonicParsing="false" onAction="#deleteOffre" prefHeight="31.0" prefWidth="253.0" text="supprimer" />
+                        <Button layoutX="361.0" layoutY="514.0" mnemonicParsing="false" onAction="#updateOffre" prefHeight="31.0" prefWidth="258.0" text="modifier" />
+                        <TextField fx:id="searchOffre" layoutX="992.0" layoutY="25.0" onKeyReleased="#search_offre" />
+                        <Button layoutX="872.0" layoutY="514.0" mnemonicParsing="false" onAction="#print_offre" prefHeight="31.0" prefWidth="326.0" text="Imprimer" />
+                        <Label fx:id="errorOffre" layoutX="59.0" layoutY="597.0" prefHeight="17.0" prefWidth="179.0" textFill="RED" />
+                        <Button layoutX="33.0" layoutY="524.0" mnemonicParsing="false" onAction="#Addoffre" prefHeight="31.0" prefWidth="230.0" text="Ajouter" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Evenement">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox layoutX="75.0" layoutY="32.0" prefHeight="433.0" prefWidth="230.0">
+                           <children>
+                              <Label prefHeight="35.0" prefWidth="51.0" text="Date" />
+                              <DatePicker fx:id="datepicker111" prefHeight="31.0" prefWidth="348.0" />
+                              <Label prefHeight="35.0" prefWidth="345.0" text="Description" />
+                              <TextField fx:id="tf_desc1" prefHeight="224.0" prefWidth="345.0" />
+                              <Label prefHeight="21.0" prefWidth="256.0" text="Enseignant" />
+                              <ComboBox fx:id="ENS" prefHeight="31.0" prefWidth="230.0" />
+                           </children>
+                        </VBox>
+                        <TableView fx:id="tab_Evenement" layoutX="461.0" layoutY="58.0" prefHeight="343.0" prefWidth="515.0">
+                           <columns>
+                              <TableColumn fx:id="idvenement_col" prefWidth="102.0" text="Num Event" />
+                              <TableColumn fx:id="date_event_col" prefWidth="105.0" text="Date" />
+                              <TableColumn fx:id="enseignant_col" prefWidth="105.0" text="Enseignant" />
+                              <TableColumn fx:id="descriptionE_col" prefWidth="202.0" text="description" />
+                           </columns>
+                        </TableView>
+                        <Button layoutX="75.0" layoutY="479.0" mnemonicParsing="false" onAction="#AddEvenement" prefHeight="31.0" prefWidth="230.0" text="Ajouter" />
+                        <Button layoutX="461.0" layoutY="402.0" mnemonicParsing="false" onAction="#deleteEvent" prefHeight="31.0" prefWidth="153.0" text="supprimer" />
+                        <Button layoutX="614.0" layoutY="402.0" mnemonicParsing="false" onAction="#updateEvent" prefHeight="31.0" prefWidth="186.0" text="modifier" />
+                        <TextField fx:id="searchEvent" layoutX="749.0" layoutY="16.0" onKeyReleased="#search_event" prefHeight="27.0" prefWidth="227.0" />
+                        <Button layoutX="800.0" layoutY="402.0" mnemonicParsing="false" onAction="#print_event" prefHeight="31.0" prefWidth="176.0" text="imprimer" />
+                        <TableView fx:id="tab_participation" layoutX="994.0" layoutY="58.0" prefHeight="344.0" prefWidth="200.0">
+                           <columns>
+                              <TableColumn fx:id="event" prefWidth="75.0" text="Evenement" />
+                              <TableColumn fx:id="participant" prefWidth="124.0" text="Participant" />
+                           </columns>
+                        </TableView>
+                        <TextField fx:id="searchParticipation" layoutX="1069.0" layoutY="16.0" onKeyReleased="#search_participation" prefHeight="27.0" prefWidth="125.0" />
+                        <Label fx:id="errorEvent" layoutX="655.0" layoutY="494.0" prefHeight="17.0" prefWidth="128.0" textFill="RED" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
          </tabs>
       </TabPane>
       <Button layoutX="1101.0" layoutY="7.0" mnemonicParsing="false" onAction="#DecoU" style="-fx-background-color: black;" text="déconnexion" textFill="WHITE" />

@@ -76,12 +76,56 @@ public class ServiceUser
         }
         return e;
     }
+      public User getById(int id){
+        User tmp = new User();
+        try {
+            String requete = "SELECT id,username,email FROM fos_user where id='"+id+"'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                tmp=new User(rs.getInt("id"), rs.getString("username"), rs.getString("email"));
+            }
+
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return tmp;
+    }
     
     
     
-    
- 
-     
+   public List<User> getList() {
+        List<User> list = new ArrayList<>();
+
+        try {
+            String requete = "SELECT id,username,email FROM fos_user";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                list.add(new User(rs.getInt(1), rs.getString(2), rs.getString(3)));
+            }
+
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+
+        return list;
+    }
+       public User getByUsername(String username){
+        User tmp = new User();
+        try {
+            String requete = "SELECT id,username,email FROM fos_user where username='"+username+"'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                tmp=new User(rs.getInt(1), rs.getString(2), rs.getString(3));
+            }
+
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return tmp;
+    }
         
     
   

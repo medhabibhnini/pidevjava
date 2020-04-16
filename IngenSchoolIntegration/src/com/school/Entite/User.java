@@ -37,6 +37,12 @@ public class User
         this.email = email;
         this.role = role;
     }
+
+    public User(int id, String username, String email) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+    }
     
     
     
@@ -49,6 +55,10 @@ public class User
         this.email = email;
         this.password = password;
         this.role = role;
+    }
+
+    public User() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
   

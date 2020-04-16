@@ -5,6 +5,7 @@
  */
 package com.school.test;
 
+import com.jfoenix.controls.JFXListView;
 import com.school.Entite.Attestation;
 import com.school.Entite.Commande;
 import com.school.Entite.Livre;
@@ -49,15 +50,35 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import com.school.Entite.Blog;
+import com.school.Entite.Evenement;
+import com.school.Entite.Offre;
+import com.school.Entite.Participation;
 import com.school.Entite.Reclamation;
 import com.school.Entite.Service;
 import com.school.Entite.Session;
 import com.school.Service.ServiceAttestation;
 import com.school.Service.ServiceBlog;
+import com.school.Service.ServiceEvenement;
+import com.school.Service.ServiceOffre;
+import com.school.Service.ServiceParticipation;
 import com.school.Service.ServiceReclamation;
 import com.school.Service.ServiceService;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.util.List;
+import java.util.Scanner;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.text.TextFlow;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
+import rsscreator.ui.main.FXMLDocumentController;
+import static rsscreator.ui.main.FXMLDocumentController.createFeedListItem;
+import rsscreator.ui.resourses.FeedMessage;
+import rsscreator.ui.resourses.filesHandler;
 
 /**
  * FXML Controller class
@@ -160,6 +181,50 @@ public class FrontofficeController implements Initializable {
     private TableColumn<Service, ?> ida_col;
     @FXML
     private TableColumn<Service, ?> date_col1;
+    @FXML
+    private Pane offre_pane;
+    @FXML
+    private TableView<Offre> tab_offre;
+    @FXML
+    private TableColumn<Offre, ?> descOffre;
+    @FXML
+    private TableColumn<Offre, ?> duOffre;
+    @FXML
+    private TableColumn<Offre, ?> aOffre;
+    @FXML
+    private TableColumn<Offre, ?> prixOffre;
+    @FXML
+    private ImageView image;
+    @FXML
+    private Label labelDesc;
+    @FXML
+    private Label labelDate;
+    @FXML
+    private Label labelPrix;
+    @FXML
+    private Label errorOffre;
+    @FXML
+    private Pane evenement_pane;
+    @FXML
+    private TableView<Evenement> tab_evenement;
+    @FXML
+    private TableColumn<Evenement, ?> descEvent;
+    @FXML
+    private TableColumn<Evenement, ?> dateEvent;
+    @FXML
+    private TableColumn<Evenement, ?> ensEvent;
+    @FXML
+    private ListView<TextFlow> listView;
+    @FXML
+    private Label errorParticipation;
+    private TextField search11;
+    public static ListView<TextFlow> myList;
+    @FXML
+    private Button offre_btn;
+    @FXML
+    private Button event_btn;
+    @FXML
+    private TextField searchoffre;
 
     /**
      * Initializes the controller class.
@@ -188,11 +253,56 @@ public class FrontofficeController implements Initializable {
             afficherAttestation();  
             loadDataAttestation();
               afficherService();  
+              setCellValueFromTableToTextFieldOffre();
                loadDataService();
        
         btnnn.setOnAction(e->{
                 showMycommande();
             });
+        // listView.setExpanded(true);
+       // listView.depthProperty().set(1);
+        myList = (ListView<TextFlow>) listView;
+        try {
+                url = new URL("http://feeds.bbci.co.uk/news/world/rss.xml");
+                filesHandler.importFrom(url);
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        try {
+        ServiceOffre ser = new ServiceOffre();
+        List<Offre> list = ser.afficheroffre();
+        ObservableList<Offre> cls = FXCollections.observableArrayList();
+        for (Offre aux : list)
+        {
+          cls.add(aux);  
+        }
+        
+        descOffre.setCellValueFactory(new PropertyValueFactory<>("Description"));
+        duOffre.setCellValueFactory(new PropertyValueFactory<>("Date_debut"));
+        aOffre.setCellValueFactory(new PropertyValueFactory<>("Date_fin"));
+        prixOffre.setCellValueFactory(new PropertyValueFactory<>("Prixoffre"));
+        tab_offre.setItems(cls);
+        
+        ServiceEvenement se = new ServiceEvenement();
+        ServiceEnseignant Se = new ServiceEnseignant();
+        List<Evenement> lst = se.afficherevenement();
+        ObservableList<Evenement> cl = FXCollections.observableArrayList();
+        for (Evenement aux : lst)
+        {
+          Evenement tmp = new Evenement(aux.getIdevenement(),aux.getDateevenement(), aux.getDescription(), aux.getIdenseignant());
+          //tmp.setEnseignant(Se.getById(tmp.getIdenseignant()));
+          cl.add(tmp);  
+        }
+        
+        descEvent.setCellValueFactory(new PropertyValueFactory<>("Description"));
+        dateEvent.setCellValueFactory(new PropertyValueFactory<>("Dateevenement"));
+        ensEvent.setCellValueFactory(new PropertyValueFactory<>("Enseignant"));
+        tab_evenement.setItems(cl);
+        }
+        catch(Exception ex){
+            
+        }
+        setCellValueFromTableToTextFieldprod();
         
     }  
       @FXML
@@ -256,6 +366,26 @@ public class FrontofficeController implements Initializable {
            {
                Servi_pane.toFront();
            } 
+              
+         
+       }
+       @FXML
+       private void offrebuttonAction(ActionEvent event){
+              if (event.getSource() == offre_btn)
+           {
+               offre_pane.toFront();
+           } 
+          
+              
+         
+       }
+       @FXML
+       private void eventbuttonAction(ActionEvent event){
+              if (event.getSource() == event_btn)
+           {
+               evenement_pane.toFront();
+           } 
+          
               
          
        }
@@ -834,5 +964,249 @@ public Service gettttemp(TableColumn.CellEditEvent edittedCell)
            
         
     }
+     @FXML 
+    public void searchOffre(){
+        
+        try {
+                     ServiceOffre ser = new ServiceOffre();
+                     List<Offre> list = ser.displayClause(" WHERE description LIKE '%"+searchoffre.getText()+"%' or dateDebut LIKE '%"+searchoffre.getText()+"%' or dateFin LIKE '%"+searchoffre.getText()+"%' or prix LIKE '%"+searchoffre.getText()+"%'");
+                     ObservableList<Offre> cls = FXCollections.observableArrayList();
+                     for (Offre aux : list)
+                        {
+                            
+                            cls.add(aux);  
+                        }
+                     tab_offre.setItems(cls);
+                     
+                    
+            }
+        catch (Exception ex) {
+                     System.out.println(ex);
+            }
+        
+    }
+   /* public void searchEvent(){
+        try {
+        ServiceEvenement se = new ServiceEvenement();
+        ServiceEnseignant Se = new ServiceEnseignant();
+        List<Evenement> lst = se.displayClause(" WHERE date LIKE '%"+search11.getText()+"%' or description LIKE '%"+search11.getText()+"%'");
+        ObservableList<Evenement> cl = FXCollections.observableArrayList();
+        for (Evenement aux : lst)
+        {
+          Evenement tmp = new Evenement(aux.getIdevenement(),aux.getDateevenement(), aux.getDescription(), aux.getIdenseignant());
+          //tmp.setEnseignant(Se.getById(tmp.getIdenseignant()));
+          cl.add(tmp);  
+        }
+        tab_evenement.setItems(cl);
+                     
+                    
+            }
+        catch (Exception ex) {
+                     System.out.println(ex);
+            }
+    }*/
+           public Evenement gettempEvenement(TableColumn.CellEditEvent edittedCell) {
+        Evenement test = tab_evenement.getSelectionModel().getSelectedItem();
+        
+        return test;
+    }
+    @FXML
+    public void participer(){
+        if(tab_evenement.getSelectionModel().getSelectedIndex()!=-1){
+        int i=0;
+        try{
+            TableColumn.CellEditEvent edittedcell = null;
+           Evenement x=gettempEvenement(edittedcell);
+         
+          int  a=x.getIdevenement();
+        Participation P = new Participation(id_user,a);
+        ServiceParticipation sp=new ServiceParticipation();
+           i=sp.Participer(P);
+                  System.out.println(i);
+           
+        }
+        catch(SQLException ex){
+            
+        }
+         
+if (i == 1)
+    {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("Participation Enregistrée");
+                alert.showAndWait();
+                sendnotificationforevent();
+                errorParticipation.setText("");
+        
+    }
+        }
+        else{
+            errorParticipation.setText("Choix Invalide");
+        }
+        
+    }
+    
+    public static void createList(){
+        if (filesHandler.feed==null)return;
+        myList.getItems().clear();
+        for (FeedMessage msg:filesHandler.feed.getEntries()){
+            myList.getItems().add(createFeedListItem(msg));
+        }
+    }
+    
+    private void setCellValueFromTableToTextFieldOffre()
+        {
+       tab_offre.setOnMouseClicked(new EventHandler<MouseEvent>()
+             {
+        @Override
+        public void handle(MouseEvent event) {
+       Offre o=tab_offre.getSelectionModel().getSelectedItem();
+       labelPrix.setText(Double.toString(o.getPrixoffre())+" DT");
+       labelDesc.setText(o.getDescription());
+       labelDate.setText("Du: "+o.getDate_debut().toString()+" A: "+o.getDate_fin().toString());
+       
+       //IMAGE
+       System.out.println(o.getImage());
+       Image img=new Image("file:///C:\\wamp64\\www\\pidev\\IngenSchoolIntegration\\src\\com\\school\\images/"+o.getImage());
+      
+
+                    
+            
+       image.setImage(img);
+                    }
+               });
+       }
+     @FXML 
+    public void acheter(){
+        if(tab_offre.getSelectionModel().getSelectedIndex()!=-1){
+        Notifications notificationBuilder=  Notifications.create()
+                        .title("Achat")
+                        .text("Vous avez acheté l'Offre "+tab_offre.getSelectionModel().getSelectedItem().getIdoffre()+":\n"+tab_offre.getSelectionModel().getSelectedItem().getDescription()+".")
+                        .graphic(null)
+                        .hideAfter(Duration.seconds(5))
+                        .position(Pos.BOTTOM_RIGHT);
+                notificationBuilder.darkStyle();
+                notificationBuilder.show();
+                sendnotificationforoffre();
+                errorOffre.setText("");
+        }
+        else{
+            errorOffre.setText("Choix Invalide.");
+        }
+    }
+   
+    public void sendnotificationforoffre() {
+        try {
+            String jsonResponse;
+
+            URL url = new URL("https://onesignal.com/api/v1/notifications");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setUseCaches(false);
+            con.setDoOutput(true);
+            con.setDoInput(true);
+
+            con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            con.setRequestProperty("Authorization", "Basic Y2MwOTFlZjctNjgwOC00ZTNiLWE2YWItM2E1NDRkMjBmZTQ3");
+            con.setRequestMethod("POST");
+
+            String strJsonBody = "{"
+                    + "\"app_id\": \"253ac335-60e8-481d-8b7d-dd74c1905e42\","
+                    + "\"included_segments\": [\"All\"],"
+                    + "\"data\": {\"foo\": \"bar\"},"
+                    + "\"contents\": {\"en\": \"vous avez achetez une offre ! Profiter\"}"
+                    + "}";
+
+            System.out.println("strJsonBody:\n" + strJsonBody);
+
+            byte[] sendBytes = strJsonBody.getBytes("UTF-8");
+            con.setFixedLengthStreamingMode(sendBytes.length);
+
+            OutputStream outputStream = con.getOutputStream();
+            outputStream.write(sendBytes);
+
+            int httpResponse = con.getResponseCode();
+            System.out.println("httpResponse: " + httpResponse);
+
+            if (httpResponse >= HttpURLConnection.HTTP_OK
+                    && httpResponse < HttpURLConnection.HTTP_BAD_REQUEST) {
+                Scanner scanner = new Scanner(con.getInputStream(), "UTF-8");
+                jsonResponse = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
+                scanner.close();
+            } else {
+                Scanner scanner = new Scanner(con.getErrorStream(), "UTF-8");
+                jsonResponse = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
+                scanner.close();
+            }
+            System.out.println("jsonResponse:\n" + jsonResponse);
+
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        
+        
+        
+        
+    
+    
+}
+    
+    
+     @FXML 
+    
+    public void sendnotificationforevent() {
+        try {
+            String jsonResponse;
+
+            URL url = new URL("https://onesignal.com/api/v1/notifications");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setUseCaches(false);
+            con.setDoOutput(true);
+            con.setDoInput(true);
+
+            con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            con.setRequestProperty("Authorization", "Basic Y2MwOTFlZjctNjgwOC00ZTNiLWE2YWItM2E1NDRkMjBmZTQ3");
+            con.setRequestMethod("POST");
+
+            String strJsonBody = "{"
+                    + "\"app_id\": \"253ac335-60e8-481d-8b7d-dd74c1905e42\","
+                    + "\"included_segments\": [\"All\"],"
+                    + "\"data\": {\"foo\": \"bar\"},"
+                    + "\"contents\": {\"en\": \"vous avez participer à l'event ! Profiter\"}"
+                    + "}";
+
+            System.out.println("strJsonBody:\n" + strJsonBody);
+
+            byte[] sendBytes = strJsonBody.getBytes("UTF-8");
+            con.setFixedLengthStreamingMode(sendBytes.length);
+
+            OutputStream outputStream = con.getOutputStream();
+            outputStream.write(sendBytes);
+
+            int httpResponse = con.getResponseCode();
+            System.out.println("httpResponse: " + httpResponse);
+
+            if (httpResponse >= HttpURLConnection.HTTP_OK
+                    && httpResponse < HttpURLConnection.HTTP_BAD_REQUEST) {
+                Scanner scanner = new Scanner(con.getInputStream(), "UTF-8");
+                jsonResponse = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
+                scanner.close();
+            } else {
+                Scanner scanner = new Scanner(con.getErrorStream(), "UTF-8");
+                jsonResponse = scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
+                scanner.close();
+            }
+            System.out.println("jsonResponse:\n" + jsonResponse);
+
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        
+        
+        
+        
+    
+    
+}
     
 }

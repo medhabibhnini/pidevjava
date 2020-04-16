@@ -76,8 +76,8 @@ import org.controlsfx.control.Notifications;
 public class DiverbackController implements Initializable 
 {
 
-    private ObservableList<Offre> data;
-    private ObservableList<Evenement> data1;
+    private ObservableList<Offre> dataO;
+    private ObservableList<Evenement> dataE;
     private Connection con;
     private ResultSet rs=null;
     private PreparedStatement pst;
@@ -151,8 +151,8 @@ public class DiverbackController implements Initializable
         
         
        con = DataBase.getInstance().getConnection();
-       data= FXCollections.observableArrayList();
-       data1= FXCollections.observableArrayList();
+       dataO= FXCollections.observableArrayList();
+       dataE= FXCollections.observableArrayList();
        setCellValueFromTableToTextFieldprod();
        setCellValueFromTableToTextFieldevent();
        afficherOffre();
@@ -273,18 +273,18 @@ if (i == 1)
     }
     
      private void loadDataOffre() {
-   data.clear();
+   dataO.clear();
          try {
            pst =con.prepareStatement("Select * from offre");
 
     rs=pst.executeQuery();
      while (rs.next()) {                
-             data.add(new  Offre(rs.getInt("id"), rs.getInt("prix"), rs.getDate("datedebut"), rs.getDate("datefin"),rs.getString("description")));
+             dataO.add(new  Offre(rs.getInt("id"), rs.getInt("prix"), rs.getDate("datedebut"), rs.getDate("datefin"),rs.getString("description")));
      }       }
        catch (SQLException ex) {
            Logger.getLogger(ServiceOffre.class.getName()).log(Level.SEVERE, null, ex);
        }
-        tab_Offre.setItems(data);
+        tab_Offre.setItems(dataO);
         searchOffre.setText("");
     }
     
@@ -299,7 +299,7 @@ if (i == 1)
     }
     
     private void loadDataEvenement() {
-   data1.clear();
+   dataE.clear();
          try {
            pst =con.prepareStatement("Select * from evenement");
            ServiceEnseignant SE=new ServiceEnseignant();
@@ -307,7 +307,7 @@ if (i == 1)
      while (rs.next()) {
              Evenement tmp= new Evenement(rs.getInt("id"),rs.getDate("date"),rs.getString("description"),rs.getInt("IdEnseignant"));
              tmp.setEnseignant(SE.getById(tmp.getIdenseignant()));
-             data1.add(tmp);
+             dataE.add(tmp);
      }   
      
      List<Enseignant> ls= SE.getList();
@@ -321,7 +321,7 @@ if (i == 1)
        catch (SQLException ex) {
            Logger.getLogger(ServiceEvenement.class.getName()).log(Level.SEVERE, null, ex);
        }
-        tab_Evenement.setItems(data1);
+        tab_Evenement.setItems(dataE);
         searchEvent.setText("");
     }
     
