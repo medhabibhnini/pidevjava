@@ -5,6 +5,8 @@
  */
 package com.user.test;
 
+import com.user.Service.ServiceUser;
+import javafx.event.ActionEvent;
 import static com.user.Entite.Session.setIdSession;
 import com.user.Utils.DataBase;
 import java.io.IOException;
@@ -120,4 +122,12 @@ public class LoginController implements Initializable
                     stage.show();
     }
     
+    
+    @FXML
+    private void mdp(ActionEvent event)
+    {
+     ServiceUser s=new ServiceUser();
+     s.sendmail();
+     
+}
 }

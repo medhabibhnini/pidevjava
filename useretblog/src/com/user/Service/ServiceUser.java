@@ -5,6 +5,7 @@
  */
 package com.user.Service;
 
+import com.user.Entite.SendMail;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,6 +32,25 @@ public class ServiceUser
         con = DataBase.getInstance().getConnection();
     }
     
+    public void sendmail()
+    {
+        String host = "smtp.gmail.com";
+        String port = "587";
+        String mailFrom = "mohamedali.amri@esprit.tn";
+        String password = "medali96";
+        String mailTo = "syrine.kerriou@esprit.tn";
+        String subject = " Votre Mot de Passe est : ";
+        String message ="123"; 
+        SendMail mailer = new SendMail();
+           try {
+               mailer.SendMail(host, port, mailFrom, password, mailTo, subject, message);
+                  
+                    System.out.println("Email sent.");
+                } catch (Exception ex) {
+                    System.out.println("Failed to sent email.");
+                    ex.printStackTrace();
+                }
+    }
     public int ajouterUser(User U) throws SQLException  {
 
         String requeteInsert = "INSERT INTO fos_user (username,email,password,roles) VALUES ( '" + U.getUsername()+ "','" +U.getEmail()+ "','" +U.getPassword() + "','" +U.getRole()+ "');";

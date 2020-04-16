@@ -15,5 +15,6 @@
       <Label fx:id="registre" layoutX="43.0" layoutY="432.0" onMouseClicked="#Register" prefHeight="17.0" prefWidth="214.0" text="                  Créer un compte" />
       <Label layoutX="57.0" layoutY="153.0" text="Email :" />
       <Label layoutX="57.0" layoutY="226.0" text="Mot de Passe :" />
+      <Button layoutX="115.0" layoutY="312.0" mnemonicParsing="false" onAction="#mdp" text="Button" />
    </children>
 </AnchorPane>
