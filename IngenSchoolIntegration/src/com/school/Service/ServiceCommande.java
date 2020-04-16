@@ -80,4 +80,24 @@ public class ServiceCommande {
       return (name);  
     } 
     
+           public int getlivbyIdcom(int idc) throws SQLException
+            
+    { 
+        int i=0;  
+        String name="";
+           String query="SELECT idlivre as idlivre FROM commande WHERE idcommande='"+idc+"'";
+           
+         
+           ste=con.createStatement();
+           
+        ResultSet rst = ste.executeQuery(query); 
+        while(rst.next())
+        {
+             name=rst.getString("idlivre");
+             i=Integer.valueOf(name);
+          
+        }
+      
+      return i;  
+    }
 }

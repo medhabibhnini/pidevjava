@@ -595,14 +595,17 @@ private void loadDataLivraison() {
               ServiceCommande com = new ServiceCommande();
               ServiceLivraison li= new ServiceLivraison();
               ServiceLivre liv=new ServiceLivre();
-               int l;
-              l=rs.getInt("idcommande");
-              li.getlivbyIdcom(l);
-             String livre= liv.getnomcmdbyId(l);
+              int idcom=rs.getInt("idcommande");
+             
+             int idlivraison= rs.getInt("idlivraison");
+       
               int u =rs.getInt("id_user");
+              int idlivre=com.getlivbyIdcom(idcom);
+              String livre=liv.getnomcmdbyId(idlivre);
                String email = com.getnomuserbyId(u);
-              // System.out.println(livre);
-             dataL.add(new  Livraison(rs.getInt("idlivraison"),email ,livre ));
+               
+            System.out.println(livre);
+             dataL.add(new  Livraison(idlivraison,email ,livre ));
              //dataL.add(new  Livraison(rs.getInt("idlivraison"),email ,rs.getInt("idcommande") ));
      }       }
        catch (SQLException ex) {

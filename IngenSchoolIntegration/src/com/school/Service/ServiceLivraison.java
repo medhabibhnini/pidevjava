@@ -55,12 +55,12 @@ public class ServiceLivraison {
      finally{ste.close();}
       return i;  
     }
-             public int getlivbyIdcom(int id) throws SQLException
+     /*        public int getCombyIdlivr(int idc) throws SQLException
             
     { 
         int i=0;  
         String name="";
-           String query="SELECT idlivre as idlivre FROM commande WHERE idcommande='"+id+"'";
+           String query="SELECT idcommande as idcommande FROM livraison WHERE idlivraison='"+idc+"'";
            ste=con.createStatement();
            
         ResultSet rst = ste.executeQuery(query); 
@@ -72,6 +72,6 @@ public class ServiceLivraison {
         }
       
       return i;  
-    }
+    }*/
 
 }
