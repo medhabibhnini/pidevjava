@@ -207,7 +207,7 @@ public class BackController implements Initializable {
     @FXML
     private TextField search1;
     @FXML
-    private ComboBox<String> w;
+    private ComboBox<Attestation> w;
     @FXML
     private TableView<Service> tab_view21;
     @FXML
@@ -278,6 +278,8 @@ public class BackController implements Initializable {
     private TextField searchParticipation;
     @FXML
     private Label errorEvent;
+    @FXML
+    private DatePicker datepickerattes;
 
     /**
      * Initializes the controller class.
@@ -328,12 +330,13 @@ public class BackController implements Initializable {
        loadDataEvenement();
        afficherParticipation();
        loadDataParticipation();
+       initcatcombo();
             
   
 
-              w.getItems().removeAll(w.getItems());
-w.getItems().addAll("0","1","2","3");
-w.getSelectionModel().select("ida");
+           //   w.getItems().removeAll(w.getItems());
+//w.getItems().addAll("0","1","2","3");
+//w.getSelectionModel().select("ida");
 
 }
   
@@ -1441,19 +1444,34 @@ public Service gettttemp(TableColumn.CellEditEvent edittedCell)
     datepicker1.setValue(null);
      w.setValue(null);
 }
+private void initcatcombo() {
+    ObservableList datacat=FXCollections.observableArrayList();
+   w.getSelectionModel().clearSelection();
+   try {
+           pst =con.prepareStatement("SELECT * from attestation");
 
+    rs=pst.executeQuery();
+     while (rs.next()) {                
+             datacat.add(rs.getString(2));
+     }       }
+       catch (SQLException ex) {
+           Logger.getLogger(ServiceAttestation.class.getName()).log(Level.SEVERE, null, ex);
+       }
+w.setItems(dataA);
+
+}
      @FXML
     private void Ajouter(ActionEvent event) {
         
          String description = des_area.getText();
-            Date date = Date.valueOf(datepicker1.getValue());
-
-       String id = w.getValue();
-     
+            Date date = Date.valueOf(datepickerattes.getValue());
        
+       Attestation id = w.getValue();
+     int ida=id.getIda();
+       int idu=id_user;
        try {
 
-    PreparedStatement pst=con.prepareStatement("INSERT INTO service (description,date ) VALUES ('" +description+"','"+date+"')");
+    PreparedStatement pst=con.prepareStatement("INSERT INTO service (ida,description,date,idUser ) VALUES ('" +ida+"','" +description+"','"+date+"','"+idu+"')");
        pst.executeUpdate();
         } catch (Exception ex) {
             ex.printStackTrace();

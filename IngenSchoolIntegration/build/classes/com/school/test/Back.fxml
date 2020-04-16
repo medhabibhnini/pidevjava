@@ -293,7 +293,7 @@
                         <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="118.0" layoutY="130.0" prefHeight="21.0" prefWidth="226.0" text="Les Demandes d'attestations" textFill="#0d0d0d" textOverrun="CLIP" />
                         <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="788.0" layoutY="178.0" prefHeight="21.0" prefWidth="226.0" text="Confirmation des demandes" textFill="#0d0d0d" textOverrun="CLIP" />
                         <TextArea fx:id="des_area" layoutX="818.0" layoutY="325.0" prefHeight="107.0" prefWidth="196.0" />
-                        <DatePicker fx:id="datepicker1" layoutX="818.0" layoutY="272.0" prefHeight="31.0" prefWidth="195.0" />
+                        <DatePicker fx:id="datepickerattes" layoutX="818.0" layoutY="272.0" prefHeight="31.0" prefWidth="195.0" />
                         <TextField fx:id="search1" layoutX="174.0" layoutY="173.0" />
                         <ComboBox fx:id="w" layoutX="841.0" layoutY="218.0" prefWidth="150.0" />
                         <Button layoutX="950.0" layoutY="461.0" mnemonicParsing="false" onAction="#ResetS" style="-fx-background-color: black;" text="actualiser" textFill="#eb9009" />
