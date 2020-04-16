@@ -22,6 +22,7 @@ import com.school.Service.ServiceReclamation;
 import com.school.Service.ServiceService;
 import com.school.Utils.DataBase;
 
+
 import java.awt.AWTException;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -37,6 +38,7 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -51,6 +53,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -195,6 +198,16 @@ public class BackController implements Initializable {
     private TableColumn<Service, ?> date_col11;
     @FXML
     private TextField search11;
+    @FXML
+    private Label error_auteur;
+    @FXML
+    private Label error_contenu;
+    @FXML
+    private Label error_titre;
+    @FXML
+    private Label error_quantite;
+    @FXML
+    private Label error_prix;
 
     /**
      * Initializes the controller class.
@@ -240,9 +253,12 @@ public class BackController implements Initializable {
               w.getItems().removeAll(w.getItems());
 w.getItems().addAll("0","1","2","3");
 w.getSelectionModel().select("ida");
+
 }
+  
   @FXML
     private void addImage(ActionEvent event) throws IOException{
+        
         FileChooser fc = new FileChooser();
 
         FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
@@ -272,10 +288,18 @@ w.getSelectionModel().select("ida");
         }
         return name;
     }
+      
+        
         @FXML
     private void AddLivre(ActionEvent event) throws SQLException {
-
- 
+    boolean isauteurEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_auteur,error_auteur, "auteur is require");
+    boolean iscontenuEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_contenu, error_contenu, "content is require");
+    boolean istitreEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_titre, error_titre, "title is require");
+    boolean isprixNumber=validation.TextFieldvalidation.istextFieldTypeNumber(tf_prix, error_prix, "quantity is number");
+    boolean isquantiteNumber=validation.TextFieldvalidation.istextFieldTypeNumber(tf_quantite, error_quantite, "price is number");
+    boolean isprixEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_prix, error_prix, "price is require");
+    boolean isquantiteEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_quantite, error_quantite, "price is require");
+    if(isauteurEmpty && iscontenuEmpty && isprixEmpty && isquantiteEmpty && istitreEmpty && isprixNumber && isquantiteNumber){
         Date date = Date.valueOf(datepicker.getValue());
          String titre = tf_titre.getText();
           String auteur = tf_auteur.getText();
@@ -289,9 +313,11 @@ Image image1=null;
         ServiceLivre sl = new ServiceLivre();
         Livre l = new Livre(titre, auteur, date, prix, contenu, quantite,photo);
             System.out.println(l);
+
+            
          sl.ajouterlivre(l);
 
-      
+         {
         
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information");
@@ -301,6 +327,10 @@ Image image1=null;
                     afficherLivre();
        loadDataLivre();
        ResetL();
+         }
+                        }
+
+    
 
     }
     private void ResetL()
@@ -339,8 +369,8 @@ private void loadDataLivre() {
 private void affichercomd(){
 
             // idcom_view.setCellValueFactory(new PropertyValueFactory <>("idcommande"));
-             idliv_view.setCellValueFactory(new PropertyValueFactory <>("idl"));
-             iduser_view.setCellValueFactory(new PropertyValueFactory <>("user"));
+             idliv_view.setCellValueFactory(new PropertyValueFactory <>("idln"));
+             iduser_view.setCellValueFactory(new PropertyValueFactory <>("username"));
              datecom_view.setCellValueFactory(new PropertyValueFactory <>("datecommande"));
     }
 private void loadDatacommande() {
@@ -350,10 +380,17 @@ private void loadDatacommande() {
 
     rs=pst.executeQuery();
      while (rs.next()) {                
-            datac.add(new  Commande(rs.getInt("idcommande"), rs.getInt("id_user"), rs.getInt("idlivre"), rs.getDate("datecommande")));
-            /*ServiceLivre liv = new ServiceLivre();
-              int l=rs.getInt("idlivre");
-               datac.add(new  Commande(rs.getInt("idcommande"), rs.getInt("id_user"),liv.getnomcmdbyId(l) , rs.getDate("datecommande")));*/
+            int l=rs.getInt("idlivre");
+              int idcommande=rs.getInt("idcommande");
+            int u=rs.getInt("id_user");
+              Date datecommande=rs.getDate("datecommande");
+              ServiceLivre liv = new ServiceLivre();
+              ServiceCommande com = new ServiceCommande();
+               String email = com.getnomuserbyId(u);
+              
+                         
+                datac.add(new Commande(idcommande, email , liv.getnomcmdbyId(l), datecommande ));
+     
      }       }
        catch (SQLException ex) {
            Logger.getLogger(ServiceLivre.class.getName()).log(Level.SEVERE, null, ex);
@@ -400,7 +437,14 @@ tf_prix.setText(Float.toString(liv.getPrixlivre()));
     }
      @FXML
      public void updatelivre(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
- 
+   // boolean isauteurEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_auteur,error_auteur, "auteur is require");
+    //boolean iscontenuEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_contenu, error_contenu, "content is require");
+    boolean istitreEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_titre, error_titre, "title is require");
+    boolean isprixNumber=validation.TextFieldvalidation.istextFieldTypeNumber(tf_prix, error_prix, "quantity is number");
+    boolean isquantiteNumber=validation.TextFieldvalidation.istextFieldTypeNumber(tf_quantite, error_quantite, "price is number");
+    boolean isprixEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_prix, error_prix, "price is require");
+    boolean isquantiteEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_quantite, error_quantite, "price is require");
+    if( isprixEmpty && isquantiteEmpty && istitreEmpty && isprixNumber && isquantiteNumber){
        
         int i;
            
@@ -408,7 +452,7 @@ tf_prix.setText(Float.toString(liv.getPrixlivre()));
     TableColumn.CellEditEvent edittedcell = null;
            Livre x=gettemp(edittedcell);
            int c=x.getIdlivre();
-            //String idp = tf_idprod.getText();
+         
             String Nomp = tf_titre.getText();
             int Pricep=Integer.valueOf(tf_prix.getText());
             int quantite=Integer.valueOf(tf_quantite.getText());
@@ -438,7 +482,7 @@ tf_prix.setText(Float.toString(liv.getPrixlivre()));
         }
               ResetL();
           
-        
+    }
         
     }
        @FXML
@@ -535,8 +579,9 @@ public void deletcommande(ActionEvent event) throws SQLException, AWTException, 
 
              idlivraison_colum.setCellValueFactory(new PropertyValueFactory <>("idlivraison"));
             
-                comlivraison_colum.setCellValueFactory(new PropertyValueFactory <>("user"));
-                userlivraison_colum.setCellValueFactory(new PropertyValueFactory <>("idc"));
+                comlivraison_colum.setCellValueFactory(new PropertyValueFactory <>("livre"));
+                //userlivraison_colum.setCellValueFactory(new PropertyValueFactory <>("idc"));
+                 userlivraison_colum.setCellValueFactory(new PropertyValueFactory <>("username"));
              
     }
 
@@ -546,8 +591,19 @@ private void loadDataLivraison() {
            pst =con.prepareStatement("Select * from livraison");
 
     rs=pst.executeQuery();
-     while (rs.next()) {                
-             dataL.add(new  Livraison(rs.getInt("idlivraison"), rs.getInt("id_user"), rs.getInt("idcommande")));
+     while (rs.next()) { 
+              ServiceCommande com = new ServiceCommande();
+              ServiceLivraison li= new ServiceLivraison();
+              ServiceLivre liv=new ServiceLivre();
+               int l;
+              l=rs.getInt("idcommande");
+              li.getlivbyIdcom(l);
+             String livre= liv.getnomcmdbyId(l);
+              int u =rs.getInt("id_user");
+               String email = com.getnomuserbyId(u);
+              // System.out.println(livre);
+             dataL.add(new  Livraison(rs.getInt("idlivraison"),email ,livre ));
+             //dataL.add(new  Livraison(rs.getInt("idlivraison"),email ,rs.getInt("idcommande") ));
      }       }
        catch (SQLException ex) {
            Logger.getLogger(ServiceLivraison.class.getName()).log(Level.SEVERE, null, ex);
@@ -742,8 +798,8 @@ tf_name.setText(us.getUsername());
     tf_role.setText(null);
     
 }
- 
-    private void DecoU(javafx.scene.input.MouseEvent event) throws IOException {
+ @FXML
+    private void DecoU(ActionEvent event) throws IOException {
         Node node = (Node) event.getSource();
                     Stage stage = (Stage) node.getScene().getWindow();
                     stage.close();
@@ -1365,11 +1421,11 @@ sl.sendEmail();
         
     }
 
-    @FXML
-    private void DecoU(ActionEvent event) {
-    }
+    
 
  
 
 
 }
+
+    

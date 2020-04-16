@@ -17,9 +17,12 @@ public class Commande {
     private Livre l;
     private Date datecommande;
     private int user;
+    private String username;
  private int idl;
  private String idln;
  private LocalDate date;
+ 
+ 
  
  
     public Commande(Livre l, int user) {
@@ -45,6 +48,20 @@ public class Commande {
         this.user = user;
         this.idln = idln;
     }
+      public Commande(int idcommande, String username, String idln, Date datecommande) {
+        this.idcommande = idcommande;
+        this.datecommande = datecommande;
+        this.username = username;
+        this.idln = idln;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
    
 
@@ -62,6 +79,13 @@ public class Commande {
     public Commande(int idcommande, int user,int idl, Date datecommande) {
         this.idcommande = idcommande;
         this.user = user;
+        this.idl = idl;
+        this.datecommande = datecommande;
+        
+    }
+        public Commande(int idcommande, String username,int idl, Date datecommande) {
+        this.idcommande = idcommande;
+        this.username = username;
         this.idl = idl;
         this.datecommande = datecommande;
         
@@ -87,6 +111,8 @@ public class Commande {
     public void setUser(int user) {
         this.user = user;
     }
+
+  
 
     public int getIdcommande() {
         return idcommande;

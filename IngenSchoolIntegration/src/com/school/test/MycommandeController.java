@@ -18,6 +18,8 @@ import com.nexmo.client.sms.MessageStatus;
 import com.nexmo.client.sms.SmsSubmissionResponse;
 import com.nexmo.client.sms.messages.TextMessage;
 import com.school.Entite.Livre;
+import com.school.Entite.Session;
+import static com.school.test.FrontofficeController.id_user;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
@@ -70,6 +72,7 @@ public class MycommandeController implements Initializable {
    private Connection con;
     private ResultSet rs=null;
     private Commande C;
+      public static int id_user = Session.getCurrentSession();
       private PreparedStatement pst;
     @FXML
     private TableView<Commande> com_view;
@@ -169,7 +172,7 @@ public class MycommandeController implements Initializable {
         System.out.println(gson.toJson(a));
         
             } catch (StripeException ex) {
-                Logger.getLogger(PaymentController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MycommandeController.class.getName()).log(Level.SEVERE, null, ex);
                 
             }
                 
@@ -217,14 +220,14 @@ public class MycommandeController implements Initializable {
            
            
              idliv_view.setCellValueFactory(new PropertyValueFactory <>("idln"));
-             iduser_view.setCellValueFactory(new PropertyValueFactory <>("user"));
+             iduser_view.setCellValueFactory(new PropertyValueFactory <>("username"));
              datecom_view.setCellValueFactory(new PropertyValueFactory <>("datecommande"));
     }
 private void loadDatacommande() {
     
    datac.clear();
          try {
-           pst =con.prepareStatement("Select * from commande");
+           pst =con.prepareStatement("Select * from commande WHERE id_user="+id_user);
 
     rs=pst.executeQuery();
      while (rs.next()) { 
@@ -232,11 +235,14 @@ private void loadDatacommande() {
             
               int l=rs.getInt("idlivre");
               int idcommande=rs.getInt("idcommande");
-              int id_user=rs.getInt("id_user");
+            int u=rs.getInt("id_user");
               Date datecommande=rs.getDate("datecommande");
               ServiceLivre liv = new ServiceLivre();
+              ServiceCommande com = new ServiceCommande();
+               String email = com.getnomuserbyId(u);
               
-                datac.add(new Commande(idcommande, id_user, liv.getnomcmdbyId(l), datecommande ));
+                         
+                datac.add(new Commande(idcommande, email , liv.getnomcmdbyId(l), datecommande ));
                //datac.add(new  Commande(rs.getInt("idcommande"), rs.getInt("id_user"),rs.getInt("idlivre") , rs.getDate("datecommande")));
              //  datac.add(new Commande(rs.getInt("idcommande"), liv.getnomcmdbyId(l), rs.getDate("datecommande"), rs.getInt("id_user")));
      }       }
@@ -319,7 +325,7 @@ Commande liv=com_view.getItems().get(com_view.getSelectionModel().getSelectedInd
             ServiceLivraison cmd=new ServiceLivraison();
             
          
-            Livraison c = new Livraison(x,1);
+            Livraison c = new Livraison(x,id_user);
             System.out.println(c);
             i=cmd.ajouterLivraison(c);
               if(i==1)

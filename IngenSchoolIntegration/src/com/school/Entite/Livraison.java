@@ -14,6 +14,8 @@ public class Livraison {
     private Commande C;
     private int user;
     private int idc;
+    private String username;
+    private String livre;
     
     
 
@@ -22,6 +24,34 @@ public class Livraison {
         this.C = C;
         this.user = user;
         this.idc = idc;
+    }
+    public Livraison(int idlivraison,String username, int idc) {
+        this.idlivraison = idlivraison;
+       
+        this.username = username;
+        this.idc = idc;
+    }
+      public Livraison(int idlivraison,String username, String livre) {
+        this.idlivraison = idlivraison;
+       
+        this.username = username;
+        this.livre = livre;
+    }
+
+    public String getLivre() {
+        return livre;
+    }
+
+    public void setLivre(String livre) {
+        this.livre = livre;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
    

@@ -40,38 +40,43 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </TableView>
-                        <VBox layoutX="112.0" layoutY="21.0" prefHeight="481.0" prefWidth="204.0" style="-fx-background-color: white;">
+                        <VBox layoutX="112.0" layoutY="21.0" prefHeight="470.0" prefWidth="204.0" style="-fx-background-color: white;">
                            <children>
                               <TextField fx:id="tf_titre" prefHeight="30.0" prefWidth="158.0">
                                  <VBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    <Insets left="10.0" right="10.0" top="10.0" />
                                  </VBox.margin>
                               </TextField>
+                              <Label fx:id="error_titre" prefHeight="21.0" prefWidth="194.0" style="-fx-text-fill: red;" />
                               <TextField fx:id="tf_auteur" prefHeight="23.0" prefWidth="158.0">
                                  <VBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="35.0" />
+                                    <Insets left="10.0" right="10.0" top="15.0" />
                                  </VBox.margin>
                               </TextField>
+                              <Label fx:id="error_auteur" prefHeight="21.0" prefWidth="189.0" />
                               <TextField fx:id="tf_prix">
                                  <VBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="35.0" />
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="25.0" />
                                  </VBox.margin>
                               </TextField>
+                              <Label fx:id="error_prix" prefHeight="21.0" prefWidth="209.0" />
                               <DatePicker fx:id="datepicker">
                                  <VBox.margin>
-                                    <Insets left="10.0" top="35.0" />
+                                    <Insets left="10.0" top="15.0" />
                                  </VBox.margin>
                               </DatePicker>
                               <TextField fx:id="tf_contenu">
                                  <VBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="35.0" />
+                                    <Insets left="10.0" right="10.0" top="35.0" />
                                  </VBox.margin>
                               </TextField>
+                              <Label fx:id="error_contenu" prefHeight="21.0" prefWidth="209.0" />
                               <TextField fx:id="tf_quantite">
                                  <VBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="35.0" />
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="15.0" />
                                  </VBox.margin>
                               </TextField>
+                              <Label fx:id="error_quantite" prefHeight="21.0" prefWidth="202.0" />
                               <Button fx:id="btn_import" mnemonicParsing="false" onAction="#addImage" prefHeight="32.0" prefWidth="96.0" style="-fx-background-color: purple;" text="import">
                                  <VBox.margin>
                                     <Insets bottom="10.0" left="55.0" top="35.0" />
@@ -118,28 +123,31 @@
                               </Label>
                            </children>
                         </VBox>
-                        <HBox layoutX="139.0" layoutY="565.0" prefHeight="103.0" prefWidth="1010.0">
+                        <HBox layoutX="102.0" layoutY="561.0" prefHeight="103.0" prefWidth="1010.0">
                            <children>
                               <Button mnemonicParsing="false" onAction="#AddLivre" prefHeight="75.0" prefWidth="262.0" style="-fx-background-color: purple;" text="ajouter">
-                                 <HBox.margin>
-                                    <Insets right="70.0" />
-                                 </HBox.margin>
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
+                                 <HBox.margin>
+                                    <Insets right="30.0" />
+                                 </HBox.margin>
                               </Button>
                               <Button mnemonicParsing="false" onAction="#updatelivre" prefHeight="75.0" prefWidth="262.0" style="-fx-background-color: purple;" text="modifier">
-                                 <HBox.margin>
-                                    <Insets right="70.0" />
-                                 </HBox.margin>
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
+                                 <HBox.margin>
+                                    <Insets right="30.0" />
+                                 </HBox.margin>
                               </Button>
                               <Button mnemonicParsing="false" onAction="#deletelivre" prefHeight="75.0" prefWidth="262.0" style="-fx-background-color: purple;" text="supprimer">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
+                                 <HBox.margin>
+                                    <Insets right="30.0" />
+                                 </HBox.margin>
                               </Button>
                            </children>
                         </HBox>
@@ -181,9 +189,9 @@
                         </Button>
                         <TableView fx:id="livraison_view" layoutX="287.0" layoutY="74.0" prefHeight="399.0" prefWidth="655.0">
                            <columns>
-                              <TableColumn fx:id="idlivraison_colum" prefWidth="211.0" text="id livraison" />
-                              <TableColumn fx:id="userlivraison_colum" prefWidth="227.0" text="idCommande" />
-                              <TableColumn fx:id="comlivraison_colum" prefWidth="216.0" text="id_user" />
+                              <TableColumn fx:id="idlivraison_colum" minWidth="0.0" prefWidth="0.0" text="id livraison" />
+                              <TableColumn fx:id="userlivraison_colum" prefWidth="438.0" text="Email" />
+                              <TableColumn fx:id="comlivraison_colum" prefWidth="216.0" text="Livre" />
                            </columns>
                            <cursor>
                               <Cursor fx:constant="HAND" />

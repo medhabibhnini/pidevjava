@@ -5,6 +5,9 @@
  */
 package com.school.Entite;
 
+import java.util.Properties;
+import javax.mail.Authenticator;
+
 /**
  *
  * @author Daly
@@ -12,7 +15,9 @@ package com.school.Entite;
 public class Session 
 {
      private static int idSession;
-
+    public static void start(int currentUserID) {
+        idSession = currentUserID;
+    }
     public static int getIdSession() {
         return idSession;
     }
@@ -20,6 +25,23 @@ public class Session
     public static void setIdSession(int idSession) {
         Session.idSession = idSession;
     }
-    
+     public static int getCurrentSession() {
+        if (idSession != -1) 
+            
+            return idSession;
+        return -1;
+        
+    }
+      public static void close() throws Exception {
+        if (idSession != -1) {
+            idSession = -1;
+        } else {
+            throw new Exception("Session has not started yet!");
+        }
+    }
+
+    public static Session getDefaultInstance(Properties props, Authenticator authenticator) {
+        throw new UnsupportedOperationException("Not supported yet."); 
+    }
     
 }

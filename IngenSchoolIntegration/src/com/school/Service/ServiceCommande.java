@@ -5,6 +5,7 @@
  */
 package com.school.Service;
 import com.school.Entite.Commande;
+import com.school.Entite.User;
 import com.school.Entite.Livraison;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -61,22 +62,22 @@ public class ServiceCommande {
     public int ajouterLivraison(Livraison c) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-  public int getnomcmdbyId(int id) throws SQLException
+ public String getnomuserbyId(int id) throws SQLException
             
     { 
-           int i=0;
+         
         String name="";
-           String query="SELECT nomlivre as livre FROM livre WHERE idlivre='"+id+"'";
+           String query="SELECT email as email FROM fos_user WHERE id='"+id+"'";
            ste=con.createStatement();
            
         ResultSet rst = ste.executeQuery(query); 
         while(rst.next())
         {
-             name=rst.getString("nomlivre");
-            i=Integer.valueOf(name);
+             name=rst.getString("email");
+          
         }
       
-      return i;  
+      return (name);  
     } 
     
 }

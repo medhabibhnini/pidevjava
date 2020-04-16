@@ -51,6 +51,7 @@ import javafx.stage.Stage;
 import com.school.Entite.Blog;
 import com.school.Entite.Reclamation;
 import com.school.Entite.Service;
+import com.school.Entite.Session;
 import com.school.Service.ServiceAttestation;
 import com.school.Service.ServiceBlog;
 import com.school.Service.ServiceReclamation;
@@ -74,7 +75,7 @@ public class FrontofficeController implements Initializable {
     private ObservableList<Attestation> dataA;
     private ObservableList<Service> dataS;
 
-    
+    public static int id_user = Session.getCurrentSession();
    
     private ObservableList<Livre> data;
     @FXML
@@ -355,7 +356,7 @@ System.out.println(formatter.format(date));
             ServiceCommande cmd=new ServiceCommande();
             
          
-            Commande c = new Commande(x,1,date);
+            Commande c = new Commande(x,id_user,date);
             System.out.println(c);
             i=cmd.ajouterCommande(c);
               if(i==1)

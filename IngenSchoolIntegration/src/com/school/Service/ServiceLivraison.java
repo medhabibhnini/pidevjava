@@ -8,6 +8,7 @@ import com.school.Entite.Livraison;
 import com.school.Utils.DataBase;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
@@ -52,6 +53,24 @@ public class ServiceLivraison {
            Logger.getLogger(ServiceLivre.class.getName()).log(Level.SEVERE, null, ex);
        }
      finally{ste.close();}
+      return i;  
+    }
+             public int getlivbyIdcom(int id) throws SQLException
+            
+    { 
+        int i=0;  
+        String name="";
+           String query="SELECT idlivre as idlivre FROM commande WHERE idcommande='"+id+"'";
+           ste=con.createStatement();
+           
+        ResultSet rst = ste.executeQuery(query); 
+        while(rst.next())
+        {
+             name=rst.getString("idlivre");
+             i=Integer.valueOf(name);
+          
+        }
+      
       return i;  
     }
 
