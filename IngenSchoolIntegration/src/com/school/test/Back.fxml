@@ -19,18 +19,21 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="755.0" prefWidth="1228.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.school.test.BackController">
+<AnchorPane id="AnchorPane" prefHeight="767.0" prefWidth="1228.0" style="-fx-background-color: purple;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.school.test.BackController">
    <children>
       <Accordion />
-      <TabPane layoutY="38.0" prefHeight="717.0" prefWidth="1228.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutY="50.0" prefHeight="717.0" prefWidth="1228.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
             <Tab text="Livre">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="645.0" prefWidth="1228.0" style="-fx-background-color: C176E9;">
                      <children>
-                        <Label layoutX="68.0" layoutY="99.0" />
+                        <Label layoutX="415.0" layoutY="14.0" prefHeight="64.0" prefWidth="263.0" text="Bibliothéques" textOverrun="CLIP">
+                           <font>
+                              <Font size="46.0" />
+                           </font></Label>
                         <ImageView fx:id="imgview" fitHeight="220.0" fitWidth="184.0" layoutX="362.0" layoutY="261.0" pickOnBounds="true" preserveRatio="true" />
-                        <TableView fx:id="tab_livre" layoutX="658.0" layoutY="14.0" prefHeight="453.0" prefWidth="491.0">
+                        <TableView fx:id="tab_livre" layoutX="671.0" layoutY="83.0" prefHeight="453.0" prefWidth="491.0">
                            <columns>
                               <TableColumn fx:id="titre" prefWidth="216.0" text="titre" />
                               <TableColumn fx:id="prix" prefWidth="103.0" text="prix" />
@@ -40,7 +43,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </TableView>
-                        <VBox layoutX="118.0" layoutY="19.0" prefHeight="470.0" prefWidth="204.0" style="-fx-background-color: white;">
+                        <VBox layoutX="158.0" layoutY="59.0" prefHeight="470.0" prefWidth="204.0" style="-fx-background-color: white;">
                            <children>
                               <TextField fx:id="tf_titre" prefHeight="30.0" prefWidth="158.0">
                                  <VBox.margin>
@@ -77,55 +80,76 @@
                                  </VBox.margin>
                               </TextField>
                               <Label fx:id="error_quantite" prefHeight="21.0" prefWidth="202.0" textFill="RED" />
-                              <Button fx:id="btn_import" mnemonicParsing="false" onAction="#addImage" prefHeight="32.0" prefWidth="96.0" style="-fx-background-color: purple;" text="import">
+                              <Button fx:id="btn_import" mnemonicParsing="false" onAction="#addImage" prefHeight="32.0" prefWidth="96.0" style="-fx-background-color: black;" text="import" textFill="#c176e9">
                                  <VBox.margin>
                                     <Insets bottom="10.0" left="55.0" top="35.0" />
                                  </VBox.margin>
                               </Button>
                            </children>
                         </VBox>
-                        <VBox layoutX="18.0" layoutY="21.0" prefHeight="497.0" prefWidth="100.0" style="-fx-background-color: white;">
+                        <VBox layoutX="16.0" layoutY="56.0" prefHeight="503.0" prefWidth="142.0" style="-fx-background-color: white;">
                            <children>
                               <Label text="titre :">
                                  <VBox.margin>
                                     <Insets left="35.0" top="15.0" />
                                  </VBox.margin>
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
                               </Label>
-                              <Label text="auteur :">
+                              <Label prefHeight="31.0" prefWidth="120.0" text="auteur :">
                                  <VBox.margin>
-                                    <Insets left="35.0" top="50.0" />
+                                    <Insets left="35.0" top="30.0" />
                                  </VBox.margin>
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
                               </Label>
                               <Label text="prix :">
                                  <VBox.margin>
-                                    <Insets left="35.0" top="50.0" />
+                                    <Insets left="35.0" top="40.0" />
                                  </VBox.margin>
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
                               </Label>
                               <Label text="Date :">
                                  <VBox.margin>
                                     <Insets left="35.0" top="50.0" />
                                  </VBox.margin>
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
                               </Label>
                               <Label text="contenu :">
                                  <VBox.margin>
-                                    <Insets left="35.0" top="50.0" />
+                                    <Insets left="35.0" top="40.0" />
                                  </VBox.margin>
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
                               </Label>
                               <Label text="quantité:">
                                  <VBox.margin>
-                                    <Insets left="35.0" top="50.0" />
+                                    <Insets left="35.0" top="40.0" />
                                  </VBox.margin>
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
                               </Label>
                               <Label text="image :">
                                  <VBox.margin>
                                     <Insets left="35.0" top="50.0" />
                                  </VBox.margin>
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
                               </Label>
                            </children>
                         </VBox>
-                        <HBox layoutX="102.0" layoutY="561.0" prefHeight="103.0" prefWidth="1010.0">
+                        <HBox layoutX="260.0" layoutY="569.0" prefHeight="103.0" prefWidth="1010.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#AddLivre" prefHeight="75.0" prefWidth="262.0" style="-fx-background-color: purple;" text="ajouter">
+                              <Button mnemonicParsing="false" onAction="#AddLivre" prefHeight="56.0" prefWidth="189.0" style="-fx-background-color: black;" text="ajouter" textFill="#c176e9">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -133,7 +157,7 @@
                                     <Insets right="30.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" onAction="#updatelivre" prefHeight="75.0" prefWidth="262.0" style="-fx-background-color: purple;" text="modifier">
+                              <Button mnemonicParsing="false" onAction="#updatelivre" prefHeight="56.0" prefWidth="208.0" style="-fx-background-color: black;" text="modifier" textFill="#c176e9">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -141,7 +165,7 @@
                                     <Insets right="30.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" onAction="#deletelivre" prefHeight="75.0" prefWidth="262.0" style="-fx-background-color: purple;" text="supprimer">
+                              <Button mnemonicParsing="false" onAction="#deletelivre" prefHeight="58.0" prefWidth="203.0" style="-fx-background-color: black;" text="supprimer" textFill="#c176e9">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -159,7 +183,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: C176E9;">
                      <children>
-                        <TableView fx:id="com_view" layoutX="272.0" layoutY="47.0" prefHeight="443.0" prefWidth="686.0">
+                        <TableView fx:id="com_view" layoutX="272.0" layoutY="99.0" prefHeight="443.0" prefWidth="686.0">
                            <columns>
                               <TableColumn fx:id="idliv_view" prefWidth="233.0" text="id livre" />
                               <TableColumn fx:id="iduser_view" prefWidth="260.0" text="id user" />
@@ -169,11 +193,16 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </TableView>
-                        <Button layoutX="476.0" layoutY="515.0" mnemonicParsing="false" onAction="#deletcommande" prefHeight="75.0" prefWidth="278.0" style="-fx-background-color: purple;" text="annuler la commande">
+                        <Button layoutX="476.0" layoutY="570.0" mnemonicParsing="false" onAction="#deletcommande" prefHeight="75.0" prefWidth="278.0" style="-fx-background-color: black;" text="annuler la commande" textFill="#c176e9">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
+                        <Label layoutX="397.0" layoutY="23.0" text="Liste des commandes">
+                           <font>
+                              <Font size="46.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
                </content>
@@ -182,12 +211,12 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: C176E9;">
                      <children>
-                        <Button layoutX="475.0" layoutY="514.0" mnemonicParsing="false" onAction="#deletlivraison" prefHeight="75.0" prefWidth="278.0" style="-fx-background-color: purple;" text="annuler la livraison">
+                        <Button layoutX="475.0" layoutY="555.0" mnemonicParsing="false" onAction="#deletlivraison" prefHeight="75.0" prefWidth="278.0" style="-fx-background-color: black;" text="annuler la livraison" textFill="#c176e9">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <TableView fx:id="livraison_view" layoutX="287.0" layoutY="74.0" prefHeight="399.0" prefWidth="655.0">
+                        <TableView fx:id="livraison_view" layoutX="280.0" layoutY="117.0" prefHeight="399.0" prefWidth="655.0">
                            <columns>
                               <TableColumn fx:id="idlivraison_colum" minWidth="0.0" prefWidth="0.0" text="id livraison" />
                               <TableColumn fx:id="userlivraison_colum" prefWidth="438.0" text="Email" />
@@ -197,6 +226,11 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </TableView>
+                        <Label layoutX="392.0" layoutY="23.0" prefHeight="68.0" prefWidth="444.0" text="Liste des Livraisons">
+                           <font>
+                              <Font size="46.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
                </content>
@@ -289,7 +323,7 @@
                               <Font size="64.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="imgviewb" fitHeight="97.0" fitWidth="198.0" layoutX="147.0" layoutY="397.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: white;" />
+                        <ImageView fx:id="imgviewb" fitHeight="97.0" fitWidth="198.0" layoutX="147.0" layoutY="397.0" pickOnBounds="true" preserveRatio="true" />
                         <Label fx:id="error_sujetblo" layoutX="146.0" layoutY="241.0" prefHeight="21.0" prefWidth="180.0" textFill="RED" />
                         <Label fx:id="error_descblo" layoutX="147.0" layoutY="313.0" prefHeight="21.0" prefWidth="195.0" textFill="RED" />
                      </children>
@@ -473,6 +507,6 @@
             </Tab>
          </tabs>
       </TabPane>
-      <Button layoutX="1101.0" layoutY="7.0" mnemonicParsing="false" onAction="#DecoU" style="-fx-background-color: black;" text="déconnexion" textFill="WHITE" />
+      <Button layoutX="1108.0" layoutY="6.0" mnemonicParsing="false" onAction="#DecoU" style="-fx-background-color: black;" text="déconnexion" textFill="#c176e9" />
    </children>
 </AnchorPane>
