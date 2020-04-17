@@ -17,6 +17,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="755.0" prefWidth="1228.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.school.test.BackController">
    <children>
@@ -39,7 +40,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </TableView>
-                        <VBox layoutX="112.0" layoutY="21.0" prefHeight="470.0" prefWidth="204.0" style="-fx-background-color: white;">
+                        <VBox layoutX="118.0" layoutY="19.0" prefHeight="470.0" prefWidth="204.0" style="-fx-background-color: white;">
                            <children>
                               <TextField fx:id="tf_titre" prefHeight="30.0" prefWidth="158.0">
                                  <VBox.margin>
@@ -202,32 +203,49 @@
             </Tab>
             <Tab text="Utilisateur">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: C176E9;">
                      <children>
-                        <VBox layoutX="66.0" layoutY="74.0" prefHeight="216.0" prefWidth="164.0">
+                        <VBox layoutX="119.0" layoutY="164.0" prefHeight="371.0" prefWidth="270.0">
                            <children>
-                              <Label text="Nom d'utilisateur :" />
+                              <Label text="Nom d'utilisateur :">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font></Label>
                               <TextField fx:id="tf_name" />
                               <Label fx:id="error_username" prefHeight="21.0" prefWidth="181.0" textFill="RED" />
-                              <Label text="Email :" />
+                              <Label text="Email :">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font></Label>
                               <TextField fx:id="tf_email" />
                               <Label fx:id="error_email" prefHeight="21.0" prefWidth="172.0" textFill="RED" />
-                              <Label text="Mot de passe :" />
+                              <Label text="Mot de passe :">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font></Label>
                               <PasswordField fx:id="tf_password" />
                               <Label fx:id="error_mdp" prefHeight="21.0" prefWidth="170.0" textFill="RED" />
-                              <Label text="Role :" />
+                              <Label text="Role :">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font></Label>
                               <TextField fx:id="tf_role" disable="true" />
                            </children>
                         </VBox>
-                        <TableView fx:id="tab_viewU" layoutX="315.0" layoutY="24.0" prefHeight="277.0" prefWidth="316.0">
+                        <TableView fx:id="tab_viewU" layoutX="668.0" layoutY="153.0" prefHeight="369.0" prefWidth="494.0">
                            <columns>
-                              <TableColumn fx:id="username_colum" prefWidth="75.0" text="Utilisateur" />
-                              <TableColumn fx:id="email_colum" prefWidth="133.0" text="Email" />
-                              <TableColumn fx:id="role_colum" prefWidth="107.0" text="Role" />
+                              <TableColumn fx:id="username_colum" prefWidth="129.0" text="Utilisateur" />
+                              <TableColumn fx:id="email_colum" prefWidth="241.0" text="Email" />
+                              <TableColumn fx:id="role_colum" prefWidth="123.0" text="Role" />
                            </columns>
                         </TableView>
-                        <Button layoutX="412.0" layoutY="322.0" mnemonicParsing="false" onAction="#deleteUser" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: black;" text="Supprimer" textFill="WHITE" />
-                        <Button layoutX="101.0" layoutY="338.0" mnemonicParsing="false" onAction="#updateUser" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: black;" text="Modifier" textFill="WHITE" />
+                        <Button layoutX="820.0" layoutY="579.0" mnemonicParsing="false" onAction="#deleteUser" prefHeight="39.0" prefWidth="162.0" style="-fx-background-color: black;" text="Supprimer" textFill="#c176e9" />
+                        <Button layoutX="155.0" layoutY="576.0" mnemonicParsing="false" onAction="#updateUser" prefHeight="42.0" prefWidth="185.0" style="-fx-background-color: black;" text="Modifier" textFill="#c176e9" />
+                        <Label layoutX="44.0" layoutY="47.0" text="Gestion Utilisateurs">
+                           <font>
+                              <Font size="64.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
                </content>
@@ -236,93 +254,144 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: C176E9;">
                      <children>
-                        <VBox layoutX="25.0" layoutY="30.0" prefHeight="122.0" prefWidth="189.0">
-                           <children>
-                              <Label text="Sujet :" />
-                              <TextField fx:id="tf_sujet" />
-                              <Label fx:id="error_sujetblo" prefHeight="21.0" prefWidth="192.0" textFill="RED" />
-                              <Label text="Description :" />
-                              <TextField fx:id="tf_description" />
-                              <Label fx:id="error_descblo" prefHeight="21.0" prefWidth="195.0" textFill="RED" />
-                           </children>
-                        </VBox>
-                        <TableView fx:id="t_view" layoutX="374.0" layoutY="53.0" prefHeight="247.0" prefWidth="369.0">
+                        <TableView fx:id="t_view" layoutX="666.0" layoutY="155.0" prefHeight="369.0" prefWidth="494.0">
                            <columns>
-                              <TableColumn fx:id="sujet_colum" prefWidth="75.0" text="Sujet" />
-                              <TableColumn fx:id="description_colum" prefWidth="293.0" text="Description" />
+                              <TableColumn fx:id="sujet_colum" prefWidth="147.0" text="Sujet" />
+                              <TableColumn fx:id="description_colum" prefWidth="346.0" text="Description" />
                            </columns>
                         </TableView>
-                        <Button layoutX="50.0" layoutY="422.0" mnemonicParsing="false" onAction="#AddBlog" prefHeight="60.0" prefWidth="225.0" style="-fx-background-color: black;" text="ajouter" textFill="WHITE" />
-                        <Button layoutX="463.0" layoutY="324.0" mnemonicParsing="false" onAction="#afficherblog" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: black;" text="supprimer" textFill="WHITE" />
-                        <TextField fx:id="searchb" layoutX="463.0" layoutY="14.0" />
-                        <Label layoutX="370.0" layoutY="18.0" text="Chercher :" />
-                        <Button fx:id="browse" layoutX="192.0" layoutY="289.0" mnemonicParsing="false" onAction="#addImageblog" style="-fx-background-color: black;" text="importer " textFill="WHITE" />
-                        <Label layoutX="25.0" layoutY="192.0" text="Image :" />
-                        <ImageView fx:id="imgviewb" fitHeight="137.0" fitWidth="178.0" layoutX="14.0" layoutY="202.0" pickOnBounds="true" preserveRatio="true" />
+                        <Button layoutX="149.0" layoutY="578.0" mnemonicParsing="false" onAction="#AddBlog" prefHeight="43.0" prefWidth="192.0" style="-fx-background-color: black;" text="ajouter" textFill="#c176e9" />
+                        <Button layoutX="816.0" layoutY="578.0" mnemonicParsing="false" onAction="#afficherblog" prefHeight="43.0" prefWidth="161.0" style="-fx-background-color: black;" text="supprimer" textFill="#c176e9" />
+                        <TextField fx:id="searchb" layoutX="803.0" layoutY="83.0" />
+                        <Label layoutX="666.0" layoutY="81.0" text="Chercher :">
+                           <font>
+                              <Font size="24.0" />
+                           </font></Label>
+                        <Button fx:id="browse" layoutX="189.0" layoutY="502.0" mnemonicParsing="false" onAction="#addImageblog" prefHeight="44.0" prefWidth="94.0" style="-fx-background-color: black;" text="importer " textFill="#c176e9" />
+                        <Label layoutX="150.0" layoutY="364.0" text="Image :">
+                           <font>
+                              <Font size="24.0" />
+                           </font></Label>
+                        <TextField fx:id="tf_description" layoutX="147.0" layoutY="303.0" prefHeight="42.0" prefWidth="196.0" />
+                        <TextField fx:id="tf_sujet" layoutX="147.0" layoutY="199.0" prefHeight="42.0" prefWidth="195.0" />
+                        <Label layoutX="148.0" layoutY="268.0" text="Description :">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="149.0" layoutY="155.0" text="Sujet :">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="41.0" layoutY="45.0" text="Gestion Blog">
+                           <font>
+                              <Font size="64.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="imgviewb" fitHeight="97.0" fitWidth="198.0" layoutX="147.0" layoutY="397.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: white;" />
+                        <Label fx:id="error_sujetblo" layoutX="146.0" layoutY="241.0" prefHeight="21.0" prefWidth="180.0" textFill="RED" />
+                        <Label fx:id="error_descblo" layoutX="147.0" layoutY="313.0" prefHeight="21.0" prefWidth="195.0" textFill="RED" />
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
             <Tab text="Reclamation">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: C176E9;">
                      <children>
-                        <TableView fx:id="tab_view1" layoutX="355.0" layoutY="101.0" prefHeight="266.0" prefWidth="488.0">
+                        <TableView fx:id="tab_view1" layoutX="350.0" layoutY="208.0" prefHeight="333.0" prefWidth="543.0">
                            <columns>
-                              <TableColumn fx:id="nom_col1" text="nom" />
-                              <TableColumn fx:id="sujet_col1" prefWidth="282.0" text="sujet" />
-                              <TableColumn fx:id="date_col1" prefWidth="124.0" sortType="DESCENDING" text="date" />
+                              <TableColumn fx:id="nom_col1" prefWidth="116.0" text="nom" />
+                              <TableColumn fx:id="date_col1" prefWidth="150.0" sortType="DESCENDING" text="date" />
+                              <TableColumn fx:id="sujet_col1" prefWidth="276.0" text="sujet" />
                            </columns>
                         </TableView>
-                        <Button layoutX="555.0" layoutY="479.0" mnemonicParsing="false" onAction="#deleteReclamation" style="-fx-background-color: black;" text="supprimer" textFill="#ffac06" />
-                        <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="524.0" layoutY="63.0" text="Les Réclamations" textFill="#0d0d0d" textOverrun="CLIP" />
-                        <TextField fx:id="search" layoutX="506.0" layoutY="411.0" />
+                        <Button layoutX="521.0" layoutY="571.0" mnemonicParsing="false" onAction="#deleteReclamation" prefHeight="42.0" prefWidth="187.0" style="-fx-background-color: black;" text="supprimer" textFill="#c176e9" />
+                        <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="372.0" layoutY="20.0" text="Les Réclamations" textOverrun="CLIP">
+                           <font>
+                              <Font size="64.0" />
+                           </font></Label>
+                        <TextField fx:id="search" layoutX="534.0" layoutY="156.0" />
+                        <Label layoutX="372.0" layoutY="152.0" text="Chercher :">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
             <Tab text="Attestation">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: C176E9;">
                      <children>
-                        <TableView fx:id="tab_view11" layoutX="142.0" layoutY="227.0" prefHeight="122.0" prefWidth="251.0">
+                        <TableView fx:id="tab_view11" layoutX="62.0" layoutY="236.0" prefHeight="286.0" prefWidth="458.0">
                            <columns>
-                              <TableColumn fx:id="nom_col111" prefWidth="70.0" text="id" />
-                              <TableColumn fx:id="nom_col11" prefWidth="91.0" text="type" />
-                              <TableColumn fx:id="sujet_col11" prefWidth="89.0" text="langue" />
+                              <TableColumn fx:id="nom_col111" minWidth="0.0" prefWidth="39.0" text="id" />
+                              <TableColumn fx:id="nom_col11" prefWidth="224.0" text="type" />
+                              <TableColumn fx:id="sujet_col11" prefWidth="194.0" text="langue" />
                            </columns>
                         </TableView>
-                        <Button layoutX="795.0" layoutY="461.0" mnemonicParsing="false" onAction="#Ajouter" style="-fx-background-color: black;" text="ajouter" textFill="#eb9009" />
-                        <Button layoutX="202.0" layoutY="417.0" mnemonicParsing="false" onAction="#deleteAttestation" style="-fx-background-color: black;" text="supprimer" textFill="#ed7c02" />
-                        <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="118.0" layoutY="130.0" prefHeight="21.0" prefWidth="226.0" text="Les Demandes d'attestations" textFill="#0d0d0d" textOverrun="CLIP" />
-                        <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="788.0" layoutY="178.0" prefHeight="21.0" prefWidth="226.0" text="Confirmation des demandes" textFill="#0d0d0d" textOverrun="CLIP" />
-                        <DatePicker fx:id="datepickerattes" layoutX="818.0" layoutY="272.0" prefHeight="31.0" prefWidth="195.0" />
-                        <TextField fx:id="search1" layoutX="174.0" layoutY="173.0" />
+                        <Button layoutX="715.0" layoutY="564.0" mnemonicParsing="false" onAction="#Ajouter" prefHeight="43.0" prefWidth="187.0" style="-fx-background-color: black;" text="ajouter" textFill="#c176e9" />
+                        <Button layoutX="185.0" layoutY="564.0" mnemonicParsing="false" onAction="#deleteAttestation" prefHeight="43.0" prefWidth="186.0" style="-fx-background-color: black;" text="supprimer" textFill="#c176e9" />
+                        <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="42.0" layoutY="74.0" prefHeight="93.0" prefWidth="473.0" text="Les Demandes d'attestations" textOverrun="CLIP">
+                           <font>
+                              <Font size="36.0" />
+                           </font></Label>
+                        <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="680.0" layoutY="74.0" prefHeight="95.0" prefWidth="494.0" text="Confirmation des demandes" textOverrun="CLIP">
+                           <font>
+                              <Font size="36.0" />
+                           </font></Label>
+                        <DatePicker fx:id="datepickerattes" layoutX="837.0" layoutY="308.0" prefHeight="31.0" prefWidth="195.0" />
+                        <TextField fx:id="search1" layoutX="208.0" layoutY="173.0" />
                         <ComboBox fx:id="w" layoutX="841.0" layoutY="218.0" prefWidth="150.0" />
-                        <Button layoutX="950.0" layoutY="461.0" mnemonicParsing="false" onAction="#ResetS" style="-fx-background-color: black;" text="actualiser" textFill="#eb9009" />
-                        <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="751.0" layoutY="223.0" prefHeight="21.0" prefWidth="67.0" text="id" textFill="#0d0d0d" textOverrun="CLIP" />
-                        <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="709.0" layoutY="368.0" prefHeight="21.0" prefWidth="99.0" text="description" textFill="#0d0d0d" textOverrun="CLIP" />
-                        <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="741.0" layoutY="277.0" prefHeight="21.0" prefWidth="54.0" text="Date" textFill="#0d0d0d" textOverrun="CLIP" />
-                        <TextField fx:id="des_area" layoutX="823.0" layoutY="323.0" prefHeight="111.0" prefWidth="187.0" />
-                        <Label fx:id="error_descripServ" layoutX="819.0" layoutY="438.0" prefHeight="21.0" prefWidth="181.0" textFill="RED" />
+                        <Button layoutX="976.0" layoutY="565.0" mnemonicParsing="false" onAction="#ResetS" prefHeight="41.0" prefWidth="183.0" style="-fx-background-color: black;" text="actualiser" textFill="#c176e9" />
+                        <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="833.0" layoutY="187.0" prefHeight="21.0" prefWidth="139.0" text="Attestation :" textFill="#0d0d0d" textOverrun="CLIP">
+                           <font>
+                              <Font size="24.0" />
+                           </font></Label>
+                        <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="832.0" layoutY="354.0" prefHeight="35.0" prefWidth="142.0" text="Description :" textFill="#0d0d0d" textOverrun="CLIP">
+                           <font>
+                              <Font size="24.0" />
+                           </font></Label>
+                        <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="832.0" layoutY="273.0" prefHeight="35.0" prefWidth="74.0" text="Date :" textFill="#0d0d0d" textOverrun="CLIP">
+                           <font>
+                              <Font size="24.0" />
+                           </font></Label>
+                        <TextField fx:id="des_area" layoutX="841.0" layoutY="389.0" prefHeight="111.0" prefWidth="187.0" />
+                        <Label fx:id="error_descripServ" layoutX="844.0" layoutY="500.0" prefHeight="21.0" prefWidth="181.0" textFill="RED" />
+                        <Label layoutX="65.0" layoutY="171.0" text="Chercher :">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
             <Tab text="Service">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: C176E9;">
                      <children>
-                        <TableView fx:id="tab_view21" layoutX="310.0" layoutY="172.0" prefHeight="139.0" prefWidth="462.0">
+                        <TableView fx:id="tab_view21" layoutX="351.0" layoutY="200.0" prefHeight="335.0" prefWidth="546.0">
                            <columns>
                               <TableColumn fx:id="ida_col1" minWidth="0.0" prefWidth="115.0" text="id" />
-                              <TableColumn fx:id="des_col1" prefWidth="188.0" text="description" />
-                              <TableColumn fx:id="date_col11" minWidth="0.0" prefWidth="155.0" text="date" />
+                              <TableColumn fx:id="des_col1" prefWidth="236.0" text="description" />
+                              <TableColumn fx:id="date_col11" minWidth="0.0" prefWidth="193.0" text="date" />
                            </columns>
                         </TableView>
-                        <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="486.0" layoutY="76.0" prefHeight="21.0" prefWidth="110.0" text="Les  Services" textFill="#0d0d0d" textOverrun="CLIP" />
-                        <TextField fx:id="search11" layoutX="460.0" layoutY="115.0" />
-                        <Button layoutX="509.0" layoutY="362.0" mnemonicParsing="false" onAction="#deleteService" style="-fx-background-color: black;" text="supprimer" textFill="#ffac06" />
+                        <Label alignment="TOP_RIGHT" blendMode="DARKEN" layoutX="369.0" layoutY="29.0" prefHeight="93.0" prefWidth="403.0" text="Les  Services" textFill="#0d0d0d" textOverrun="CLIP">
+                           <font>
+                              <Font size="64.0" />
+                           </font></Label>
+                        <TextField fx:id="search11" layoutX="540.0" layoutY="152.0" />
+                        <Button layoutX="533.0" layoutY="568.0" mnemonicParsing="false" onAction="#deleteService" prefHeight="43.0" prefWidth="182.0" style="-fx-background-color: black;" text="supprimer" textFill="#c176e9" />
+                        <Label layoutX="386.0" layoutY="150.0" text="Chercher :">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
                </content>

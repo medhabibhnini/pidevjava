@@ -80,25 +80,29 @@ public class ServiceService {
    
       }
     
-    public void sendEmail(){
+ 
+        
+         public void sendEmail(){
       String host = "smtp.gmail.com";
         String port = "587";
         String mailFrom = "syrine.kerriou@esprit.tn";
         String password = "07494750";
-        String mailTo = "syrine.kerriou@gmail.com";
-        String subject = "Validating email ";
-        String message =" done";
+        String mailTo = "mohamedali.amri@esprit.tn";
+        String subject = " Attestation de Présence ";
+        String message =" Bonjour Madame/Monsieur,\n" +
+"\n" +
+"Veuillez trouver ci-joint votre Attestation ";
+        String filename = "C:/s.pdf";
         SendEmail mailer = new SendEmail();
            try {
-                    mailer.SendEmail(host, port, mailFrom, password, mailTo,subject, message);
+                    mailer.SendEmail(host, port, mailFrom, password, mailTo,subject, message,filename);
                     System.out.println("Email sent.");
                 } catch (Exception ex) {
                     System.out.println("Failed to sent email.");
                     ex.printStackTrace();
                 }
 
-    }    
-                    
+    }                
 				 public int deleteService(int ids) throws SQLException  {
         int i = 0;
        try {
