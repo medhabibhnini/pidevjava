@@ -44,9 +44,10 @@
                      <children>
                         <TableView fx:id="tab_evenement" layoutX="2.0" layoutY="62.0" prefHeight="281.0" prefWidth="1011.0">
                            <columns>
-                              <TableColumn fx:id="descEvent" prefWidth="313.0" text="Description" />
-                              <TableColumn fx:id="dateEvent" minWidth="0.0" prefWidth="234.0" text="Date" />
-                              <TableColumn fx:id="ensEvent" minWidth="0.0" prefWidth="457.0" text="Enseignant" />
+                              <TableColumn fx:id="nomEvent" minWidth="0.0" prefWidth="163.14509987831116" text="Nom" />
+                              <TableColumn fx:id="descEvent" prefWidth="326.8536071777344" text="Description" />
+                              <TableColumn fx:id="dateEvent" minWidth="0.0" prefWidth="163.26467895507812" text="Date" />
+                              <TableColumn fx:id="ensEvent" minWidth="0.0" prefWidth="355.0" text="Enseignant" />
                            </columns>
                         </TableView>
                         <TextField fx:id="search2" layoutX="455.0" layoutY="3.0" onKeyReleased="#searchEvent" prefHeight="27.0" prefWidth="171.0" promptText="Rechercher" />

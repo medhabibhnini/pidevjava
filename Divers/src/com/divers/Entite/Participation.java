@@ -13,7 +13,7 @@ import com.divers.Entite.Enseignant;
 public class Participation {
     private int id;
     private Enseignant idUser;
-    private int idEvent;
+    private Evenement idEvent;
 
     public Participation() {
     }
@@ -21,7 +21,7 @@ public class Participation {
     public Participation(int id, int idUser, int idEvent) {
         this.id = id;
         this.idUser=new Enseignant(idUser);
-        this.idEvent = idEvent;
+        this.idEvent=new Evenement(idEvent);
     }
 
     public int getId() {
@@ -29,7 +29,7 @@ public class Participation {
     }
 
     public int getIdEvent() {
-        return idEvent;
+        return this.idEvent.getIdevenement();
     }
 
     public int getIdUser() {
@@ -39,13 +39,16 @@ public class Participation {
     public String getUser(){
         return this.idUser.getUsername();
     }
+    public String getEvent(){
+        return this.idEvent.getNomevent();
+    }
 
     public void setId(int id) {
         this.id = id;
     }
 
     public void setIdEvent(int idEvent) {
-        this.idEvent = idEvent;
+        this.idEvent.setIdevenement(idEvent);
     }
 
     public void setIdUser(int idUser) {
@@ -53,6 +56,9 @@ public class Participation {
     }
     public void setUser(Enseignant User){
         this.idUser=User;
+    }
+    public void setEvent(Evenement evnt){
+        this.idEvent=evnt;
     }
     
     

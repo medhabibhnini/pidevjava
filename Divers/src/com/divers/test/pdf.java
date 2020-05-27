@@ -88,15 +88,11 @@ private static String FILE = "/Users/MrStealYourMom/Desktop/Beta/pdf/pdf";
         Info.setAlignment(Element.ALIGN_CENTER);
         preface.add(Info);
 
-        addEmptyLine(preface, 5);
+        addEmptyLine(preface, 4);
 
-        PdfPTable table = new PdfPTable(5);
+        PdfPTable table = new PdfPTable(4);
 
-        PdfPCell c1 = new PdfPCell(new Phrase("Offre"));
-        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(c1);
-
-        c1 = new PdfPCell(new Phrase("Prix"));
+        PdfPCell c1 = new PdfPCell(new Phrase("Prix"));
         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(c1);
 
@@ -115,7 +111,6 @@ private static String FILE = "/Users/MrStealYourMom/Desktop/Beta/pdf/pdf";
 
         list.stream().forEach((N) -> {
             System.out.println(N.toString());
-            table.addCell(String.valueOf(N.getIdoffre()));
             table.addCell(String.valueOf(N.getPrixoffre()));
             table.addCell(N.getDate_debut().toString());
             table.addCell(N.getDate_fin().toString());
@@ -149,8 +144,8 @@ private static String FILE = "/Users/MrStealYourMom/Desktop/Beta/pdf/pdf";
         addEmptyLine(preface, 4);
 
         PdfPTable table = new PdfPTable(4);
-
-        PdfPCell c1 = new PdfPCell(new Phrase("Evenement"));
+        
+        PdfPCell c1 = new PdfPCell(new Phrase("Nom"));
         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(c1);
 
@@ -166,11 +161,13 @@ private static String FILE = "/Users/MrStealYourMom/Desktop/Beta/pdf/pdf";
         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(c1);
         
+        
+        
         table.setHeaderRows(1);
 
         list.stream().forEach((N) -> {
             System.out.println(N.toString());
-            table.addCell(String.valueOf(N.getIdevenement()));
+            table.addCell(N.getNomevent());
             table.addCell(String.valueOf(N.getDateevenement()));
             table.addCell(N.getDescription());
             table.addCell(N.getEnseignant());

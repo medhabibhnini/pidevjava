@@ -84,6 +84,8 @@ public class DiverbackController implements Initializable
     @FXML
     private TextField tf_prix;
     @FXML
+    private TextField tf_nom;
+    @FXML
     private TextField tf_desc;
     @FXML
     private DatePicker datepicker;
@@ -129,6 +131,8 @@ public class DiverbackController implements Initializable
     @FXML
     private TableColumn<Evenement, ?> idvenement_col;
     @FXML
+    private TableColumn<Evenement, ?> nomevenement_col;
+    @FXML
     private TableColumn<Evenement, ?> date_event_col;
     @FXML
     private TableColumn<Evenement, ?> descriptionE_col;
@@ -168,16 +172,23 @@ public class DiverbackController implements Initializable
 @FXML
     private void Addoffre(ActionEvent event) throws SQLException {
         if(Validchamp(tf_desc) && fileName.getText()!="Choisir Image" && Validchamp(tf_prix)){
-        int i=0;
+        int i=0,d=0;
          double prixoffre = Float.valueOf(tf_prix.getText());
          Date date_debut = Date.valueOf(datepicker.getValue());
          Date date_fin = Date.valueOf(datepicker1.getValue());
+         int day2=date_fin.getDay(),day1=date_debut.getDay();
+         int month1=date_debut.getMonth(),month2=date_fin.getMonth();
+         int year1=date_debut.getYear(),year2=date_fin.getYear();
         String description =tf_desc.getText();
         ServiceOffre Bl = new ServiceOffre();
         Offre B = new Offre(prixoffre,date_debut,date_fin,description);
         B.setImage(fileName.getText());
          System.out.println(B);
+        if((day1+month1*30+year1*365)<(day2+month2*30+year2*365)){
          i=Bl.ajouteroffre(B);
+         d=1;
+        }
+                 
          
 if (i == 1)
     {
@@ -201,6 +212,13 @@ if (i == 1)
                 notificationBuilder.show();
         
     }
+if(d==0){
+             Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Date Invalide");
+                alert.showAndWait();
+        }
         }
         else{
             errorOffre.setText("Input Invalide");
@@ -214,11 +232,12 @@ if (i == 1)
         ServiceEnseignant se= new ServiceEnseignant();
         Date dateevenemet = Date.valueOf(datepicker11.getValue());
         String description =tf_desc1.getText();
+        String nom=tf_nom.getText();
         Enseignant tmp=se.getByUsername(ENS.getSelectionModel().getSelectedItem().toString());
         int id_es=tmp.getId();
         System.out.print(id_es);
         ServiceEvenement Bl = new ServiceEvenement();
-        Evenement B = new Evenement(dateevenemet,description,id_es);
+        Evenement B = new Evenement(dateevenemet,description,id_es,nom);
          System.out.println(B);
          i=Bl.ajouterevenement(B);
          errorEvent.setText("");
@@ -253,7 +272,7 @@ if (i == 1)
     
     private void afficherParticipation(){
 
-             event.setCellValueFactory(new PropertyValueFactory <>("IdEvent"));
+             event.setCellValueFactory(new PropertyValueFactory <>("Event"));
              participant.setCellValueFactory(new PropertyValueFactory <>("User"));
     }
     private void loadDataParticipation(){
@@ -261,12 +280,15 @@ if (i == 1)
          
         ServiceParticipation sp=new ServiceParticipation();
         ServiceEnseignant SE=new ServiceEnseignant();
+        ServiceEvenement se=new ServiceEvenement();
         List<Participation> list = sp.afficherparticipation();
         ObservableList<Participation> cls = FXCollections.observableArrayList();
         for (Participation aux : list)
         {
           Participation P=new Participation(aux.getId(),aux.getIdUser(), aux.getIdEvent());
           P.setUser(SE.getById(P.getIdUser()));
+          P.setEvent(se.getById(P.getIdEvent()));
+          System.out.print(aux.getIdEvent());
           cls.add(P);  
         }
         tab_participation.setItems(cls);
@@ -292,6 +314,7 @@ if (i == 1)
     private void afficherEvenement(){
 
              idvenement_col.setCellValueFactory(new PropertyValueFactory <>("idevenement"));
+             nomevenement_col.setCellValueFactory(new PropertyValueFactory <>("nomevent"));
              date_event_col.setCellValueFactory(new PropertyValueFactory <>("dateevenement"));
              descriptionE_col.setCellValueFactory(new PropertyValueFactory <>("description"));
              enseignant_col.setCellValueFactory(new PropertyValueFactory <>("enseignant"));
@@ -305,7 +328,7 @@ if (i == 1)
            ServiceEnseignant SE=new ServiceEnseignant();
     rs=pst.executeQuery();
      while (rs.next()) {
-             Evenement tmp= new Evenement(rs.getInt("id"),rs.getDate("date"),rs.getString("description"),rs.getInt("IdEnseignant"));
+             Evenement tmp= new Evenement(rs.getInt("id"),rs.getDate("date"),rs.getString("description"),rs.getInt("IdEnseignant"),rs.getString("nomevent"));
              tmp.setEnseignant(SE.getById(tmp.getIdenseignant()));
              data1.add(tmp);
      }   
@@ -365,8 +388,10 @@ if (i == 1)
        String dtstr=ev.getDateevenement().toString();
             LocalDate dt=new LocalDateStringConverter().fromString(dtstr.substring(5,7)+"/"+dtstr.substring(8,10)+"/"+dtstr.substring(0,4));
             datepicker11.setValue(dt);
+       tf_nom.setText(ev.getNomevent());
                     }
                });
+       
        }
      
      
@@ -407,7 +432,7 @@ if (i == 1)
      public void updateOffre(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
        
        if(Validchamp(tf_desc) && fileName.getText()!="Choisir Image" && Validchamp(tf_prix) &&tab_Offre.getSelectionModel().getSelectedIndex()!=-1){
-        int i;
+        int i=0,d=0;
            
             
            TableColumn.CellEditEvent edittedcell = null;
@@ -416,6 +441,10 @@ if (i == 1)
            Double prixoffre=Double.valueOf(tf_prix.getText());
            Date date_debut=Date.valueOf(datepicker.getValue());
            Date date_fin=Date.valueOf(datepicker1.getValue());
+           int day2=date_fin.getDay(),day1=date_debut.getDay();
+           int month1=date_debut.getMonth(),month2=date_fin.getMonth();
+           int year1=date_debut.getYear(),year2=date_fin.getYear();
+           
            String description=String.valueOf(tf_desc.getText());            
             
    
@@ -426,7 +455,10 @@ if (i == 1)
          
        
             System.out.println(u);
+            if((day1+month1*30+year1*365)<(day2+month2*30+year2*365)){
             i=prod.modifieroffre(u);
+            d=1;
+            }
               if(i==1)
         {
            
@@ -439,6 +471,13 @@ if (i == 1)
            loadDataOffre();
            errorOffre.setText("");
            
+        }
+        if(d==0){
+             Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Date Invalide");
+                alert.showAndWait();
         }
        }
        else{
@@ -492,12 +531,13 @@ if (i == 1)
         ServiceEnseignant se= new ServiceEnseignant();
         Date dateevenemet = Date.valueOf(datepicker11.getValue());
         String description =tf_desc1.getText();
+        String nom=tf_nom.getText();
         Enseignant tmp=se.getByUsername(ENS.getSelectionModel().getSelectedItem().toString());
         int id_es=tmp.getId();
         System.out.print(id_es);
         ServiceEvenement Bl = new ServiceEvenement();
          Evenement tmp2=tab_Evenement.getSelectionModel().getSelectedItem();
-        Evenement B = new Evenement(tmp2.getIdevenement(),dateevenemet,description,id_es);
+        Evenement B = new Evenement(tmp2.getIdevenement(),dateevenemet,description,id_es,nom);
          System.out.println(B);
        
          i=Bl.modifierevenement(B);
@@ -534,12 +574,12 @@ if (i == 1)
         
     @FXML void search_event(){
         ServiceEvenement ser = new ServiceEvenement();
-                     List<Evenement> list = ser.displayClause(" WHERE id LIKE '%"+searchEvent.getText()+"%' or date LIKE '%"+searchEvent.getText()+"%' or description LIKE '%"+searchEvent.getText()+"%' or idEnseignant LIKE '%"+searchEvent.getText()+"%'");
+                     List<Evenement> list = ser.displayClause(" WHERE id LIKE '%"+searchEvent.getText()+"%' or date LIKE '%"+searchEvent.getText()+"%' or description LIKE '%"+searchEvent.getText()+"%' or idEnseignant LIKE '%"+searchEvent.getText()+"%' or nomevent LIKE '%"+searchEvent.getText()+"%'");
                      ObservableList<Evenement> cls = FXCollections.observableArrayList();
                      ServiceEnseignant se= new ServiceEnseignant();
                      for (Evenement aux : list)
                      {
-                         Evenement tmp= new Evenement(aux.getIdevenement(),aux.getDateevenement(), aux.getDescription(), aux.getIdenseignant());
+                         Evenement tmp= new Evenement(aux.getIdevenement(),aux.getDateevenement(), aux.getDescription(), aux.getIdenseignant(),aux.getNomevent());
                           tmp.setEnseignant(se.getById(tmp.getIdenseignant()));
                           cls.add(tmp);  
                      }

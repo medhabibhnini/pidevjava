@@ -36,7 +36,7 @@ public class ServiceEvenement {
     
     public int ajouterevenement(Evenement E) throws SQLException  {
 
-        String requeteInsert = "INSERT INTO evenement (date,description,idEnseignant) VALUES ( '" + E.getDateevenement()+ "','" + E.getDescription()+ "','" + E.getIdenseignant()+ "');";
+        String requeteInsert = "INSERT INTO evenement (date,description,idEnseignant,nomevent) VALUES ( '" + E.getDateevenement()+ "','" + E.getDescription()+ "','" + E.getIdenseignant()+ "','"+E.getNomevent()+"')";
         int i = 0;   
        try {
            ste = con.createStatement();
@@ -69,7 +69,7 @@ public class ServiceEvenement {
                    int e = 0;
 
         try {
-            String requete = "UPDATE evenement SET date='" + E.getDateevenement()+   "',description='" + E.getDescription()+ "',idEnseignant='" + E.getIdenseignant()+"' WHERE id='"+E.getIdevenement()+"'";
+            String requete = "UPDATE evenement SET date='" + E.getDateevenement()+   "',description='" + E.getDescription()+ "',idEnseignant='" + E.getIdenseignant()+"', nomevent= '"+E.getNomevent()+"' WHERE id='"+E.getIdevenement()+"'";
             Statement st = con.createStatement();
             e=st.executeUpdate(requete);
             System.out.println("Evenement modifiée !");
@@ -85,11 +85,11 @@ public class ServiceEvenement {
         List<Evenement> list = new ArrayList<>();
 
         try {
-            String requete = "SELECT * FROM evenement";
+            String requete = "Select * from evenement";
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(requete);
             while (rs.next()) {
-                list.add(new Evenement(rs.getInt(1), rs.getDate(2), rs.getString(3), rs.getInt(4)));
+                list.add(new Evenement(rs.getInt(1), rs.getDate(2), rs.getString(4), rs.getInt(5),rs.getString(3)));
             }
 
         } catch (SQLException ex) {
@@ -106,7 +106,7 @@ public class ServiceEvenement {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(requete);
             while (rs.next()) {
-                list.add(new Evenement(rs.getInt(1), rs.getDate(2), rs.getString(3), rs.getInt(4)));
+                list.add(new Evenement(rs.getInt(1), rs.getDate(2), rs.getString(4), rs.getInt(5),rs.getString(3)));
             }
 
         } catch (SQLException ex) {
@@ -114,6 +114,21 @@ public class ServiceEvenement {
         }
 
         return list;
+    }
+    public Evenement getById(int Id){
+        Evenement tmp = new Evenement();
+        try {
+            String requete = "SELECT * FROM evenement where id='"+Id+"'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(requete);
+            while (rs.next()) {
+                tmp=new Evenement(rs.getInt(1), rs.getDate(2), rs.getString(4),rs.getInt(5),rs.getString(3));
+            }
+
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return tmp;
     }
     
     

@@ -82,6 +82,8 @@ public class DiverfrontController implements Initializable {
     @FXML
     private TableColumn<String, Evenement> ensEvent;
     @FXML
+    private TableColumn<String, Evenement> nomEvent;
+    @FXML
     private TextField search2;
     @FXML
     private Label errorParticipation;
@@ -131,11 +133,12 @@ public class DiverfrontController implements Initializable {
         ObservableList<Evenement> cl = FXCollections.observableArrayList();
         for (Evenement aux : lst)
         {
-          Evenement tmp = new Evenement(aux.getIdevenement(),aux.getDateevenement(), aux.getDescription(), aux.getIdenseignant());
+          System.out.print("1");
+          Evenement tmp = new Evenement(aux.getIdevenement(),aux.getDateevenement(), aux.getDescription(), aux.getIdenseignant(),aux.getNomevent());
           tmp.setEnseignant(Se.getById(tmp.getIdenseignant()));
           cl.add(tmp);  
         }
-        
+        nomEvent.setCellValueFactory(new PropertyValueFactory<>("Nomevent"));
         descEvent.setCellValueFactory(new PropertyValueFactory<>("Description"));
         dateEvent.setCellValueFactory(new PropertyValueFactory<>("Dateevenement"));
         ensEvent.setCellValueFactory(new PropertyValueFactory<>("Enseignant"));
@@ -178,7 +181,7 @@ public class DiverfrontController implements Initializable {
         ObservableList<Evenement> cl = FXCollections.observableArrayList();
         for (Evenement aux : lst)
         {
-          Evenement tmp = new Evenement(aux.getIdevenement(),aux.getDateevenement(), aux.getDescription(), aux.getIdenseignant());
+          Evenement tmp = new Evenement(aux.getIdevenement(),aux.getDateevenement(), aux.getDescription(), aux.getIdenseignant(),aux.getNomevent());
           tmp.setEnseignant(Se.getById(tmp.getIdenseignant()));
           cl.add(tmp);  
         }

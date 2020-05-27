@@ -15,12 +15,14 @@ public class Evenement {
      private Date dateevenement;
      private String description;
      private Enseignant idenseignant;
+     private String nomevent;
 
-    public Evenement(int idevenement, Date dateevenement, String description, int idenseignant) {
+    public Evenement(int idevenement, Date dateevenement, String description, int idenseignant,String nomevent) {
         this.idevenement = idevenement;
         this.dateevenement = dateevenement;
         this.description = description;
         this.idenseignant = new Enseignant(idenseignant);
+        this.nomevent=nomevent;
     }
 
     public int getIdevenement() {
@@ -41,6 +43,9 @@ public class Evenement {
     public String getEnseignant(){
         return this.idenseignant.getUsername();
     }
+    public String getNomevent(){
+        return this.nomevent;
+    }
     public void setIdevenement(int idevenement) {
         this.idevenement = idevenement;
     }
@@ -60,15 +65,27 @@ public class Evenement {
         this.idenseignant=ens;
     }
 
+    public void setNomevent(String nomevent) {
+        this.nomevent = nomevent;
+    }
+    
+
     @Override
     public String toString() {
         return "Evenement{" + "idevenement=" + idevenement + ", dateevenement=" + dateevenement + ", description=" + description + ", idenseignant=" + idenseignant + '}';
     }
 
-    public Evenement(Date dateevenement, String description,int idEsg) {
+    public Evenement(Date dateevenement, String description,int idEsg,String nomevent) {
         this.dateevenement = dateevenement;
         this.description = description;
         this.idenseignant=new Enseignant(idEsg);
+        this.nomevent=nomevent;
+    }
+    public Evenement(int Id) {
+        this.idevenement=Id;
+    }
+    public Evenement(){
+        
     }
     
      
