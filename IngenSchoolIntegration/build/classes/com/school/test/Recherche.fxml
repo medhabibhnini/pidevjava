@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="569.0" prefWidth="827.0" style="-fx-background-color: FFA500;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.school.test.RecherceController">
+   <children>
+      <TableView fx:id="tab_cours" layoutX="41.0" layoutY="329.0" prefHeight="200.0" prefWidth="747.0" style="-fx-background-color: F5F5F5;">
+         <columns>
+            <TableColumn fx:id="titrecours" prefWidth="186.0" text="Titre " />
+            <TableColumn fx:id="matierecours" prefWidth="186.0" text="Matière" />
+            <TableColumn fx:id="datecours" prefWidth="186.0" text="Date d'ajout" />
+            <TableColumn fx:id="dureecours" prefWidth="186.0" text="Durée" />
+         </columns>
+      </TableView>
+      <Label layoutY="38.0" prefHeight="68.0" prefWidth="506.0" style="-fx-background-color: white;" text="    INGEN SCHOOL" textFill="ORANGE">
+         <font>
+            <Font name="System Bold" size="46.0" />
+         </font>
+      </Label>
+      <Label layoutX="52.0" layoutY="123.0" text="Page de recherche" textFill="#f8f8f8">
+         <font>
+            <Font name="Arial" size="54.0" />
+         </font>
+      </Label>
+      <Label layoutX="52.0" layoutY="231.0" text="Chercher un cours">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="search" layoutX="52.0" layoutY="267.0" onAction="#search">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </TextField>
+      <Button layoutX="652.0" layoutY="49.0" mnemonicParsing="false" onAction="#Retour" prefHeight="46.0" prefWidth="150.0" text="Retour" />
+      <ImageView fx:id="vw_image" fitHeight="150.0" fitWidth="200.0" layoutX="587.0" layoutY="163.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>

@@ -16,10 +16,11 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="767.0" prefWidth="1228.0" style="-fx-background-color: purple;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.school.test.BackController">
+<AnchorPane id="AnchorPane" prefHeight="767.0" prefWidth="1228.0" style="-fx-background-color: purple;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.school.test.BackController">
    <children>
       <Accordion />
       <TabPane layoutY="50.0" prefHeight="717.0" prefWidth="1228.0" tabClosingPolicy="UNAVAILABLE">
@@ -501,6 +502,222 @@
                         </TableView>
                         <TextField fx:id="searchParticipation" layoutX="1069.0" layoutY="16.0" onKeyReleased="#search_participation" prefHeight="27.0" prefWidth="125.0" />
                         <Label fx:id="errorEvent" layoutX="655.0" layoutY="494.0" prefHeight="17.0" prefWidth="128.0" textFill="RED" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Cours">
+               <content>
+                  <AnchorPane prefHeight="728.0" prefWidth="1228.0" style="-fx-background-color: FFA500;">
+                     <children>
+                        <Pane layoutX="1042.0" layoutY="471.0" prefHeight="146.0" prefWidth="148.0" style="-fx-border-color: black;" />
+                        <TableView fx:id="tab_cours" layoutX="120.0" layoutY="225.0" prefHeight="200.0" prefWidth="748.0" style="-fx-background-color: F5F5F5;">
+                           <columns>
+                              <TableColumn fx:id="titrecours" prefWidth="186.0" text="Titre " />
+                              <TableColumn fx:id="matierecours" prefWidth="186.0" text="Matière" />
+                              <TableColumn fx:id="datecours" prefWidth="186.0" text="Date d'ajout" />
+                              <TableColumn fx:id="dureecours" prefWidth="186.0" text="Durée" />
+                           </columns>
+                        </TableView>
+                        <Button fx:id="btn_im_image" layoutX="1041.0" layoutY="406.0" mnemonicParsing="false" onAction="#addImageC" prefHeight="25.0" prefWidth="149.0" text="Importer image">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="btn_im_pdf" layoutX="860.0" layoutY="503.0" mnemonicParsing="false" onAction="#addPDF" prefHeight="25.0" prefWidth="149.0" text="Importer PDF">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="btn_vis_pdf" layoutX="860.0" layoutY="543.0" mnemonicParsing="false" onAction="#VisualiserPDF" prefHeight="25.0" prefWidth="149.0" text="Visualiser PDF">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <ImageView fx:id="vw_image" fitHeight="144.0" fitWidth="149.0" layoutX="1044.0" layoutY="472.0" pickOnBounds="true" preserveRatio="true" />
+                        <Button fx:id="btn_ajoutcours" layoutX="109.0" layoutY="582.0" mnemonicParsing="false" onAction="#AddCours" prefHeight="65.0" prefWidth="215.0" style="-fx-background-color: FF8C00;" text="Ajouter">
+                           <font>
+                              <Font name="Bauhaus 93" size="22.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Label layoutY="38.0" prefHeight="68.0" prefWidth="506.0" style="-fx-background-color: white;" text="    INGEN SCHOOL" textFill="ORANGE">
+                           <font>
+                              <Font name="System Bold" size="46.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="btn_modifiercours" layoutX="359.0" layoutY="582.0" mnemonicParsing="false" onAction="#updateCours" prefHeight="65.0" prefWidth="215.0" style="-fx-background-color: FF8C00;" text="Modifier">
+                           <font>
+                              <Font name="Bauhaus 93" size="22.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="btn_supprimercours" layoutX="609.0" layoutY="582.0" mnemonicParsing="false" onAction="#deleteCours" prefHeight="65.0" prefWidth="215.0" style="-fx-background-color: FF8C00;" text="Supprimer">
+                           <font>
+                              <Font name="Bauhaus 93" size="22.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Label layoutX="52.0" layoutY="143.0" text="LISTE DES COURS" textFill="#f8f8f8">
+                           <font>
+                              <Font name="Arial" size="54.0" />
+                           </font>
+                        </Label>
+                        <Pane layoutX="66.0" layoutY="425.0" prefHeight="152.0" prefWidth="772.0">
+                           <children>
+                              <HBox layoutX="14.0" layoutY="101.0" prefHeight="53.0" prefWidth="713.0" spacing="30.0">
+                                 <children>
+                                    <TextField fx:id="tf_titrecours">
+                                       <cursor>
+                                          <Cursor fx:constant="TEXT" />
+                                       </cursor>
+                                    </TextField>
+                                    <TextField fx:id="tf_matierecours">
+                                       <cursor>
+                                          <Cursor fx:constant="TEXT" />
+                                       </cursor>
+                                    </TextField>
+                                    <DatePicker fx:id="datepicker2" disable="true" />
+                                    <TextField fx:id="tf_duree">
+                                       <cursor>
+                                          <Cursor fx:constant="TEXT" />
+                                       </cursor>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                              <Label layoutX="60.0" layoutY="62.0" text="Titre">
+                                 <font>
+                                    <Font name="System Bold Italic" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="245.0" layoutY="66.0" text="Matère">
+                                 <font>
+                                    <Font name="System Bold Italic" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="error_titrecours" layoutX="15.0" layoutY="130.0" prefHeight="18.0" prefWidth="156.0" textFill="RED" />
+                              <Label fx:id="error_matierecours" layoutX="195.0" layoutY="130.0" prefHeight="18.0" prefWidth="146.0" textFill="RED" />
+                              <Label layoutX="4.0" layoutY="14.0" text="Gestion des cours :">
+                                 <font>
+                                    <Font name="Arial Bold" size="26.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="628.0" layoutY="66.0" text="Durée">
+                                 <font>
+                                    <Font name="System Bold Italic" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="error_duree" layoutX="579.0" layoutY="130.0" prefHeight="18.0" prefWidth="172.0" textFill="RED" />
+                              <Label layoutX="404.0" layoutY="66.0" text="Date d'ajout">
+                                 <font>
+                                    <Font name="System Bold Italic" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <TextField fx:id="tf_pdf" disable="true" layoutX="848.0" layoutY="639.0" prefHeight="19.0" prefWidth="342.0">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
+                        </TextField>
+                        <Label layoutX="848.0" layoutY="596.0" text="Fichier PDF">
+                           <font>
+                              <Font name="System Bold Italic" size="13.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="error_pdf" layoutX="849.0" layoutY="615.0" prefHeight="18.0" prefWidth="172.0" textFill="RED" />
+                        <TextField fx:id="tf_imgc" disable="true" layoutX="1041.0" layoutY="440.0" prefHeight="26.0" prefWidth="149.0">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
+                        </TextField>
+                        <Label fx:id="error_imgc" layoutX="1042.0" layoutY="620.0" prefHeight="18.0" prefWidth="153.0" textFill="RED" />
+                        <TextField fx:id="searchc" layoutX="719.0" layoutY="192.0">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
+                        </TextField>
+                        <Label layoutX="600.0" layoutY="196.0" prefHeight="18.0" prefWidth="107.0" text="Barre de recherche :" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Formations">
+               <content>
+                  <AnchorPane prefHeight="728.0" prefWidth="1228.0" style="-fx-background-color: FFA500;">
+                     <children>
+                        <Label layoutX="24.0" layoutY="227.0" prefHeight="26.0" prefWidth="190.0" text="Nom de la formation">
+                           <font>
+                              <Font name="System Bold Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="144.0" layoutY="295.0" text="Matère">
+                           <font>
+                              <Font name="System Bold Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="153.0" layoutY="364.0" text="Durée">
+                           <font>
+                              <Font name="System Bold Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="btn_ajoutcours1" layoutX="532.0" layoutY="567.0" mnemonicParsing="false" onAction="#AddF" prefHeight="65.0" prefWidth="215.0" style="-fx-background-color: FF8C00;" text="Ajouter">
+                           <font>
+                              <Font name="Bauhaus 93" size="22.0" />
+                           </font>
+                        </Button>
+                        <Label layoutY="38.0" prefHeight="68.0" prefWidth="506.0" style="-fx-background-color: white;" text="    INGEN SCHOOLE " textFill="ORANGE">
+                           <font>
+                              <Font name="System Bold" size="46.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="btn_modifiercours1" layoutX="96.0" layoutY="517.0" mnemonicParsing="false" onAction="#updateF" prefHeight="65.0" prefWidth="215.0" style="-fx-background-color: FF8C00;" text="Modifier">
+                           <font>
+                              <Font name="Bauhaus 93" size="22.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btn_supprimercours1" layoutX="799.0" layoutY="567.0" mnemonicParsing="false" onAction="#deletef" prefHeight="65.0" prefWidth="215.0" style="-fx-background-color: FF8C00;" text="Supprimer">
+                           <font>
+                              <Font name="Bauhaus 93" size="22.0" />
+                           </font>
+                        </Button>
+                        <Label layoutX="467.0" layoutY="134.0" text="LISTE DES FORMATIONS" textFill="#f8f8f8">
+                           <font>
+                              <Font name="Arial" size="54.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="168.0" layoutY="433.0" text="Prix">
+                           <font>
+                              <Font name="System Bold Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="57.0" layoutY="168.0" text="Gestion des formations :">
+                           <font>
+                              <Font name="Arial Bold" size="26.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="cb_matiere" layoutX="236.0" layoutY="296.0" prefWidth="150.0" />
+                        <TableView fx:id="tab_f" layoutX="431.0" layoutY="228.0" prefHeight="200.0" prefWidth="782.0">
+                           <columns>
+                              <TableColumn fx:id="idf" minWidth="0.0" prefWidth="0.0" />
+                              <TableColumn fx:id="nomfor" prefWidth="174.4000244140625" text="Titre" />
+                              <TableColumn fx:id="matiere" prefWidth="172.0" text="Matière" />
+                              <TableColumn fx:id="dureef" prefWidth="198.4000244140625" text="Durée" />
+                              <TableColumn fx:id="prixf" prefWidth="241.60009765625" text="Prix" />
+                           </columns>
+                        </TableView>
+                        <TextField fx:id="tf_dureef" layoutX="237.0" layoutY="365.0" />
+                        <TextField fx:id="tf_prixf" layoutX="237.0" layoutY="434.0" />
+                        <TextField fx:id="tf_nomf" layoutX="237.0" layoutY="228.0" />
+                        <Label fx:id="error_nomf" layoutX="239.0" layoutY="254.0" prefHeight="18.0" prefWidth="126.0" />
+                        <Label fx:id="error_prixf" layoutX="236.0" layoutY="460.0" prefHeight="18.0" prefWidth="126.0" />
+                        <Label fx:id="error_dureef" layoutX="236.0" layoutY="391.0" prefHeight="18.0" prefWidth="126.0" />
                      </children>
                   </AnchorPane>
                </content>

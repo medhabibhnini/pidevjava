@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="IngenSchoolIntegration.jar" size="53501219" download="eager" />
+    <jar href="IngenSchoolIntegration.jar" size="53544130" download="eager" />
     <jar href="lib\NotificationAPI.jar" size="2821" download="eager" />
     <jar href="lib\annotations-13.0.jar" size="17536" download="eager" />
     <jar href="lib\client-5.2.1.jar" size="332373" download="eager" />
@@ -27,6 +27,9 @@
     <jar href="lib\gson-2.8.2-javadoc.jar" size="263440" download="eager" />
     <jar href="lib\httpclient-4.5.8.jar" size="772386" download="eager" />
     <jar href="lib\httpcore-4.4.11.jar" size="326874" download="eager" />
+    <jar href="lib\icepdf-core-4.3.3.jar" size="801279" download="eager" />
+    <jar href="lib\icepdf-core.jar" size="505475" download="eager" />
+    <jar href="lib\icepdf-viewer-4.3.3.jar" size="425005" download="eager" />
     <jar href="lib\itext-pdfa-5.5.13.1.jar" size="119290" download="eager" />
     <jar href="lib\itext-xtra-5.5.13.1.jar" size="120753" download="eager" />
     <jar href="lib\itextpdf-5.5.13.1.jar" size="2330916" download="eager" />

@@ -28,6 +28,12 @@ import com.school.Service.ServiceParticipation;
 import com.school.Service.ServiceReclamation;
 import com.school.Service.ServiceService;
 import com.school.Utils.DataBase;
+import com.school.Entite.Cours;
+import com.school.Entite.Formation;
+import com.school.Service.ServiceCours;
+import com.school.Service.ServiceFormation;
+import com.school.Utils.DataSource;
+
 
 
 import java.awt.AWTException;
@@ -111,6 +117,94 @@ public class BackController implements Initializable {
     private Connection con;
     private ResultSet rs=null;
     private PreparedStatement pst;
+    
+    
+    
+    
+    
+    private ObservableList<Cours> datax;
+    @FXML
+    private TableView<Cours> tab_cours;
+    @FXML
+    private TableColumn<Cours, ?> idcours;
+    @FXML
+    private TableColumn<Cours, ?> titrecours;
+    @FXML
+    private TableColumn<Cours, ?> matierecours;
+    @FXML
+    private TableColumn<Cours, ?> datecours;
+    @FXML
+    private TableColumn<Cours, ?> dureecours;
+    @FXML
+    private TableColumn<Cours, ?> pdfcours;
+    @FXML
+    private ImageView vw_image;
+    @FXML
+    private TextField tf_titrecours;
+    @FXML
+    private TextField tf_matierecours;
+    @FXML
+    private DatePicker datepickerc;
+    @FXML
+    private TextField tf_duree;
+    @FXML
+    private TextField tf_pdf;
+    @FXML
+    private TextField tf_imgc;
+    @FXML
+    private TextField searchc;
+    @FXML
+    private Label error_titrecours;
+    @FXML
+    private Label error_matierecours;
+    @FXML
+    private Label error_duree;
+    @FXML
+    private Label error_pdf;
+    @FXML
+    private Label error_imgc;
+    @FXML
+    private Button btn_im_image;
+    
+    
+    
+    
+    
+     private ObservableList<Formation> dataf;
+    @FXML
+    private TableView<Formation> tab_f;
+    @FXML
+    private TableColumn<Formation, ?> idf;
+    @FXML
+    private TableColumn<Formation, ?> nomfor;
+    @FXML
+    private TableColumn<Formation, ?> matiere;
+    @FXML   
+    private TableColumn<Formation, ?> dureef;
+    @FXML
+    private TableColumn<Formation, ?> prixf;
+    @FXML
+    private TextField tf_nomf;
+    @FXML
+    private TextField tf_dureef;
+    @FXML
+    private TextField tf_prixf;
+    @FXML
+    private ComboBox<Cours> cb_matiere;
+    @FXML
+    private Label error_nomf;
+    @FXML
+    private Label error_dureef;
+    @FXML
+    private Label error_prixf;
+    
+    
+    
+    
+    
+    
+    
+    
     
     @FXML
     private ImageView imgview;
@@ -345,6 +439,22 @@ public class BackController implements Initializable {
        afficherParticipation();
        loadDataParticipation();
        initcatcombo();
+       datax= FXCollections.observableArrayList();
+
+
+
+        setCellValueFromTableToTextFieldcours();
+        afficherCours();
+        loadDataCours();
+        search();
+        
+        dataf= FXCollections.observableArrayList();
+          setCellValueFromTableToTextFieldformation();
+          afficherFormation();
+        loadDataFormation();
+        
+      
+        initcb();
             
   
 
@@ -737,6 +847,592 @@ private void loadDataLivraison() {
         
     }
  /*------------------------------------USER&BLOG---------------------------*/
+ /* -----------------------------Cours------------------------------------------*/
+    
+    @FXML
+    private void addImageC(ActionEvent event) throws IOException{
+        
+        FileChooser fc = new FileChooser();
+
+        FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+        FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
+        fc.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
+        File selectedFile = fc.showOpenDialog(null);
+        String imgname = selectedFile.getName();
+        try {
+            BufferedImage bufferedImage = ImageIO.read(selectedFile);
+              Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+             vw_image.setImage(image);
+             tf_imgc.setText(imgname);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    @FXML
+    private void addPDF(ActionEvent event) throws IOException{
+        
+        FileChooser fc = new FileChooser();
+
+        FileChooser.ExtensionFilter extFilterPDF = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.PDF");
+        fc.getExtensionFilters().addAll(extFilterPDF);
+        File selectedFile = fc.showOpenDialog(null);
+        String filename = selectedFile.getName();
+        tf_pdf.setText(filename);
+        fc.setTitle("Save PDF");
+        fc.setInitialDirectory(new File("C:\\wamp64\\www\\etudes\\src\\com\\etudes\\pdf"));
+        fc.setInitialFileName(filename);
+        File dest = fc.showSaveDialog(null);
+
+        
+        if (dest != null) {
+            try {
+                Files.copy(selectedFile.toPath(), dest.toPath());
+            }catch (IOException ex) {
+            System.out.println(ex.getMessage());
+            }
+       }
+    }
+    
+    public static String saveToFileImageNormalC(Image image)throws SQLException  {
+
+        String ext = "jpg";
+        File dir = new File("C:\\wamp64\\www\\etudes\\src\\com\\etudes\\images");
+        String name;
+        name = String.format("%s.%s", RandomStringUtils.randomAlphanumeric(8), ext);
+        File outputFile = new File(dir, name);
+        BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
+        try {
+            ImageIO.write(bImage, "png", outputFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return name;
+    }
+      
+    @FXML
+    private void AddCours(ActionEvent event) throws SQLException {
+    boolean istitleEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_titrecours,error_titrecours, "title is required");
+    boolean issubjectEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_matierecours, error_matierecours, "subject is required");
+    boolean isdurationEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_duree, error_duree, "duration is required");
+    boolean ispdfEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_pdf, error_pdf, "Select PDF file");
+    boolean isimgEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_imgc, error_imgc, "Select image file");
+
+    if(istitleEmpty && issubjectEmpty && isdurationEmpty && ispdfEmpty && isimgEmpty ){
+        //Date date = Date.valueOf(datepicker.getValue());
+         String titre = tf_titrecours.getText();
+         String matiere = tf_matierecours.getText();
+         String duree = tf_duree.getText();
+         String pdf = tf_pdf.getText();
+         Image image1=null;
+         image1= vw_image.getImage();
+         String photo = null;
+         photo = saveToFileImageNormalC(image1);
+         ServiceCours cl = new ServiceCours();
+         Cours c = new Cours(titre, matiere,  duree, photo,pdf);
+         System.out.println(c);
+
+            
+         cl.ajouterCours(c);
+
+         {
+        
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("course added");
+                alert.showAndWait();
+                afficherCours();
+                loadDataCours();
+                ResetC();
+         }
+                        }
+
+    
+
+    }
+       
+    private void afficherCours(){
+
+             titrecours.setCellValueFactory(new PropertyValueFactory <>("titreCours"));
+             matierecours.setCellValueFactory(new PropertyValueFactory <>("matiere"));
+             dureecours.setCellValueFactory(new PropertyValueFactory <>("duree"));
+             datecours.setCellValueFactory(new PropertyValueFactory <>("updated_at"));
+    }
+
+
+    private void loadDataCours() {
+   datax.clear();
+         try {
+           pst =con.prepareStatement("Select * from cours");
+
+    rs=pst.executeQuery();
+     while (rs.next()) {                
+             datax.add(new  Cours(rs.getInt("id"), rs.getString("titreCours"), rs.getString("matiere"), rs.getDate("updated_at"), rs.getString("duree"), rs.getString("pdfname")));
+     }       }
+       catch (SQLException ex) {
+           Logger.getLogger(ServiceCours.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        tab_cours.setItems(datax);
+    }
+
+  
+    private void setCellValueFromTableToTextFieldcours(){
+    tab_cours.setOnMouseClicked(new EventHandler<MouseEvent>(){
+        @Override
+        public void handle(MouseEvent event) {
+Cours cour=tab_cours.getItems().get(tab_cours.getSelectionModel().getSelectedIndex());
+
+
+
+
+
+tf_titrecours.setText(cour.getTitreCours());
+tf_matierecours.setText(cour.getMatiere());
+tf_duree.setText(cour.getDuree());
+datepickerc.setValue(LocalDate.now());
+tf_pdf.setText(cour.getPdfname());
+    
+         TableColumn.CellEditEvent edittedcell = null;
+            Cours c=gettempC(edittedcell);  
+            
+      
+            String photo;
+            try {
+                photo = getImageCbyId(c.getIdcours());
+                
+           
+           
+           
+            Image imageURL= new Image("file:///C:\\wamp64\\www\\etudes\\src\\com\\etudes\\images/" + photo);
+
+                    
+       
+        vw_image.setImage(imageURL);
+             } catch (SQLException ex) {
+                Logger.getLogger(BackController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+});
+
+    }
+
+    @FXML
+    public void updateCours(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
+    boolean istitleEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_titrecours,error_titrecours, "title is required");
+    boolean issubjectEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_matierecours, error_matierecours, "subject is required");
+    boolean isdurationEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_duree, error_duree, "duration is required");
+    boolean ispdfEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_pdf, error_pdf, "Select PDF file");
+    boolean isimgEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_imgc, error_imgc, "Select image file");
+    if( istitleEmpty && issubjectEmpty && isdurationEmpty && ispdfEmpty && isimgEmpty ){
+       
+        int i;
+           
+            
+    TableColumn.CellEditEvent edittedcell = null;
+           Cours x=gettempC(edittedcell);
+           int c=x.getIdcours();
+         
+            String titre = tf_titrecours.getText();
+            String matierec = tf_matierecours.getText();
+            String duree = tf_duree.getText();
+            String pdf = tf_pdf.getText();
+           Image image1=null;
+             image1= vw_image.getImage();
+              String photo = null;
+             photo = saveToFileImageNormalC(image1);
+   
+
+            ServiceCours prod=new ServiceCours();
+            
+         
+            Cours p = new Cours(c, titre, matierec, duree, photo,pdf);
+            System.out.println(p);
+            i=prod.modifierCours(p);
+              if(i==1)
+        {
+           
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("Course updated");
+                alert.showAndWait();
+           afficherCours();
+           loadDataCours();
+           
+        }
+              ResetC();
+          
+    }
+        
+    }
+
+    
+    @FXML
+    public void deleteCours(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
+        
+        
+ TableColumn.CellEditEvent edittedcell = null;
+            Cours x=gettempC(edittedcell);         
+            int i=x.getIdcours();
+            ServiceCours cour=new ServiceCours();
+           
+           
+            
+            int s=cour.deleteCours(i);
+              if(s==1)
+        {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("Course deleted");
+                alert.showAndWait();
+           afficherCours();
+           loadDataCours();
+        }
+              
+          
+             
+              
+              
+              
+              
+          
+           
+        
+    }
+
+
+    public Cours gettempC(TableColumn.CellEditEvent edittedCell) {
+        Cours test = tab_cours.getSelectionModel().getSelectedItem();
+        
+        return test;
+    }
+
+    public String getImageCbyId(int ide) throws SQLException
+    {
+        String i="";
+          Statement ste;
+        String  id=null;
+           String query="SELECT image_name as image_name FROM cours WHERE id LIKE '%"+ide+"%'";
+           ste=con.createStatement();
+        ResultSet rst = ste.executeQuery(query); 
+         while(rst.next())
+        {
+             i=rst.getString("image_name");
+            
+        }
+      
+        
+        return i;
+    }
+
+
+    private void ResetC(){
+    
+    tf_titrecours.setText(null);
+    tf_matierecours.setText(null);
+    tf_duree.setText(null);
+    tf_pdf.setText(null);
+    tf_imgc.setText(null);
+    datepickerc.setValue(null);
+    
+
+}
+    
+    @FXML
+    private void VisualiserPDF(ActionEvent event) throws IOException {
+        boolean ispdfEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_pdf, error_pdf, "Select PDF file");
+        if( ispdfEmpty ){
+                    
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getResource("pdf.fxml"));
+                    Node node = (Node) event.getSource();
+                    Stage stage = (Stage) node.getScene().getWindow();
+                    stage.close();
+
+                    Scene scene = new Scene(loader.load());
+                    
+                    stage.setScene(scene);
+                    
+                    stage.show();
+                    PdfController  controller = loader.getController();
+                    controller.initData(tab_cours.getSelectionModel().getSelectedItem());
+        }
+    }
+    
+    public void search(){
+searchc.setOnKeyReleased(e->
+{
+    if(searchc.getText().equals(""))
+    {
+        loadDataCours();
+    }
+    else
+    {
+        datax.clear();
+          String sql = "Select * from cours where titreCours LIKE '%"+searchc.getText()+"%'"
+                + "UNION Select * from cours where matiere LIKE '%"+searchc.getText()+"%'" ;
+    try 
+    {
+      
+        pst=con.prepareStatement(sql);
+        rs=pst.executeQuery();
+        while(rs.next())
+        {
+         String titre =rs.getString("titreCours");  
+         String matiere=rs.getString("matiere");
+         Date date = rs.getDate("updated_at");
+         String duree=rs.getString("duree");
+
+         
+     
+                      
+    
+             datax.add(new Cours(titre, matiere, date,duree));
+ 
+        }
+        tab_cours.setItems(datax);
+    } 
+    catch (SQLException ex) 
+    {
+        Logger.getLogger(BackController.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
+    }
+});
+   
+      
+        
+        }
+      
+      /* -----------------------------Cours------------------------------------------*/
+    /* -----------------------------Formation------------------------------------------*/
+   
+      
+    private void initcb() {
+    ObservableList datacb=FXCollections.observableArrayList();
+   cb_matiere.getSelectionModel().clearSelection();
+   try {
+           pst =con.prepareStatement("SELECT *  from cours ");
+
+    rs=pst.executeQuery();
+     while (rs.next()) {                
+             datacb.add(rs.getString(6));
+     }       }
+       catch (SQLException ex) {
+           Logger.getLogger(ServiceFormation.class.getName()).log(Level.SEVERE, null, ex);
+       }
+cb_matiere.setItems(datax);
+
+}
+      
+    private void loadDataFormation() {
+   dataf.clear();
+         try {
+           pst =con.prepareStatement("Select f.nomFormation, c.matiere ,f.duree,f.prix ,c.id from formation f JOIN cours c on f.coursId=c.id");
+
+    rs=pst.executeQuery();
+     while (rs.next()) {   
+          String nomFormation = rs.getString("nomFormation");
+              String duree = rs.getString("duree");
+                 
+             
+                int idcours = rs.getInt("c.id");
+                  int prix = rs.getInt("prix");
+                        
+                           
+                   String matiere = rs.getString("c.matiere");
+                     
+                Cours c = new Cours(idcours,duree,matiere);
+             dataf.add(new  Formation(rs.getInt("id"), rs.getString("nomFormation"), rs.getString("matiere"), rs.getString("duree"), rs.getInt("prix"),rs.getInt("c.id")));
+     }       }
+       catch (SQLException ex) {
+           Logger.getLogger(ServiceFormation.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        tab_f.setItems(dataf);
+    }
+    
+    
+   
+    private void afficherFormation()
+    {
+    
+             idf.setCellValueFactory(new PropertyValueFactory <>("idc"));
+             nomfor.setCellValueFactory(new PropertyValueFactory <>("nomf"));
+             matiere.setCellValueFactory(new PropertyValueFactory <>("matieref"));
+             dureef.setCellValueFactory(new PropertyValueFactory <>("dureef"));
+             prixf.setCellValueFactory(new PropertyValueFactory <>("prixf"));
+             
+    }
+    
+    private void setCellValueFromTableToTextFieldformation(){
+    tab_f.setOnMouseClicked(new EventHandler<MouseEvent>(){
+        @Override
+        public void handle(MouseEvent event) {
+Formation fo=tab_f.getItems().get(tab_f.getSelectionModel().getSelectedIndex());
+
+
+
+
+
+tf_nomf.setText(fo.getNomf());
+
+tf_dureef.setText(fo.getDureef());
+
+tf_prixf.setText(Integer.toString(fo.getPrixf()));
+    
+         TableColumn.CellEditEvent edittedcell = null;
+            Formation f=gettempf(edittedcell);  
+            
+      
+            
+        }
+});
+
+    }
+    
+    public Formation gettempf(TableColumn.CellEditEvent edittedCell) {
+        Formation test = (Formation) tab_f.getSelectionModel().getSelectedItem();
+        
+        return test;
+      }
+    
+    private void ResetF(){
+    
+    tf_nomf.setText(null);
+    cb_matiere.setValue(null);
+    tf_dureef.setText(null);
+    tf_prixf.setText(null);
+
+    
+       
+    
+}
+      
+    @FXML
+    private void AddF(ActionEvent event) throws SQLException {
+        
+          boolean isnomfEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_nomf,error_nomf, "name is required");
+          
+          boolean isprixfEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_prixf,error_prixf, "price is required");
+          boolean isprixfNumber=validation.TextFieldvalidation.istextFieldTypeNumber(tf_prixf, error_prixf, "price is number");
+          if(isnomfEmpty  && isprixfEmpty && isprixfNumber )
+          {
+         
+
+       
+         Cours id = cb_matiere.getValue();
+         String nomfor = tf_nomf.getText();
+         String matierefor=id.getMatiere();
+         String dureefor = tf_dureef.getText();
+         int prixfor=Integer.valueOf(tf_prixf.getText());
+         int idc=id.getIdcours();
+
+         ServiceFormation fl = new ServiceFormation();
+         Formation f = new Formation(nomfor, matierefor,dureefor,prixfor,idc);
+         System.out.println(f);
+        
+            
+         fl.ajouterF(f);
+
+         {
+        
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("Formation added");
+                alert.showAndWait();
+                loadDataFormation();
+                afficherFormation();
+                ResetF();
+         }
+    }
+    
+    }
+    
+    @FXML
+    public void updateF(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
+    boolean isnomfEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_nomf,error_nomf, "name is required");
+    boolean isprixfEmpty=validation.TextFieldvalidation.isTextFieldNoEmpty(tf_prixf,error_prixf, "price is required");
+    boolean isprixfNumber=validation.TextFieldvalidation.istextFieldTypeNumber(tf_prixf, error_prixf, "price is number");
+          if(isnomfEmpty  && isprixfEmpty && isprixfNumber ){
+       
+                int i;
+           
+            
+                TableColumn.CellEditEvent edittedcell = null;
+           Formation x=gettempf(edittedcell);
+           int idF=x.getIdf();
+         
+            Cours id = cb_matiere.getValue();
+         String nomforma = tf_nomf.getText();
+         String matierefor=id.getMatiere();
+         String dureefor = tf_dureef.getText();
+         int prixfor=Integer.valueOf(tf_prixf.getText());
+         int idc=id.getIdcours();
+   
+
+            ServiceFormation prod=new ServiceFormation();
+            
+         
+            Formation f = new Formation(idF, nomforma, matierefor, dureefor, prixfor,idc);
+            System.out.println(f);
+            i=prod.modifierF(f);
+              if(i==1)
+        {
+           
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("Course updated");
+                alert.showAndWait();
+           afficherCours();
+           loadDataCours();
+           
+        }
+              ResetC();
+          
+    }
+        
+    }
+    
+    @FXML
+    public void deletef(ActionEvent event) throws SQLException, AWTException, MalformedURLException {
+        
+        
+ TableColumn.CellEditEvent edittedcell = null;
+            Formation x=gettempf(edittedcell);  
+            System.out.println(x);
+            int i=x.getIdf();
+             System.out.println(i);
+            ServiceFormation f=new ServiceFormation();
+           
+           
+            
+            int s=f.deleteF(i);
+                     
+              if(s==1)
+        {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("Formation deleted");
+                alert.showAndWait();
+           afficherFormation();
+           loadDataFormation();
+            System.out.println(s);
+        }
+                
+           
+        
+    
+    }
+    
+    
+      
+  /* -----------------------------Formation------------------------------------------*/
   /* -----------------------------User------------------------------------------*/
     
     private void Adduser(ActionEvent event) throws SQLException {
@@ -923,6 +1619,10 @@ tf_name.setText(us.getUsername());
                     stage.setScene(scene);
                     stage.show();
     }
+    
+    
+    
+    
      /* -----------------------------Blog------------------------------------------*/
     
          @FXML

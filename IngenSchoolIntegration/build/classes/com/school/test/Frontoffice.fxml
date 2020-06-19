@@ -15,9 +15,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="763.0" prefWidth="1149.0" style="-fx-background-color: orange;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.school.test.FrontofficeController">
+<AnchorPane id="AnchorPane" prefHeight="763.0" prefWidth="1149.0" style="-fx-background-color: orange;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.school.test.FrontofficeController">
    <children>
-      <VBox layoutX="16.0" layoutY="168.0" prefHeight="478.0" prefWidth="209.0" style="-fx-background-color: orange;">
+      <VBox layoutX="18.0" layoutY="102.0" prefHeight="530.0" prefWidth="210.0" style="-fx-background-color: orange;">
          <children>
             <Button fx:id="biblio_btn" mnemonicParsing="false" onAction="#bibliobuttonAction" prefHeight="74.0" prefWidth="231.0" style="-fx-background-color: white;" text="Bibliotheque">
                <VBox.margin>
@@ -267,7 +267,7 @@
             </Pane>
          </children>
       </AnchorPane>
-      <Button layoutX="14.0" layoutY="729.0" mnemonicParsing="false" onMouseClicked="#Deco" style="-fx-background-color: brown;" text="déconnexion" textFill="WHITE">
+      <Button layoutX="14.0" layoutY="747.0" mnemonicParsing="false" onMouseClicked="#Deco" style="-fx-background-color: brown;" text="déconnexion" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
@@ -279,5 +279,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
+      <Button layoutX="28.0" layoutY="640.0" mnemonicParsing="false" onAction="#Cours" prefHeight="42.0" prefWidth="190.0" style="-fx-background-color: white;" text="Cours" />
+      <Button layoutX="28.0" layoutY="693.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="190.0" style="-fx-background-color: white;" text="Formation" />
    </children>
 </AnchorPane>

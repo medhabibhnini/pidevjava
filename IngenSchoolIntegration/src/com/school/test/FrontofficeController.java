@@ -271,11 +271,13 @@ public class FrontofficeController implements Initializable {
         myList = (ListView<TextFlow>) listView;
         try {
                 url = new URL("http://feeds.bbci.co.uk/news/world/rss.xml");
-                filesHandler.importFrom(url);
-            } catch (MalformedURLException ex) {
+               
+            } catch (MalformedURLException ex) 
+            {
                 Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        try {
+        try 
+        {
         ServiceOffre ser = new ServiceOffre();
         List<Offre> list = ser.afficheroffre();
         ObservableList<Offre> cls = FXCollections.observableArrayList();
@@ -1216,12 +1218,22 @@ if (i == 1)
         
         
         
+        
+        
     
     
 }
-
+    
     @FXML
-    private void ResetR(ActionEvent event) {
+    private void Cours(ActionEvent event) throws IOException {
+        Node node = (Node) event.getSource();
+                    Stage stage = (Stage) node.getScene().getWindow();
+                    stage.close();
+
+                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("Cours.fxml")));
+                    stage.setScene(scene);
+                    stage.show();
     }
+
     
 }

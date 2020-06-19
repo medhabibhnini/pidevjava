@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="728.0" prefWidth="1228.0" style="-fx-background-color: C86D00;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.school.test.CoursController">
+   <children>
+      <AnchorPane id="AnchorPane" layoutY="42.0" prefHeight="723.0" prefWidth="1235.0" style="-fx-background-color: orange; -fx-border-color: D6D4D1; -fx-border-width: 10;">
+         <children>
+            <ImageView fitHeight="679.0" fitWidth="1150.0" layoutX="65.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/Coursimg.jpg" />
+               </image>
+            </ImageView>
+            <Button fx:id="btn_modifiercours1" layoutX="889.0" layoutY="38.0" mnemonicParsing="false" onAction="#GoFront" prefHeight="65.0" prefWidth="215.0" style="-fx-background-color: FF8C00;" text="Retour">
+               <font>
+                  <Font name="Bauhaus 93" size="22.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="190.0" fitWidth="247.0" layoutX="34.0" layoutY="-22.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/84237738_496561737716008_6034289881054707712_n_2.png" />
+               </image>
+            </ImageView>
+            <TableView fx:id="tab_cours" layoutX="65.0" layoutY="448.0" prefHeight="238.0" prefWidth="770.0" style="-fx-background-color: F5F5F5;">
+               <columns>
+                  <TableColumn fx:id="titrecours" prefWidth="188.79998016357422" text="Titre " />
+                  <TableColumn fx:id="matierecours" prefWidth="154.39996337890625" text="Matière" />
+                  <TableColumn fx:id="datecours" prefWidth="126.40005493164062" text="Date d'ajout" />
+                  <TableColumn fx:id="dureecours" prefWidth="133.60003662109375" text="Durée" />
+                  <TableColumn fx:id="pdfcours" prefWidth="133.60003662109375" text="PDF" />
+               </columns>
+            </TableView>
+            <Button fx:id="btn_vis_pdf" layoutX="930.0" layoutY="594.0" mnemonicParsing="false" onAction="#VisualiserPDF" prefHeight="66.0" prefWidth="202.0" text="Visualiser PDF">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <ImageView fx:id="vw_image" fitHeight="238.0" fitWidth="247.0" layoutX="442.0" layoutY="185.0" pickOnBounds="true" preserveRatio="true" />
+            <Label layoutX="76.0" layoutY="372.0" text="Chercher un cours !!!" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="26.0" />
+               </font>
+            </Label>
+            <Button layoutX="85.0" layoutY="410.0" mnemonicParsing="false" onAction="#Gosearsh" prefHeight="26.0" prefWidth="202.0" text="Chercher ici !!!!" />
+            <Label fx:id="error_pdf" layoutX="916.0" layoutY="567.0" prefHeight="18.0" prefWidth="172.0" textFill="RED" />
+            <TextField fx:id="tf_titrecours" layoutX="952.0" layoutY="137.0" visible="false">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+            </TextField>
+            <TextField fx:id="tf_matierecours" layoutX="952.0" layoutY="190.0" visible="false">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+            </TextField>
+            <DatePicker fx:id="datepicker" disable="true" layoutX="939.0" layoutY="255.0" visible="false" />
+            <TextField fx:id="tf_duree" layoutX="952.0" layoutY="312.0" visible="false">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+            </TextField>
+            <TextField fx:id="tf_pdf" disable="true" layoutX="814.0" layoutY="372.0" prefHeight="19.0" prefWidth="342.0" visible="false">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+            </TextField>
+            <Label layoutX="20.0" layoutY="-35.0" prefHeight="34.0" prefWidth="234.0" text="Page des cours">
+               <font>
+                  <Font name="Bauhaus 93" size="28.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Button layoutX="1118.0" layoutY="6.0" mnemonicParsing="false" onAction="#DecoU" style="-fx-background-color: black;" text="déconnexion" textFill="#c86d00" />
+   </children>
+</AnchorPane>
